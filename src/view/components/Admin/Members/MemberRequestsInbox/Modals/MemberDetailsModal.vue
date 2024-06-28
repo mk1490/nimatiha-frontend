@@ -44,17 +44,11 @@
             v-if="tab === 0"
             :key="0"
             :value="0">
-          <v-simple-table>
-            <template v-slot:default>
-              <tbody>
-              <tr
-                  v-for="item in model.information.table.items">
-                <td>{{ item.title }}</td>
-                <td>{{ item.value }}</td>
-              </tr>
-              </tbody>
-            </template>
-          </v-simple-table>
+
+          <base-key-value-simple-table
+              :items="model.personal.items"
+          />
+
         </v-tab-item>
         <v-tab-item
             v-if="tab === 1"
@@ -62,34 +56,8 @@
             :value="1">
 
           <base-key-value-simple-table
-              :items="model.personal"
+              :items="model.parents.items"
           />
-
-        </v-tab-item>
-        <v-tab-item
-            v-if="tab === 2"
-            :key="2"
-            :value="2">
-          <v-simple-table>
-            <template v-slot:default>
-              <tbody>
-              <tr
-                  v-for="item in model.documents"
-                  :key="item.value">
-                <td>{{ item.title }}</td>
-                <td>
-
-                  <div v-if="item.url">
-                    <a
-                        @click="downloadItem(item)">
-                      دانلود
-                    </a>
-                  </div>
-                </td>
-              </tr>
-              </tbody>
-            </template>
-          </v-simple-table>
 
         </v-tab-item>
       </v-container>
@@ -114,36 +82,17 @@ export default {
   emits: ['onEditClick'],
   created() {
     if (this.data) {
-      this.model.products.items = this.data.model.productItems
-      this.model.documents = this.data.model.uploadedDocuments;
-
-      this.model.information.table.items = this.model.information.table.headers.map(f => {
-        let content = this.data.model[f.key];
-        switch (f.key) {
-          case 'creationTime':
-            content = this.getPersianTime(content);
-            break;
-          case 'disabilityStatus': {
-            content = this.data.initialize.disabilityStatus.find(x => x.value === content).title
-            break;
-          }
-          case 'maritalStatus': {
-            content = this.data.initialize.maritalStatus.find(x => x.value === content).title
-            break;
-          }
-          case 'educationLevel': {
-            content = this.data.initialize.educationLevels.find(x => x.value === content).title
-            break;
-          }
-          case 'birthDate':
-            const date = new Date(content);
-            content = this.getPersianTime(date, 'DD MMMM YYYY');
-            break;
-        }
-        return {
+      this.model.personal.headers.map(f => {
+        this.model.personal.items.push({
           title: f.title,
-          value: content,
-        }
+          value: this.data.model[f.key]
+        })
+      })
+      this.model.parents.headers.map(f => {
+        this.model.parents.items.push({
+          title: f.title,
+          value: this.data.model[f.key]
+        })
       })
 
     }
@@ -152,27 +101,39 @@ export default {
     return {
       tab: 0,
       model: {
-        personal: [
-
-        ]
-        information: {
-          table: {
-            headers: [
-              {title: 'شماره تلفن', key: 'mobileNumber'},
-              {title: 'نام', key: 'name'},
-              {title: 'نام خانوادگی', key: 'family'},
-              {title: 'نام پدر', key: 'fatherName'},
-              {title: 'کد ملّی', key: 'nationalCode'},
-              {title: 'وضعیت ازدواج', key: 'maritalStatus'},
-              {title: 'تعداد فرزندان', key: 'childrenCounts'},
-              {title: 'میزان تحصیلات', key: 'educationLevel'},
-              {title: 'وضعیت معلولیت', key: 'disabilityStatus'},
-              {title: 'شرح معلولیت', key: 'disabilityDescription'},
-              {title: 'نشانی محلّ سکونت', key: 'address'},
-            ],
-            items: [],
-          }
+        personal: {
+          headers: [
+            {title: 'شماره تلفن', key: 'mobileNumber'},
+            {title: 'نام', key: 'name'},
+            {title: 'نام خانوادگی', key: 'family'},
+            {title: 'نام پدر', key: 'fatherName'},
+            {title: 'کد ملّی', key: 'nationalCode'},
+            {title: 'تاریخ تولّد', key: 'birthDate'},
+            {title: 'وضعیت معلولیت', key: 'disabilityStatus'},
+            {title: 'شرح معلولیت', key: 'disabilityDescription'},
+            {title: 'مذهب', key: 'religion'},
+            {title: 'سابقه بیماری', key: 'diseaseBackground'},
+            {title: 'شهرستان محل سکونت', key: 'city'},
+            {title: 'نشانی محلّ سکونت', key: 'address'},
+          ],
+          items: [],
         },
+        parents: {
+          headers: [
+            {title: 'نام پدر', key: 'fatherName'},
+            {title: 'نام خانوادگی پدر', key: 'fatherFamily'},
+            {title: 'تحصیلات پدر', key: 'fatherEducationLevel'},
+            {title: 'وضعیت حیات پدر', key: 'fatherEducationLevelFifeSituation'},
+            {title: 'نام مادر', key: 'motherName'},
+            {title: 'نام خانوادگی مادر', key: 'motherFamily'},
+            {title: 'تحصیلات مادر', key: 'motherEducationLevel'},
+            {title: 'وضعیت حیات مادر', key: 'motherEducationLevelFifeSituation'},
+            {title: 'وضعیت تک فرزندی', key: 'singleChild'},
+            {title: 'تعداد اعضای خانواده', key: 'familyMembers'},
+          ],
+          items: [],
+        },
+        information: {},
         products: {
           headers: [
             {text: 'عنوان', value: 'title'},
