@@ -130,6 +130,18 @@
           </v-expansion-panels>
 
         </v-tab-item>
+        <v-tab-item
+            v-if="tab === 5"
+            :key="5"
+            :value="5">
+
+
+          <base-key-value-simple-table
+              :items="model.educationalCourses.items"
+          />
+
+
+        </v-tab-item>
       </v-container>
 
     </v-tabs-items>
@@ -188,7 +200,13 @@ export default {
         if (f.category === 'artistic') {
           this.model.culturalAndEducational.artistic.items.push(f)
         }
+      })
 
+      this.model.educationalCourses.headers.map(f => {
+        this.model.educationalCourses.items.push({
+          title: f.text,
+          value: this.data.model.educationalCourses[f.value]
+        })
       })
 
     }
@@ -245,6 +263,14 @@ export default {
         executive: {
           items: [],
         },
+        educationalCourses: {
+          headers: [
+            {text: 'طرح ولایت', value: 'tarheVelayat'},
+            {text: 'آستان قدس', value: 'astaneQods'},
+            {text: 'اوقاف', value: 'oqaf'},
+          ],
+          items: [],
+        },
         culturalAndEducational: {
           headers: [
             {text: 'عنوان رشته', value: 'fieldTitle'},
@@ -262,14 +288,6 @@ export default {
           },
 
         },
-        information: {},
-        products: {
-          headers: [
-            {text: 'عنوان', value: 'title'},
-            {text: 'تولید بومی', value: 'ownProduct'},
-          ],
-          items: [],
-        }
       }
     }
   },
