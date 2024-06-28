@@ -60,6 +60,16 @@
           />
 
         </v-tab-item>
+        <v-tab-item
+            v-if="tab === 2"
+            :key="2"
+            :value="2">
+
+          <base-key-value-simple-table
+              :items="model.educational.items"
+          />
+
+        </v-tab-item>
       </v-container>
 
     </v-tabs-items>
@@ -92,6 +102,12 @@ export default {
         this.model.parents.items.push({
           title: f.title,
           value: this.data.model[f.key]
+        })
+      })
+      this.model.educational.headers.map(f => {
+        this.model.educational.items.push({
+          title: f.title,
+          value: this.data.model.educational[f.key]
         })
       })
 
@@ -133,18 +149,16 @@ export default {
           ],
           items: [],
         },
-        parents: {
+        educational: {
           headers: [
-            {title: 'نام پدر', key: 'fatherName'},
-            {title: 'نام خانوادگی پدر', key: 'fatherFamily'},
-            {title: 'تحصیلات پدر', key: 'fatherEducationLevel'},
-            {title: 'وضعیت حیات پدر', key: 'fatherEducationLevelFifeSituation'},
-            {title: 'نام مادر', key: 'motherName'},
-            {title: 'نام خانوادگی مادر', key: 'motherFamily'},
-            {title: 'تحصیلات مادر', key: 'motherEducationLevel'},
-            {title: 'وضعیت حیات مادر', key: 'motherEducationLevelFifeSituation'},
-            {title: 'وضعیت تک فرزندی', key: 'singleChild'},
-            {title: 'تعداد اعضای خانواده', key: 'familyMembers'},
+            {title: 'مقطع', key: 'educationGrade'},
+            {title: 'پایه', key: 'schoolGrade'},
+            {title: 'رشته تحصیلی', key: 'educationField'},
+            {title: 'محل تحصیل', key: 'educationField'},
+            {title: 'معدل', key: 'educationField'},
+            {title: 'نام مدرسه', key: 'schoolName'},
+            {title: 'نام مدیر', key: 'managerName'},
+            {title: 'نام معاون پرورشی', key: 'breedingAssistantName'},
           ],
           items: [],
         },
