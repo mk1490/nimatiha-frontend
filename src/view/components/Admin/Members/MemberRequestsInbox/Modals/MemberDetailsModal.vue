@@ -80,6 +80,56 @@
           />
 
         </v-tab-item>
+        <v-tab-item
+            v-if="tab === 4"
+            :key="4"
+            :value="4">
+
+
+          <v-expansion-panels multiple>
+
+            <v-expansion-panel>
+              <v-expansion-panel-header>
+                رشته‌های قرآنی
+              </v-expansion-panel-header>
+              <v-expansion-panel-content>
+                <base-table
+                    hide-default-footer
+                    :headers="model.culturalAndEducational.headers"
+                    :items="model.culturalAndEducational.qurani.items"
+                    :items-per-page="-1"
+                />
+              </v-expansion-panel-content>
+            </v-expansion-panel>
+            <v-expansion-panel>
+              <v-expansion-panel-header>
+                رشته‌های هنری
+              </v-expansion-panel-header>
+              <v-expansion-panel-content>
+                <base-table
+                    hide-default-footer
+                    :headers="model.culturalAndEducational.headers"
+                    :items="model.culturalAndEducational.artistic.items"
+                    :items-per-page="-1"
+                />
+              </v-expansion-panel-content>
+            </v-expansion-panel>
+            <v-expansion-panel>
+              <v-expansion-panel-header>
+                رشته‌های ورزشی
+              </v-expansion-panel-header>
+              <v-expansion-panel-content>
+                <base-table
+                    hide-default-footer
+                    :headers="model.culturalAndEducational.headers"
+                    :items="model.culturalAndEducational.sport.items"
+                    :items-per-page="-1"
+                />
+              </v-expansion-panel-content>
+            </v-expansion-panel>
+          </v-expansion-panels>
+
+        </v-tab-item>
       </v-container>
 
     </v-tabs-items>
@@ -122,9 +172,23 @@ export default {
       })
 
 
-
-      this.data.model.executiveHistory.map(f=>{
+      this.data.model.executiveHistory.map(f => {
         this.model.executive.items.push(f)
+      })
+
+      this.data.model.educationalAndHistorical.map(f => {
+
+        if (f.category === 'qurani') {
+          this.model.culturalAndEducational.qurani.items.push(f)
+        }
+        if (f.category === 'sport') {
+          this.model.culturalAndEducational.sport.items.push(f)
+        }
+
+        if (f.category === 'artistic') {
+          this.model.culturalAndEducational.artistic.items.push(f)
+        }
+
       })
 
     }
@@ -180,6 +244,23 @@ export default {
         },
         executive: {
           items: [],
+        },
+        culturalAndEducational: {
+          headers: [
+            {text: 'عنوان رشته', value: 'fieldTitle'},
+            {text: 'رتبه', value: 'rank'},
+            {text: 'سطح', value: 'level'},
+          ],
+          qurani: {
+            items: [],
+          },
+          artistic: {
+            items: [],
+          },
+          sport: {
+            items: [],
+          },
+
         },
         information: {},
         products: {
