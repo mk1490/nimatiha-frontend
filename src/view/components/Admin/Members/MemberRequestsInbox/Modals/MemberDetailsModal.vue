@@ -70,6 +70,16 @@
           />
 
         </v-tab-item>
+        <v-tab-item
+            v-if="tab === 3"
+            :key="3"
+            :value="3">
+
+          <base-key-value-simple-table
+              :items="model.executive.items"
+          />
+
+        </v-tab-item>
       </v-container>
 
     </v-tabs-items>
@@ -109,6 +119,12 @@ export default {
           title: f.title,
           value: this.data.model.educational[f.key]
         })
+      })
+
+
+
+      this.data.model.executiveHistory.map(f=>{
+        this.model.executive.items.push(f)
       })
 
     }
@@ -160,6 +176,9 @@ export default {
             {title: 'نام مدیر', key: 'managerName'},
             {title: 'نام معاون پرورشی', key: 'breedingAssistantName'},
           ],
+          items: [],
+        },
+        executive: {
           items: [],
         },
         information: {},
