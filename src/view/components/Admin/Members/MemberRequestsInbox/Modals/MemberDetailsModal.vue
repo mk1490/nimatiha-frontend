@@ -133,6 +133,21 @@ export default {
           ],
           items: [],
         },
+        parents: {
+          headers: [
+            {title: 'نام پدر', key: 'fatherName'},
+            {title: 'نام خانوادگی پدر', key: 'fatherFamily'},
+            {title: 'تحصیلات پدر', key: 'fatherEducationLevel'},
+            {title: 'وضعیت حیات پدر', key: 'fatherEducationLevelFifeSituation'},
+            {title: 'نام مادر', key: 'motherName'},
+            {title: 'نام خانوادگی مادر', key: 'motherFamily'},
+            {title: 'تحصیلات مادر', key: 'motherEducationLevel'},
+            {title: 'وضعیت حیات مادر', key: 'motherEducationLevelFifeSituation'},
+            {title: 'وضعیت تک فرزندی', key: 'singleChild'},
+            {title: 'تعداد اعضای خانواده', key: 'familyMembers'},
+          ],
+          items: [],
+        },
         information: {},
         products: {
           headers: [
