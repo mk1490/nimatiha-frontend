@@ -60,6 +60,26 @@ export const constantRoutes = [{
                     // permission: 'access_permissions.list,access_permissions.update,access_permissions.insert,access_permissions.delete'
                 },
             },
+            {
+                path: 'members',
+                name: 'members',
+                component: () => import('@/view/components/Admin/Members/MembersManagement.vue'),
+                meta: {
+                    title: 'route.members',
+                    icon: 'mdi-account-settings',
+                    // permission: 'access_permissions.list,access_permissions.update,access_permissions.insert,access_permissions.delete'
+                },
+            },
+            {
+                path: 'Questionnaire',
+                name: 'Questionnaire',
+                component: () => import('@/view/components/Admin/Questionnaire/QuestionnaireManagement.vue'),
+                meta: {
+                    title: 'قالب پرسش نامه ها',
+                    icon: 'mdi-account-settings',
+                    // permission: 'access_permissions.list,access_permissions.update,access_permissions.insert,access_permissions.delete'
+                },
+            },
         ]
     },
     {
