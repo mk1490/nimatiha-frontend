@@ -51,16 +51,6 @@ export const constantRoutes = [{
             //     },
             // },
             {
-                path: 'membersRequestInbox',
-                name: 'membersRequestInbox',
-                component: () => import('@/view/components/Admin/Members/MemberRequestsInbox/MemberRequestsInbox.vue'),
-                meta: {
-                    title: 'route.memberRequestsInbox',
-                    icon: 'mdi-account-settings',
-                    // permission: 'access_permissions.list,access_permissions.update,access_permissions.insert,access_permissions.delete'
-                },
-            },
-            {
                 path: 'members',
                 name: 'members',
                 component: () => import('@/view/components/Admin/Members/MembersManagement.vue'),
