@@ -347,3 +347,11 @@ small {
 .v-alert__content {
   font-family: Iransans;
 }
+
+.required--symbol {
+  direction: rtl !important;
+}
+
+.required--symbol small {
+  color: red !important;
+}

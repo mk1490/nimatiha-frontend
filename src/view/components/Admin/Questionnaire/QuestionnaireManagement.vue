@@ -4,11 +4,38 @@ import QuestionnaireModal from "@/view/components/Admin/Questionnaire/Questionna
 export default {
   name: "QuestionnaireManagement",
   components: {QuestionnaireModal},
+  created() {
+    this.httpGet(`/test-template/list`, result => {
+      this.table.contents = result
+    })
+  },
   data() {
     return {
       table: {
-        headers: [],
+        headers: [
+          {text: 'عنوان', value: 'title'},
+          {text: 'اسلاگ', value: 'slug'},
+        ],
         contents: [],
+        actions: [
+          {
+            title: 'ویرایش',
+            icon: 'mdi-pen',
+            click: item => {
+              this.modal.data = item;
+              this.modal.visible = true;
+            }
+
+          },
+          {
+            title: 'حذف',
+            icon: 'mdi-delete',
+            color: 'red',
+            click: item => {
+            }
+
+          }
+        ],
       },
       modal: {
         visible: false,
@@ -17,6 +44,7 @@ export default {
   },
   methods: {
     defineNew() {
+      this.modal.data = null;
       this.modal.visible = true;
     }
   }
@@ -30,12 +58,14 @@ export default {
       title="مدیریت پرسش نامه ها">
     <base-table
         :items="table.contents"
+        :actions="table.actions"
         :headers="table.headers">
     </base-table>
 
     <questionnaire-modal
         v-if="modal.visible"
-        :visible.sync="modal.visible">
+        :visible.sync="modal.visible"
+        :data="modal.data">
 
     </questionnaire-modal>
   </base-card-layout>
