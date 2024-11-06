@@ -6,7 +6,7 @@ export default {
   components: {QuestionnaireModal},
   created() {
     this.httpGet(`/test-template/list`, result => {
-      this.table.contents = result
+      this.table.contents = result;
     })
   },
   data() {
@@ -22,8 +22,11 @@ export default {
             title: 'ویرایش',
             icon: 'mdi-pen',
             click: item => {
-              this.modal.data = item;
-              this.modal.visible = true;
+              this.httpGet(`/test-template/${item.id}`, result => {
+                this.modal.data = result;
+                this.modal.visible = true;
+              })
+
             }
 
           },

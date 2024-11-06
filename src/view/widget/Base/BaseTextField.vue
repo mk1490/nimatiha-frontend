@@ -21,7 +21,7 @@
       :append-outer-icon="appendOuterIcon"
       :prepend-inner-icon="prependInnerIcon"
       @click:append="$emit('click:append')"
-      :hide-details="rules.length > 0 ? 'auto': ''"
+      :hide-details="rules && rules.length > 0 ? 'auto': ''"
       v-model="model"
       outlined
       dense>

@@ -1,10 +1,27 @@
 <script>
 export default {
   name: "QuestionnaireModal",
-  created(){
-    this.httpGet(`/`, result=>{
+  props: {
+    visible: Boolean,
+    data: Object,
+  },
+  created() {
+    this.selectedItems.push(this.items[0].value)
+    if (this.data) {
+      this.model.title = this.data.title;
+      this.model.slug = this.data.slug;
+      this.disabledValues = this.data['disabledForm'];
 
-    })
+      this.disabledValues.map(f => {
+        if (!this.disabledValues.includes(f)) {
+          this.selectedChildItem.push(f)
+          console.log(f)
+        }
+
+      })
+
+    }
+
   },
   methods: {
     toggleSelection(index) {
@@ -36,18 +53,21 @@ export default {
       });
 
 
-      this.httpPost(`/test-template `, {
-        title: this.model.title,
-        slug: this.model.slug,
-        keys: disableItems,
-      })
+      if (this.data) {
+        console.log(disableItems)
+      } else {
+        this.httpPost(`/test-template `, {
+          title: this.model.title,
+          slug: this.model.slug,
+          keys: disableItems,
+        })
+      }
+
     }
-  },
-  props: {
-    visible: Boolean,
   },
   data() {
     return {
+      disabledValues: [],
       model: {
         title: null,
         slug: null,
@@ -109,7 +129,7 @@ export default {
 
 <template>
   <base-modal
-      title="تعریف پرسش نامه جدید"
+      :title="data? 'ویرایش پرسش‌نامه ': 'تعریف پرسش‌نامه جدید'"
       @close="$emit('update:visible',false)"
       @submit="submit"
       :visible="visible">
@@ -131,16 +151,17 @@ export default {
       <div
           v-for="(item, index) in items "
           class="col-12">
-        <v-checkbox
-            @change="toggleSelection(index)"
-            :label="item.title"
-        />
+        <label>
+          {{ item.title }}
+        </label>
+
         <v-switch
             v-if="selectedItems.find(x=> x === item.value)"
             class="mr-4 mb-1"
             v-for="(childrenItem, childrenIndex) in item.children"
             inset
             hide-details
+            :input-value="disabledValues.includes(childrenItem.value) ? 0 : 1"
             @change="toggleChildSelection(index, childrenIndex)"
             :label="childrenItem.title">
         </v-switch>
