@@ -5,19 +5,17 @@ export default {
     visible: Boolean,
     data: Object,
   },
+  emits:['add','update'],
   created() {
     this.selectedItems.push(this.items[0].value)
     if (this.data) {
       this.model.title = this.data.title;
       this.model.slug = this.data.slug;
       this.disabledValues = this.data['disabledForm'];
-
       this.disabledValues.map(f => {
         if (!this.disabledValues.includes(f)) {
           this.selectedChildItem.push(f)
-          console.log(f)
         }
-
       })
 
     }

@@ -42,6 +42,7 @@ export default {
       },
       modal: {
         visible: false,
+        index: -1,
       }
     }
   },
@@ -49,6 +50,12 @@ export default {
     defineNew() {
       this.modal.data = null;
       this.modal.visible = true;
+    },
+    addItem(data) {
+      this.table.contents.push(data);
+    },
+    updateItem(data){
+      this.table.contents.splice(this.modal.index, 1)
     }
   }
 }
@@ -68,7 +75,9 @@ export default {
     <questionnaire-modal
         v-if="modal.visible"
         :visible.sync="modal.visible"
-        :data="modal.data">
+        :data="modal.data"
+        @add="addItem"
+        @update="updateItem">
 
     </questionnaire-modal>
   </base-card-layout>

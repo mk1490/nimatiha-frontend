@@ -5,6 +5,19 @@
 
     <template v-slot:button-area>
       <div class="d-inline-flex align-center">
+
+
+        <base-select
+            class="mx-2"
+            v-model="filter.tests"
+            :items="items.tests"
+            item-value="id"
+            item-text="title"
+            multiple
+            label="فیلتر قالب پرسش‌نامه"
+            style="max-width: 150px"
+        />
+
         <v-btn
             class="ml-4"
             @click="downloadExcel"
@@ -60,14 +73,13 @@ import {addCommas} from "@persian-tools/persian-tools";
 import xlsx from "json-as-xlsx";
 import {mapGetters} from "vuex";
 import MemberDetailsModal from "@/view/components/Admin/Members/MemberRequestsInbox/Modals/MemberDetailsModal.vue";
+import BaseSelect from "@/view/widget/Base/BaseSelect.vue";
 
 export default {
   name: "MembersManagement",
-  components: {MemberDetailsModal},
+  components: {BaseSelect, MemberDetailsModal},
   created() {
-    this.httpGet(`/member-request/list`, result => {
-      this.table.contents = result;
-    })
+    this.fetchData()
   },
   data() {
     return {
@@ -106,6 +118,7 @@ export default {
           {text: 'نام', value: 'name'},
           {text: 'نام خانوادگی', value: 'family'},
           {text: 'وضعیت', value: 'status'},
+          {text: 'پرسش‌نامه', value: 'questionnaireTitle'},
           {text: 'تاریخ ثبت', value: 'creationTime'},
         ],
         contents: [],
@@ -199,12 +212,10 @@ export default {
         ],
       },
       items: {
-        projects: [],
+        tests: [],
       },
       filter: {
-        isFiltered: false,
-        trackingCode: null,
-        projectId: null,
+        tests: [],
       }
     }
   },
@@ -215,11 +226,11 @@ export default {
       this.editItem({...this.table.contents[this.modal.details.index]});
     },
     fetchData() {
-      this.httpGet(`/member-request/list/${this.filter.projectId}${this.filter.trackingCode ? '?trackingCode=' + this.filter.trackingCode : ''}`, (data) => {
-        this.table.contents = data;
-        if (this.filter.trackingCode) {
-          this.filter.isFiltered = true;
-        }
+      this.httpPost(`/member-request/list`, {
+        tests: this.filter.tests
+      }, (data) => {
+        this.items.tests = data.initialize.filter.tests;
+        this.table.contents = data.items;
       });
     },
     getItemColor(item) {
@@ -348,9 +359,8 @@ export default {
     },
   },
   watch: {
-    'filter.projectId': {
+    'filter.tests': {
       handler(value) {
-        localStorage.setItem('lastSelectedProjectId', value);
         this.fetchData();
       }
     }
