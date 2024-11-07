@@ -23,6 +23,7 @@ export default {
             icon: 'mdi-pen',
             click: item => {
               this.httpGet(`/test-template/${item.id}`, result => {
+                this.modal.index = this.table.contents.indexOf(item);
                 this.modal.data = result;
                 this.modal.visible = true;
               })
@@ -53,9 +54,11 @@ export default {
     },
     addItem(data) {
       this.table.contents.push(data);
+      this.modal.visible = false;
     },
-    updateItem(data){
-      this.table.contents.splice(this.modal.index, 1)
+    updateItem(data) {
+      this.table.contents.splice(this.modal.index, 1, data)
+      this.modal.visible = false;
     }
   }
 }

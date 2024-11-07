@@ -5,7 +5,7 @@ export default {
     visible: Boolean,
     data: Object,
   },
-  emits:['add','update'],
+  emits: ['add', 'update'],
   created() {
     this.selectedItems.push(this.items[0].value)
     if (this.data) {
@@ -51,13 +51,18 @@ export default {
       });
 
 
+      let payload = {
+        title: this.model.title,
+        slug: this.model.slug,
+        keys: disableItems,
+      }
       if (this.data) {
-        console.log(disableItems)
+        this.httpPut(`/test-template/${this.data.id}`, payload, result => {
+          this.$emit('update', result);
+        })
       } else {
-        this.httpPost(`/test-template `, {
-          title: this.model.title,
-          slug: this.model.slug,
-          keys: disableItems,
+        this.httpPost(`/test-template`, payload, result => {
+          this.$emit('add', result);
         })
       }
 
@@ -159,7 +164,7 @@ export default {
             v-for="(childrenItem, childrenIndex) in item.children"
             inset
             hide-details
-            :input-value="disabledValues.includes(childrenItem.value) ? 0 : 1"
+            :input-value="!!data? disabledValues.includes(childrenItem.value) ?0 : 1: 0"
             @change="toggleChildSelection(index, childrenIndex)"
             :label="childrenItem.title">
         </v-switch>
