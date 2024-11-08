@@ -74,10 +74,12 @@ import xlsx from "json-as-xlsx";
 import {mapGetters} from "vuex";
 import MemberDetailsModal from "@/view/components/Admin/Members/MemberRequestsInbox/Modals/MemberDetailsModal.vue";
 import BaseSelect from "@/view/widget/Base/BaseSelect.vue";
+import membersMixin from "@/view/components/Admin/Members/membersMixin";
 
 export default {
   name: "MembersManagement",
   components: {BaseSelect, MemberDetailsModal},
+  mixins: [membersMixin],
   created() {
     this.fetchData()
   },
@@ -291,71 +293,6 @@ export default {
         this.modal.edit.initialize = data.initialize;
         this.modal.edit.visible = true;
       })
-    },
-    downloadExcel() {
-      if (this.table.contents.length == 0) {
-        this.$swal.fire({
-          icon: 'warning',
-          text: 'موردی جهت دانلود وجود ندارد!'
-        })
-        return;
-      }
-      const _h = [
-        {label: 'ردیف', value: 'row'},
-        {label: 'نام', value: 'name'},
-        {label: 'نام خانوادگی', value: 'family'},
-        {label: 'نام پدر', value: 'fatherName'},
-        {label: 'کد ملّی', value: 'nationalCode'},
-        {label: 'تاریخ تولد', value: 'birthDate'},
-        {label: 'شماره تلفن همراه', value: 'mobileNumber'},
-        {label: 'وضعیت معلولیت', value: 'nationalCode'},
-        {label: 'توضیحات معلولیت', value: 'nationalCode'},
-        {label: 'سابقه بیماری', value: 'job'},
-        {label: 'شرح سابقه بیماری', value: 'job'},
-        {label: 'شهرستان محل سکونت', value: 'mobileNumber'},
-        {label: 'نشانی محل سکونت', value: 'birthCertificateNumber'},
-        {label: 'وضعیت تک فرزندی', value: 'birthPlace'},
-        {label: 'تعداد اعضای خانواده', value: 'birthPlace'},
-        {label: 'نام پدر', value: 'birthPlace'},
-        {label: 'نام خانوادگی پدر', value: 'birthPlace'},
-        {label: 'تحصیلات پدر', value: 'birthPlace'},
-        {label: 'وضعیت حیات پدر', value: 'birthPlace'},
-        {label: 'نام مادر', value: 'birthPlace'},
-        {label: 'نام خانوادگی مادر', value: 'birthPlace'},
-        {label: 'تحصیلات مادر', value: 'birthPlace'},
-        {label: 'وضعیت حیات مادر', value: 'birthPlace'},
-        {label: 'مقطع تحصیلی', value: 'birthPlace'},
-        {label: 'پایه تحصیلی', value: 'birthPlace'},
-        {label: 'محل تحصیل (مشهد / شهرستان)', value: 'birthPlace'},
-        {label: 'ناحیه / شهرستان محل تحصیل', value: 'birthPlace'},
-        {label: 'معدل', value: 'birthPlace'},
-        {label: 'نام مدرسه', value: 'birthPlace'},
-        {label: 'نام مدیر', value: 'birthPlace'},
-        {label: 'نام نام معاون پرورشی', value: 'birthPlace'},
-        {label: 'نام نام معاون پرورشی', value: 'birthPlace'},
-        {label: 'کد پیگیری سیستمی', value: 'trackingCode'},
-        {label: 'تاریخ ثبت نام', value: 'creationTime'},
-      ]
-      const _c = [...this.table.contents].map((f, i) => {
-        f.row = i + 1;
-        delete f.id;
-        delete f.creatorId;
-        delete f.projectId;
-        delete f.parentUserId;
-        delete f.status;
-        return f;
-      })
-      let settings = {
-        fileName: `Nimkatiha_DataExport_${this.faToEn(this.getPersianTime(new Date(), 'YYYY_MM_DD_HH_mm_ss'))}`,
-        writeMode: "writeFile",
-        RTL: true,
-        writeOptions: {},
-      }
-      xlsx([{
-        sheet: 'Main',
-        content: _c,
-        columns: _h,
-      }], settings);
     },
   },
   watch: {
