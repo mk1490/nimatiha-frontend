@@ -119,7 +119,6 @@ export default {
         headers: [
           {text: 'نام', value: 'name'},
           {text: 'نام خانوادگی', value: 'family'},
-          {text: 'وضعیت', value: 'status'},
           {text: 'پرسش‌نامه', value: 'questionnaireTitle'},
           {text: 'تاریخ ثبت', value: 'creationTime'},
         ],
