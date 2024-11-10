@@ -9,7 +9,7 @@
 import 'swiper/css';
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
-import ImageSlider from "@/view/widgets/ImageSlider.vue";
+import ImageSlider from "@/view/widget/ImageSlider.vue";
 import {mapGetters} from "vuex";
 
 export default {

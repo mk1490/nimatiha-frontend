@@ -3,11 +3,7 @@ import xlsx from "json-as-xlsx";
 export default {
     methods: {
         downloadExcel() {
-
-
             const quraniKeys = this.getQuraniKeys();
-
-
             const _h = [
                 {label: 'ردیف', value: 'row'},
                 {label: 'نام', value: 'name'},
@@ -160,9 +156,11 @@ export default {
                 const _c = items.map((f, i) => {
                     f.row = i + 1;
 
-                    f.educational.educationLocation = f.educational.educationLocation === 1 ? 'مشهد' : 'شهرستان';
-                    if (f.educational.educationLocation !== 1) {
-                        f.educational.educationZone = f.educational.educationCity;
+                    if (f.educational) {
+                        f.educational.educationLocation = f.educational.educationLocation === 1 ? 'مشهد' : 'شهرستان';
+                        if (f.educational.educationLocation !== 1) {
+                            f.educational.educationZone = f.educational.educationCity;
+                        }
                     }
 
 
@@ -170,8 +168,7 @@ export default {
                     let honariObj = {};
                     let quraniObj = {};
                     let varzeshiObj = {};
-                    try {
-
+                    if (f.executiveHistory) {
                         this.getExecutiveKeys().map(executiveItem => {
                             const item = f.executiveHistory.find(x => x.title === f.title);
                             finalExecutiveKeys[`executiveHistory_has_${executiveItem.key}`] = item ? 'بله' : 'خیر';
@@ -179,7 +176,10 @@ export default {
                             finalExecutiveKeys[`executiveHistory_history_${executiveItem.key}`] = item ? item.postHistory : '';
                             finalExecutiveKeys[`executiveHistory_description_${executiveItem.key}`] = item ? item.description : '';
                         })
+                    }
 
+
+                    if (f.educationalAndHistorical) {
 
                         this.getHonariKeys().map(honari => {
                             const item = f.educationalAndHistorical.find(x => x.category === 'artistic' && x.title === honari.title);
@@ -193,8 +193,6 @@ export default {
                         for (let i = 0; i < quraniKeys.length; i++) {
 
                             const item = f.educationalAndHistorical.find(x => x.category === 'qurani' && x.title === quraniKeys[i].title);
-                            console.log(quraniKeys.length, quraniKeys[i].title);
-                            console.log("QURANI", item)
                             const baseKey = `educationalAndHistorical_qurani_${quraniKeys[i].key}`
                             quraniObj[`${baseKey}title`] = !!item ? item['fieldTitle'] : '';
                             quraniObj[`${baseKey}level`] = !!item ? item.level : '';
@@ -210,9 +208,6 @@ export default {
                             varzeshiObj[`${baseKey}level`] = item ? item.level : '';
                             varzeshiObj[`${baseKey}rank`] = item ? item.rank : '';
                         })
-
-                    } catch (e) {
-                        console.log(e)
                     }
                     return {
                         ...f,
@@ -229,8 +224,6 @@ export default {
                     RTL: true,
                     writeOptions: {},
                 }
-
-                console.log(_h, _c)
                 xlsx([{
                     sheet: 'Main',
                     content: _c,
