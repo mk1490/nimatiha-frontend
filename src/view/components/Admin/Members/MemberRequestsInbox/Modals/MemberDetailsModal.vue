@@ -165,21 +165,67 @@ export default {
   created() {
     if (this.data) {
       this.model.personal.headers.map(f => {
+
+        let value = this.data.model[f.key];
+
+
+        switch (f.key) {
+          case 'disabilityStatus':
+            value = this.getTitleFromInitialize('disabilityStatus', value);
+            break;
+          case 'diseaseBackground':
+            value = this.getTitleFromInitialize('diseaseBackgroundItems', value);
+            break;
+        }
+
+
         this.model.personal.items.push({
           title: f.title,
-          value: this.data.model[f.key]
+          value: value
         })
       })
       this.model.parents.headers.map(f => {
+
+        let value = this.data.model[f.key];
+
+
+        switch (f.key) {
+          case 'fatherEducationLevel':
+            value = this.getTitleFromInitialize('educationLevels', value);
+            break;
+          case 'motherEducationLevel':
+            value = this.getTitleFromInitialize('educationLevels', value);
+            break;
+          case 'fatherEducationLevelFifeSituation':
+            value = this.getTitleFromInitialize('lifeSituationItems', value);
+            break;
+          case 'motherEducationLevelFifeSituation':
+            value = this.getTitleFromInitialize('lifeSituationItems', value);
+            break;
+        }
+
+
         this.model.parents.items.push({
           title: f.title,
-          value: this.data.model[f.key]
+          value: value
         })
       })
       this.model.educational.headers.map(f => {
+        let value = this.data.model.educational[f.key];
+
+
+        switch (f.key) {
+          case 'educationGrade':
+            value = this.getTitleFromInitialize('educationGrades', value);
+
+            break;
+          case 'schoolGrade':
+            value = this.getTitleFromInitialize('schoolGrades', value);
+            break;
+        }
         this.model.educational.items.push({
           title: f.title,
-          value: this.data.model.educational[f.key]
+          value: value
         })
       })
 
@@ -252,8 +298,8 @@ export default {
             {title: 'مقطع', key: 'educationGrade'},
             {title: 'پایه', key: 'schoolGrade'},
             {title: 'رشته تحصیلی', key: 'educationField'},
-            {title: 'محل تحصیل', key: 'educationField'},
-            {title: 'معدل', key: 'educationField'},
+            {title: 'محل تحصیل', key: 'educationCity'},
+            {title: 'معدل', key: 'average'},
             {title: 'نام مدرسه', key: 'schoolName'},
             {title: 'نام مدیر', key: 'managerName'},
             {title: 'نام معاون پرورشی', key: 'breedingAssistantName'},
@@ -295,6 +341,10 @@ export default {
     async downloadItem(item) {
       window.open(this.serverAddress + item.url)
     },
+    getTitleFromInitialize(key, targetValue) {
+      const item = this.data.initialize[key].find(x => x.value === targetValue)
+      return item ? item.title : '';
+    }
   }
 }
 </script>
