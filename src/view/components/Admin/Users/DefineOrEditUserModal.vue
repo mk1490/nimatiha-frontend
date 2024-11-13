@@ -21,7 +21,7 @@
       </template>
       <template v-slot:tab-3="{props}">
         <available-tests
-            v-model="model.availableTests"
+            v-model="model.availableTemplates"
             :initialize="initialize"
         />
       </template>
@@ -43,19 +43,14 @@ export default {
   components: {AvailableTests, Roles, General, BaseTabLayout, BaseSelect},
   emits: ['add', 'update'],
   async created() {
-    // this.roleItems = this.initialize['permissionGroupItems'];
-    // this.initializeRuleId = this.initialize['permissionGroupItems'][0]['id'];
     this.setInitialize();
     if (!!this.data) {
-      this.model.username = this.data.username;
-      this.model.name = this.data.name;
-      this.model.family = this.data.family;
-
-
-    } else {
-
+      this.model.general.id = this.data.id;
+      this.model.general.username = this.data.username;
+      this.model.general.name = this.data.name;
+      this.model.general.family = this.data.family;
+      this.model.availableTemplates = this.data.availableTemplates;
     }
-
 
   },
   props: {
@@ -71,7 +66,7 @@ export default {
 
       let payload = {
         ...this.model.general,
-        tests: this.model.availableTests,
+        tests: this.model.availableTemplates,
         selectedRules: this.model.roles
       }
       if (!this.data) {
@@ -118,7 +113,7 @@ export default {
       model: {
         general: {},
         roles: [],
-        availableTests: []
+        availableTemplates: []
       }
     }
   },

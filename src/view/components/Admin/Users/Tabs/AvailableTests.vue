@@ -6,19 +6,26 @@ export default {
   components: {BaseSelect},
   props: {
     initialize: Object,
+    value: Object,
+  },
+  created() {
+    if (this.value) {
+      this.model.availableTemplates = this.value;
+    }
   },
   data() {
     return {
       model: {
-        availableMembers: []
+        availableTemplates: []
       }
     }
   },
-  emits: {
-    'model.availableMembers': {
+  watch: {
+    'model.availableTemplates': {
       handler() {
-        this.$emit('input', this.model)
-      }
+        this.$emit('input', this.model.availableTemplates)
+      },
+      deep: false,
     }
   }
 }
@@ -27,11 +34,11 @@ export default {
 <template>
   <v-container>
     <base-select
-        :items="initialize['availableMembers']"
+        :items="initialize['availableTemplates']"
         multiple
         item-text="title"
         item-value="id"
-        v-model="model.availableMembers"
+        v-model="model.availableTemplates"
     />
   </v-container>
 </template>

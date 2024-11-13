@@ -3,6 +3,15 @@ export default {
   name: "General",
   props: {
     initialize: Object,
+    value: Object,
+  },
+  created() {
+    if (this.value) {
+
+      this.model.name = this.value.name;
+      this.model.family = this.value.family;
+      this.model.username = this.value.username;
+    }
   },
   data() {
     return {
