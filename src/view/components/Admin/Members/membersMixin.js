@@ -285,13 +285,18 @@ export default {
                                     value = this.getTitleFromInitialize('educationGrades', value);
                                     break;
                                 case 'educational':
-                                    console.log('educational', value, Object.keys(value))
-                                    switch (Object.keys(value)) {
-                                        case "schoolGrade":
-                                            console.log("SCHOLL GRADE", value)
-                                            value['schoolGrade'] = this.getTitleFromInitialize('schoolGrades', value.schoolGrade);
-                                            break;
-                                    }
+
+                                    Object.keys(value).map(educationalKeys => {
+                                        switch (educationalKeys) {
+                                            case "schoolGrade":
+                                                f['educational'][educationalKeys] = this.getTitleFromInitialize('schoolGrades', f['educational'][educationalKeys])
+                                                break;
+                                            case "educationGrade":
+                                                f['educational'][educationalKeys] = this.getTitleFromInitialize('educationGrades', f['educational'][educationalKeys])
+                                                break;
+                                        }
+                                    })
+
 
                                     break;
                             }
@@ -307,6 +312,7 @@ export default {
                     };
                 })
 
+                console.log(_c)
 
                 let settings = {
                     fileName: `Nimkatiha_DataExport_${this.faToEn(this.getPersianTime(new Date(), 'YYYY_MM_DD_HH_mm_ss'))}`,
