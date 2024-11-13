@@ -10,6 +10,19 @@
         :tabs="tabs">
       <template v-slot:tab-1="{props}">
         <general
+            v-model="model.general"
+        />
+      </template>
+      <template v-slot:tab-2="{props}">
+        <roles
+            v-model="model.roles"
+            :initialize="initialize"
+        />
+      </template>
+      <template v-slot:tab-3="{props}">
+        <available-tests
+            v-model="model.availableTests"
+            :initialize="initialize"
         />
       </template>
 
@@ -22,11 +35,13 @@
 import BaseSelect from "@/view/widget/Base/BaseSelect.vue";
 import BaseTabLayout from "@/view/widget/Base/BaseTabLayout.vue";
 import General from "@/view/components/Admin/Users/Tabs/General.vue";
+import Roles from "@/view/components/Admin/Users/Tabs/Roles.vue";
+import AvailableTests from "@/view/components/Admin/Users/Tabs/AvailableTests.vue";
 
 export default {
   name: "DefineOrEditUserModal",
-  components: {General, BaseTabLayout, BaseSelect},
-  emits: ['onAddItem', 'onUpdateItem'],
+  components: {AvailableTests, Roles, General, BaseTabLayout, BaseSelect},
+  emits: ['add', 'update'],
   async created() {
     // this.roleItems = this.initialize['permissionGroupItems'];
     // this.initializeRuleId = this.initialize['permissionGroupItems'][0]['id'];
@@ -53,30 +68,24 @@ export default {
       this.selectedTab -= 1;
     },
     async nextOrSubmitAndSendToServer() {
-      if (this.selectedTab < 2) {
-        this.selectedTab += 1;
-        return
-      }
-      if (!this.$refs.form.validate()) {
-        this.$swal.fire({
-          icon: 'error',
-          title: 'خطا',
-          text: 'در معتبر بودن فیلدهای ورودی اطمینان حاصل نمایید.'
-        })
-        return;
+
+      let payload = {
+        ...this.model.general,
+        tests: this.model.availableTests,
+        selectedRules: this.model.roles
       }
       if (!this.data) {
-        const [err, data] = await this.to(this.http.post(`/user`, this.model));
+        const [err, data] = await this.to(this.http.post(`/user`, payload));
         if (!err) {
-          this.$emit('onAddItem', data);
+          this.$emit('add', data);
           this.addItemSuccessToast();
         } else {
           this.addItemFailedToast();
         }
       } else {
-        const [err, data] = await this.to(this.http.put(`/user/${this.data.id}`, this.model));
+        const [err, data] = await this.to(this.http.put(`/user/${this.data.id}`, payload));
         if (!err) {
-          this.$emit('onUpdateItem', data);
+          this.$emit('update', data);
           this.updateItemSuccessToast();
         } else {
           this.updateItemFailedToast();
@@ -91,10 +100,12 @@ export default {
         },
         {
           title: 'سطوح دسترسی',
-          view: () => import('./Tabs/Roles.vue'),
           data: {
             initialize: this.initialize,
           },
+        },
+        {
+          title: 'پرسش‌نامه‌های دسترس',
         },
       ]
     }
@@ -104,6 +115,11 @@ export default {
       selectedTab: 0,
       roleItems: [],
       tabs: [],
+      model: {
+        general: {},
+        roles: [],
+        availableTests: []
+      }
     }
   },
   watch: {

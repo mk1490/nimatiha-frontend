@@ -8,7 +8,12 @@
         :actions="table.actions"
         :items="table.contents"
         :headers="table.headers">
-
+      <template v-slot:item.nameAndFamily="{item}">
+        {{ item.name + ' ' + item.family }}
+      </template>
+      <template v-slot:item.creationTime="{item}">
+        {{ getPersianTime(item.creationTime, 'YYYY/MM/DD') }}
+      </template>
     </base-table>
 
 
@@ -111,14 +116,8 @@ export default {
             sortable: true,
           },
           {
-            text: this.$t('user.table.roleTitle'),
-            value: 'roleTitle',
-            align: 'center',
-            sortable: true,
-          },
-          {
             text: this.$t('user.table.createDate'),
-            value: 'createDate',
+            value: 'creationTime',
             align: 'center',
             sortable: true,
           },
@@ -133,6 +132,9 @@ export default {
       }
     }
   },
+  computed:{
+    actions: [],
+  }
 }
 </script>
 

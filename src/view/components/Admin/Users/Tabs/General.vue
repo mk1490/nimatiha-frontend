@@ -23,6 +23,14 @@ export default {
         selectedRules: [],
       },
     }
+  },
+  watch: {
+    'model': {
+      handler() {
+        this.$emit('input', this.model);
+      },
+      deep: true,
+    }
   }
 }
 </script>
