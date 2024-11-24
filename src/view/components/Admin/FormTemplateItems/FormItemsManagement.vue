@@ -19,16 +19,17 @@ export default {
       },
       table: {
         headers: [
-          {text: 'عنوان', value: 'title'}
+          {text: 'عنوان', value: 'label'}
         ],
         contents: [],
         actions: [
           {
-            title: 'آیتم های فیلد',
-            icon: 'mdi-format-list-bulleted-type',
+            title: 'ویرایش',
+            icon: 'mdi-pen',
             click: (item) => {
-              this.httpGet(`/form-template/items/${item.id}`, result => {
-                this.modal.data = result;
+              this.httpGet(``, result => {
+                this.modal.data = {}
+                this.modal.initialize = {}
                 this.modal.visible = true;
               })
 
@@ -46,7 +47,7 @@ export default {
   },
   methods: {
     define() {
-      this.httpGet(`/form-template-items/initialize/${this.$route.params.parentId}`, result => {
+      this.httpGet(`/form-template-items/initialize`, result => {
         this.modal.initialize = result;
         this.modal.visible = true;
       })
@@ -80,6 +81,9 @@ export default {
     <items-modal
         v-if="modal.visible"
         :visible.sync=" modal.visible"
+        :initialize="modal.initialize"
+        @add="addItem"
+        @update="updateItem"
     />
 
 

@@ -24,7 +24,8 @@ export default {
             click: item => {
               this.httpGet(`/test-template/${item.id}`, result => {
                 this.modal.index = this.table.contents.indexOf(item);
-                this.modal.data = result;
+                this.modal.data = result.data;
+                this.modal.initialize = result.initialize;
                 this.modal.visible = true;
               })
 
@@ -43,14 +44,19 @@ export default {
       },
       modal: {
         visible: false,
+        initialize: null,
         index: -1,
       }
     }
   },
   methods: {
-    defineNew() {
-      this.modal.data = null;
-      this.modal.visible = true;
+    define() {
+      this.httpGet(`/test-template/initialize`, result => {
+        this.modal.initialize = result;
+        this.modal.data = null;
+        this.modal.visible = true;
+      })
+
     },
     addItem(data) {
       this.table.contents.push(data);
@@ -66,7 +72,7 @@ export default {
 
 <template>
   <base-card-layout
-      @buttonClick="defineNew"
+      @buttonClick="define"
       button-title="تعریف پرسش نامه جدید"
       title="مدیریت پرسش نامه ها">
     <base-table
@@ -79,6 +85,7 @@ export default {
         v-if="modal.visible"
         :visible.sync="modal.visible"
         :data="modal.data"
+        :initialize="modal.initialize"
         @add="addItem"
         @update="updateItem">
 
