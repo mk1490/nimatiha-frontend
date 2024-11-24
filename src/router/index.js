@@ -70,6 +70,27 @@ export const constantRoutes = [{
                     // permission: 'access_permissions.list,access_permissions.update,access_permissions.insert,access_permissions.delete'
                 },
             },
+            {
+                path: 'form-templates',
+                name: 'form-templates',
+                component: () => import('@/view/components/Admin/FormTemplates/FormTemplate.vue'),
+                meta: {
+                    title: 'قالب فرم‌ها',
+                    icon: 'mdi-account-settings',
+                    // permission: 'access_permissions.list,access_permissions.update,access_permissions.insert,access_permissions.delete'
+                },
+            },
+            {
+                path: 'form-templates/:parentId',
+                name: 'form-templates',
+                component: () => import('@/view/components/Admin/FormTemplateItems/FormItemsManagement.vue'),
+                hidden: true,
+                meta: {
+                    title: 'قالب فرم‌ها',
+                    icon: 'mdi-account-settings',
+                    // permission: 'access_permissions.list,access_permissions.update,access_permissions.insert,access_permissions.delete'
+                },
+            },
         ]
     },
     {
