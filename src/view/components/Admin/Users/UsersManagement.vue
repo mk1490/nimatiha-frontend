@@ -8,7 +8,12 @@
         :actions="table.actions"
         :items="table.contents"
         :headers="table.headers">
-
+      <template v-slot:item.nameAndFamily="{item}">
+        {{ item.name + ' ' + item.family }}
+      </template>
+      <template v-slot:item.creationTime="{item}">
+        {{ getPersianTime(item.creationTime, 'YYYY/MM/DD') }}
+      </template>
     </base-table>
 
 
@@ -17,6 +22,8 @@
         :visible.sync="modal.visible"
         :data="modal.data"
         :initialize="modal.initialize"
+        @add="addItem"
+        @update="updateItem"
     />
   </base-card-layout>
 </template>
@@ -111,14 +118,8 @@ export default {
             sortable: true,
           },
           {
-            text: this.$t('user.table.roleTitle'),
-            value: 'roleTitle',
-            align: 'center',
-            sortable: true,
-          },
-          {
             text: this.$t('user.table.createDate'),
-            value: 'createDate',
+            value: 'creationTime',
             align: 'center',
             sortable: true,
           },
@@ -130,9 +131,32 @@ export default {
           }
         ],
         contents: [],
+        actions: [
+          {
+            title: 'ویرایش',
+            icon: 'mdi-pen',
+            click: item => {
+              this.httpGet(`/user/${item.id}`, result => {
+                this.modal.index = this.table.contents.indexOf(item);
+                this.modal.data = result.result;
+                this.modal.initialize = result.initialize;
+                this.modal.visible = true;
+              })
+
+            }
+
+          },
+          {
+            title: 'حذف',
+            icon: 'mdi-delete',
+            color: 'red',
+            click: item => {
+            }
+          }
+        ],
       }
     }
-  },
+  }
 }
 </script>
 
