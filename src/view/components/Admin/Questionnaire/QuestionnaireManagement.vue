@@ -37,6 +37,9 @@ export default {
             icon: 'mdi-delete',
             color: 'red',
             click: item => {
+              this.httpDelete(`/test-template/${item.id}`, result => {
+                this.table.contents.splice(this.table.contents.indexOf(item));
+              })
             }
 
           }

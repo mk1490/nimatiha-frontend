@@ -31,6 +31,7 @@ export default {
               this.httpGet(`/form-template-items/${item.id}`, result => {
                 this.modal.data = result.data
                 this.modal.initialize = result.initialize;
+                this.modal.index = this.table.contents.indexOf(item);
                 this.modal.visible = true;
               })
 
@@ -41,7 +42,9 @@ export default {
             icon: 'mdi-delete',
             color: 'error',
             click: (item) => {
-
+              this.httpDelete(`/form-template-items/${item.id}`, result => {
+                this.table.contents.splice(this.table.contents.indexOf(item));
+              })
             }
           }
         ],
@@ -61,7 +64,8 @@ export default {
       this.modal.visible = false;
     },
     updateItem(data) {
-
+      this.table.contents.splice(this.modal.index, 1, data);
+      this.modal.visible = false;
     }
   }
 }
@@ -70,9 +74,9 @@ export default {
 <template>
   <base-card-layout
       @buttonClick="define"
-      title="آیتم های فیلد"
+      title="آیتم‌های فیلد"
       :back-route="`/form-templates`"
-      button-title="تعریف فرم جدید"
+      button-title="تعریف فیلد جدید"
   >
     <base-table
         :items="table.contents"

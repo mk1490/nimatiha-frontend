@@ -36,7 +36,9 @@ export default {
             icon: 'mdi-delete',
             color: 'error',
             click: (item) => {
-
+              this.httpDelete(`/form-template/${item.id}`, result => {
+                this.table.contents.splice(this.table.contents.indexOf(item));
+              })
             }
           }
         ],
@@ -61,9 +63,8 @@ export default {
 <template>
   <base-card-layout
       @buttonClick="define"
-      title="قالب فرم ها"
-      button-title="تعریف فرم جدید"
-  >
+      title="قالب فرم‌ها"
+      button-title="تعریف فرم جدید">
     <base-table
         :items="table.contents"
         :headers="table.headers"

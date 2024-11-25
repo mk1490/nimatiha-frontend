@@ -65,7 +65,7 @@ export const constantRoutes = [{
                 name: 'Questionnaire',
                 component: () => import('@/view/components/Admin/Questionnaire/QuestionnaireManagement.vue'),
                 meta: {
-                    title: 'قالب پرسش نامه ها',
+                    title: 'قالب پرسش‌نامه',
                     icon: 'mdi-comment-question-outline',
                     // permission: 'access_permissions.list,access_permissions.update,access_permissions.insert,access_permissions.delete'
                 },
