@@ -84,6 +84,12 @@ export default {
       this.model.type = this.data.type;
       this.model.size = this.data.size;
       this.model.isRequired = this.data.isRequired;
+      if (this.data.items && this.data.items.length > 0) {
+        this.model.items = this.data.items.map(f => {
+          return {title: f.text}
+        });
+      }
+
     }
   },
   props: {

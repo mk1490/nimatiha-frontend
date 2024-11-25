@@ -19,7 +19,8 @@ export default {
       },
       table: {
         headers: [
-          {text: 'عنوان', value: 'label'}
+          {text: 'عنوان', value: 'label'},
+          {text: 'نوع فیلد', value: 'type'}
         ],
         contents: [],
         actions: [
