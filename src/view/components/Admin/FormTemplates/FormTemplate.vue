@@ -33,6 +33,8 @@ export default {
           },
           {
             title: 'حذف',
+            icon: 'mdi-delete',
+            color: 'error',
             click: (item) => {
 
             }

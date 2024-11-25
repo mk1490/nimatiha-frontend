@@ -37,13 +37,35 @@ export default {
 
     },
     addItem() {
-      this.items.push({
-        levelTitle: '',
-        formId: null
+      if (this.data) {
+        this.httpPost(`/test-template/add-level-item/${this.data.id}`, {}, result => {
+          this.items.push({
+            id: result.id,
+            levelTitle: result.levelTitle,
+            formId: null
+          })
+        })
+      } else {
+        this.items.push({
+          levelTitle: '',
+          formId: null
+        })
+      }
 
+    },
+    removeItem(item, index) {
+      this.httpDelete(`/test-template/delete-level-item/${item.id}`, result => {
+        this.items.splice(index, 1);
       })
     },
-    removeItem(index) {
+    changeForm(item, id) {
+      if (this.data) {
+        this.httpPut(`/test-template/update-level-item-form/${item.id}`, {
+          newId: id,
+        }, result => {
+
+        })
+      }
 
     }
   },
@@ -70,7 +92,7 @@ export default {
       width="800"
       :visible="visible">
     <div class="row">
-      <div class="col-4">
+      <div class="col-12">
         <div class="row">
           <div class="col-12">
             <base-text-field
@@ -99,6 +121,7 @@ export default {
                 <base-select
                     :items="initialize.formTemplates"
                     v-model="items[index].formId"
+                    @input="changeForm(items[index], $event)"
                     label="فرم"
                 />
               </div>
@@ -110,7 +133,7 @@ export default {
               </div>
               <div class="col-auto">
                 <base-square-button
-                    @click="removeItem(index)"
+                    @click="removeItem(items[index], index)"
                     color="error"
                     icon="mdi-delete"
                     text="حذف"
