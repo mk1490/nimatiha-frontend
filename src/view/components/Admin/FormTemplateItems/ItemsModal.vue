@@ -19,6 +19,22 @@
       </div>
 
 
+      <template v-if="[1,2, 11].includes(model.type)">
+        <div class="col-12">
+          <base-text-field
+              label="حدأقل تعداد کاراکتر لازم"
+              v-model="model.minLength"
+          />
+        </div>
+        <div class="col-12">
+          <base-text-field
+              label="حدأکثر تعداد کاراکتر مجاز"
+              v-model="model.maxLength"
+          />
+        </div>
+      </template>
+
+
       <template v-if="[5, 6,7].includes(model.type)">
         <div
             v-for="(item, index) in model.items"
@@ -60,7 +76,7 @@
       </div>
       <div class="col-12">
         <v-checkbox
-            label="این فرم اجباری است"
+            label="این فیلد اجباری است"
             v-model="model.isRequired"
         />
       </div>
@@ -102,6 +118,8 @@ export default {
       model: {
         label: null,
         type: null,
+        minLength: null,
+        maxLength: null,
         size: 12,
         isRequired: false,
         items: [],

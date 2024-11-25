@@ -51,12 +51,12 @@ export const constantRoutes = [{
             //     },
             // },
             {
-                path: 'members',
-                name: 'members',
-                component: () => import('@/view/components/Admin/Members/MembersManagement.vue'),
+                path: 'form-templates',
+                name: 'form-templates',
+                component: () => import('@/view/components/Admin/FormTemplates/FormTemplate.vue'),
                 meta: {
-                    title: 'route.members',
-                    icon: 'mdi-account-settings',
+                    title: 'قالب فرم‌ها',
+                    icon: 'mdi-format-list-checks',
                     // permission: 'access_permissions.list,access_permissions.update,access_permissions.insert,access_permissions.delete'
                 },
             },
@@ -66,27 +66,7 @@ export const constantRoutes = [{
                 component: () => import('@/view/components/Admin/Questionnaire/QuestionnaireManagement.vue'),
                 meta: {
                     title: 'قالب پرسش نامه ها',
-                    icon: 'mdi-account-settings',
-                    // permission: 'access_permissions.list,access_permissions.update,access_permissions.insert,access_permissions.delete'
-                },
-            },
-            {
-                path: 'answerSheets',
-                name: 'answerSheets',
-                component: () => import('@/view/components/Admin/AnswerSheets/AnswerSheets.vue'),
-                meta: {
-                    title: 'پاسخ‌نامه',
-                    // icon: 'mdi-account-settings',
-                    // permission: 'access_permissions.list,access_permissions.update,access_permissions.insert,access_permissions.delete'
-                },
-            },
-            {
-                path: 'form-templates',
-                name: 'form-templates',
-                component: () => import('@/view/components/Admin/FormTemplates/FormTemplate.vue'),
-                meta: {
-                    title: 'قالب فرم‌ها',
-                    icon: 'mdi-account-settings',
+                    icon: 'mdi-comment-question-outline',
                     // permission: 'access_permissions.list,access_permissions.update,access_permissions.insert,access_permissions.delete'
                 },
             },
@@ -97,10 +77,32 @@ export const constantRoutes = [{
                 hidden: true,
                 meta: {
                     title: 'قالب فرم‌ها',
-                    icon: 'mdi-account-settings',
+                    icon: 'mdi-comment-question-outline',
                     // permission: 'access_permissions.list,access_permissions.update,access_permissions.insert,access_permissions.delete'
                 },
             },
+
+
+        ]
+    },
+    {
+        path: '/', name: 'Root', component: Layout, meta: {
+            noCache: true,
+            affix: true,
+            title: 'route.Management',
+        }, children: [
+            {
+                path: 'answerSheets',
+                name: 'answerSheets',
+                component: () => import('@/view/components/Admin/AnswerSheets/AnswerSheets.vue'),
+                meta: {
+                    title: 'پاسخ‌نامه',
+                    icon: 'mdi-book-open-page-variant',
+                    // permission: 'access_permissions.list,access_permissions.update,access_permissions.insert,access_permissions.delete'
+                },
+            },
+
+
         ]
     },
     {
