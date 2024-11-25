@@ -24,18 +24,20 @@
           <base-text-field
               label="حدأقل تعداد کاراکتر لازم"
               v-model="model.minLength"
+              type="tel"
           />
         </div>
         <div class="col-12">
           <base-text-field
               label="حدأکثر تعداد کاراکتر مجاز"
               v-model="model.maxLength"
+              type="tel"
           />
         </div>
       </template>
 
 
-      <template v-if="[5, 6,7].includes(model.type)">
+      <template v-if="[5, 6,7, 10].includes(model.type)">
         <div
             v-for="(item, index) in model.items"
             class="col-12">
