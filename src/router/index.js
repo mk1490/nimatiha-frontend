@@ -71,6 +71,16 @@ export const constantRoutes = [{
                 },
             },
             {
+                path: 'answerSheets',
+                name: 'answerSheets',
+                component: () => import('@/view/components/Admin/AnswerSheets/AnswerSheets.vue'),
+                meta: {
+                    title: 'پاسخ‌نامه',
+                    // icon: 'mdi-account-settings',
+                    // permission: 'access_permissions.list,access_permissions.update,access_permissions.insert,access_permissions.delete'
+                },
+            },
+            {
                 path: 'form-templates',
                 name: 'form-templates',
                 component: () => import('@/view/components/Admin/FormTemplates/FormTemplate.vue'),
