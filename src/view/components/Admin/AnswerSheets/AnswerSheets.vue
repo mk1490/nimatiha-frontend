@@ -30,8 +30,9 @@ export default {
             title: 'مشاهده جزئیات',
             icon: 'mdi-eye',
             click: (item) => {
-              this.httpGet(`/answer-sheet/${item.id}`, result => {
+              this.httpGet(`/answer-sheet/${item.questionnaireId}/${item.memberId}`, result => {
                 this.modal.data = result;
+                this.modal.visible = true;
               })
             }
           },
@@ -49,11 +50,6 @@ export default {
   },
   methods: {
     define() {
-      this.httpGet(`/form-template-items/initialize`, result => {
-        this.modal.initialize = result;
-        this.modal.visible = true;
-      })
-
     },
     addItem(data) {
       this.table.contents.push(data);

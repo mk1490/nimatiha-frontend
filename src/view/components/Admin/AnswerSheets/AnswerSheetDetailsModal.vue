@@ -11,8 +11,8 @@
         centered
         fixed-tabs
         v-model="tab">
-      <v-tab>
-        اطلاعات فردی
+      <v-tab v-for="tabItem in tabItems">
+        {{ tabItem.title }}
       </v-tab>
     </v-tabs>
 
@@ -20,11 +20,11 @@
     <v-tabs-items v-model="tab">
       <v-container>
         <v-tab-item
-            v-if="tab === 0"
-            :key="0"
-            :value="0">
-
+            v-for="(tabItem, tabIndex) in tabItems"
+            :key="tabIndex"
+            :value="tabIndex">
           <base-key-value-simple-table
+              :items="getTableContent(tabItem)"
           />
 
         </v-tab-item>
@@ -49,18 +49,27 @@ export default {
   },
   created() {
     if (this.data) {
-
+      this.tabItems = this.data.tabs;
     }
   },
   data() {
     return {
       tab: 0,
+      tabItems: []
     }
   },
   methods: {
     async downloadItem(item) {
 
     },
+    getTableContent(item) {
+      return item.answers.map(f => {
+        return {
+          title: f.label,
+          value: f.value,
+        };
+      })
+    }
   }
 }
 </script>
