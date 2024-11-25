@@ -17,6 +17,40 @@
             v-model="model.type"
         />
       </div>
+
+
+      <template v-if="[5, 6,7].includes(model.type)">
+        <div
+            v-for="(item, index) in model.items"
+            class="col-12">
+          <div class="row">
+            <div class="col">
+              <base-text-field
+                  v-model="model.items[index].title"
+              />
+            </div>
+            <div class="col-auto">
+              <base-square-button
+                  color="red"
+                  text="حذف"
+                  icon="mdi-delete"
+                  @click="removeItem(index)"
+              />
+            </div>
+          </div>
+
+        </div>
+        <div class="col-12">
+          <v-btn
+              color="primary"
+              @click="defineNewItem"
+              block>
+            تعریف آیتم جدید
+          </v-btn>
+        </div>
+      </template>
+
+
       <div class="col-12">
         <base-select
             label="اندازه"
@@ -44,6 +78,14 @@ export default {
   name: "ItemsModal",
   components: {BaseSelect},
   emits: ['update', 'add'],
+  created() {
+    if (this.data) {
+      this.model.label = this.data.label;
+      this.model.type = this.data.type;
+      this.model.size = this.data.size;
+      this.model.isRequired = this.data.isRequired;
+    }
+  },
   props: {
     visible: Boolean,
     data: Object,
@@ -56,6 +98,7 @@ export default {
         type: null,
         size: 12,
         isRequired: false,
+        items: [],
       }
     }
   },
@@ -64,6 +107,7 @@ export default {
       let payload = {
         ...this.model,
         parentId: this.$route.params.parentId,
+        items: this.model.items.map(f => f.title)
       }
       if (this.data) {
         this.httpPut(`/form-template-items/${this.data.id}`, payload, result => {
@@ -74,6 +118,14 @@ export default {
           this.$emit('add', result);
         })
       }
+    },
+    defineNewItem() {
+      this.model.items.push({
+        title: ''
+      })
+    },
+    removeItem(index) {
+      this.model.items.splice(index, 1);
     }
   }
 }

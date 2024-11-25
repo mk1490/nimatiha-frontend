@@ -165,10 +165,7 @@ export default {
   created() {
     if (this.data) {
       this.model.personal.headers.map(f => {
-
         let value = this.data.model[f.key];
-
-
         switch (f.key) {
           case 'disabilityStatus':
             value = this.getTitleFromInitialize('disabilityStatus', value);

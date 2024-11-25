@@ -27,9 +27,9 @@ export default {
             title: 'ویرایش',
             icon: 'mdi-pen',
             click: (item) => {
-              this.httpGet(``, result => {
-                this.modal.data = {}
-                this.modal.initialize = {}
+              this.httpGet(`/form-template-items/${item.id}`, result => {
+                this.modal.data = result.data
+                this.modal.initialize = result.initialize;
                 this.modal.visible = true;
               })
 
@@ -37,6 +37,8 @@ export default {
           },
           {
             title: 'حذف',
+            icon: 'mdi-delete',
+            color: 'error',
             click: (item) => {
 
             }
@@ -82,6 +84,7 @@ export default {
         v-if="modal.visible"
         :visible.sync=" modal.visible"
         :initialize="modal.initialize"
+        :data="modal.data"
         @add="addItem"
         @update="updateItem"
     />
