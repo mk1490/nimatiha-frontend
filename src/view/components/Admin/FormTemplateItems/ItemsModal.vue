@@ -1,7 +1,8 @@
 <template>
   <base-modal
       :title="!data? 'تعریف آیتم جدید': 'ویرایش آیتم'"
-      :visible.sync="visible"
+      :visible="visible"
+      @close="$emit('update:visible', false)"
       @submit="submit">
     <div class="row">
       <div class="col-12">
@@ -52,7 +53,7 @@
                   color="red"
                   text="حذف"
                   icon="mdi-delete"
-                  @click="removeItem(index)"
+                  @click="removeItem(item, index)"
               />
             </div>
           </div>
@@ -104,7 +105,10 @@ export default {
       this.model.isRequired = this.data.isRequired;
       if (this.data.items && this.data.items.length > 0) {
         this.model.items = this.data.items.map(f => {
-          return {title: f.text}
+          return {
+            id: f.id,
+            title: f.text,
+          }
         });
       }
 
@@ -133,7 +137,7 @@ export default {
       let payload = {
         ...this.model,
         parentId: this.$route.params.parentId,
-        items: this.model.items.map(f => f.title)
+        items: this.model.items
       }
       if (this.data) {
         this.httpPut(`/form-template-items/${this.data.id}`, payload, result => {
@@ -146,12 +150,29 @@ export default {
       }
     },
     defineNewItem() {
-      this.model.items.push({
-        title: ''
-      })
+      if (this.data) {
+        this.httpPost(`/form-template-items/add-item/${this.data.id}`, {}, result => {
+          this.model.items.push({
+            id: result.id,
+            title: ''
+          })
+        })
+      } else {
+        this.model.items.push({
+          title: ''
+        })
+      }
     },
-    removeItem(index) {
-      this.model.items.splice(index, 1);
+    removeItem(item, index) {
+      if (this.data) {
+        this.httpDelete(`/form-template-items/delete-item/${item.id}`, result => {
+          this.model.items.splice(index, 1);
+        })
+      } else {
+        this.model.items.splice(index, 1);
+      }
+
+
     }
   }
 }
