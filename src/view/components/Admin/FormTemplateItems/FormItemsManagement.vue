@@ -50,8 +50,10 @@ export default {
           title: 'حرکت به بالا',
           icon: 'mdi-arrow-up',
           click: (item) => {
+            const index = this.table.contents.indexOf(item);
+            if (index === 0)
+              return;
             this.httpPut(`/form-template-items/move/${item.id}/1`, {}, result => {
-              const index = this.table.contents.indexOf(item);
               this.table.contents.splice(index, 1, this.table.contents[index - 1]);
               this.table.contents.splice(index - 1, 1, item);
             })
@@ -61,8 +63,11 @@ export default {
           title: 'حرکت به پایین',
           icon: 'mdi-arrow-down',
           click: (item) => {
+            const index = this.table.contents.indexOf(item);
+            if (index === this.table.contents.length - 1)
+              return;
             this.httpPut(`/form-template-items/move/${item.id}/0`, {}, result => {
-              const index = this.table.contents.indexOf(item);
+
               this.table.contents.splice(index, 1, this.table.contents[index + 1]);
               this.table.contents.splice(index + 1, 1, item);
             })
