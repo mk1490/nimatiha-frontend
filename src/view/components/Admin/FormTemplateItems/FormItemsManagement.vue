@@ -111,7 +111,6 @@ export default {
         :actions="actions">
     </base-table>
 
-    {{ modal.visible}}
     <items-modal
         v-if="modal.visible"
         :visible.sync="modal.visible"
