@@ -23,31 +23,6 @@ export default {
           {text: 'نوع فیلد', value: 'type'}
         ],
         contents: [],
-        actions: [
-          {
-            title: 'ویرایش',
-            icon: 'mdi-pen',
-            click: (item) => {
-              this.httpGet(`/form-template-items/${item.id}`, result => {
-                this.modal.data = result.data
-                this.modal.initialize = result.initialize;
-                this.modal.index = this.table.contents.indexOf(item);
-                this.modal.visible = true;
-              })
-
-            }
-          },
-          {
-            title: 'حذف',
-            icon: 'mdi-delete',
-            color: 'error',
-            click: (item) => {
-              this.httpDelete(`/form-template-items/${item.id}`, result => {
-                this.table.contents.splice(this.table.contents.indexOf(item));
-              })
-            }
-          }
-        ],
       }
     }
   },
@@ -67,6 +42,58 @@ export default {
       this.table.contents.splice(this.modal.index, 1, data);
       this.modal.visible = false;
     }
+  },
+  computed: {
+    actions() {
+      return [
+        {
+          title: 'حرکت به بالا',
+          icon: 'mdi-arrow-up',
+          click: (item) => {
+            this.httpPut(`/form-template-items/move/${item.id}/1`, {}, result => {
+              const index = this.table.contents.indexOf(item);
+              this.table.contents.splice(index, 1, this.table.contents[index - 1]);
+              this.table.contents.splice(index - 1, 1, item);
+            })
+          }
+        },
+        {
+          title: 'حرکت به پایین',
+          icon: 'mdi-arrow-down',
+          click: (item) => {
+            this.httpPut(`/form-template-items/move/${item.id}/0`, {}, result => {
+              const index = this.table.contents.indexOf(item);
+              this.table.contents.splice(index, 1, this.table.contents[index + 1]);
+              this.table.contents.splice(index + 1, 1, item);
+            })
+          }
+        },
+        {
+          title: 'ویرایش',
+          icon: 'mdi-pen',
+          click: (item) => {
+            this.httpGet(`/form-template-items/${item.id}`, result => {
+              this.modal.data = result.data
+              this.modal.initialize = result.initialize;
+              this.modal.index = this.table.contents.indexOf(item);
+              this.modal.visible = true;
+            })
+
+          }
+        },
+        {
+          title: 'حذف',
+          icon: 'mdi-delete',
+          color: 'error',
+          click: (item) => {
+            this.httpDelete(`/form-template-items/${item.id}`, result => {
+              this.table.contents.splice(this.table.contents.indexOf(item));
+            })
+          }
+        },
+
+      ]
+    }
   }
 }
 </script>
@@ -81,8 +108,7 @@ export default {
     <base-table
         :items="table.contents"
         :headers="table.headers"
-        :actions="table.actions">
-
+        :actions="actions">
     </base-table>
 
     <items-modal
