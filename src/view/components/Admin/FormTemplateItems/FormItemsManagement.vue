@@ -53,7 +53,7 @@ export default {
             const index = this.table.contents.indexOf(item);
             if (index === 0)
               return;
-            this.httpPut(`/form-template-items/move/${item.id}/1`, {}, result => {
+            this.httpPut(`/form-template-items/move/${this.$route.params.parentId}/${item.id}/1`, {}, result => {
               this.table.contents.splice(index, 1, this.table.contents[index - 1]);
               this.table.contents.splice(index - 1, 1, item);
             })
@@ -66,7 +66,7 @@ export default {
             const index = this.table.contents.indexOf(item);
             if (index === this.table.contents.length - 1)
               return;
-            this.httpPut(`/form-template-items/move/${item.id}/0`, {}, result => {
+            this.httpPut(`/form-template-items/move/${this.$route.params.parentId}/${item.id}/0`, {}, result => {
 
               this.table.contents.splice(index, 1, this.table.contents[index + 1]);
               this.table.contents.splice(index + 1, 1, item);
