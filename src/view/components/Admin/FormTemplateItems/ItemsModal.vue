@@ -16,16 +16,16 @@
             label="شرط نمایش"
             :items="initialize.addedForms"
             return-object
-            v-model="visibilityCondition"
+            v-model="model.visibilityCondition"
         />
       </div>
       <div
           v-if="conditionChildrenItems.length> 0"
           class="col-12">
         <base-select
-            label="شرط نمایش"
+            label="مقدار"
             :items="conditionChildrenItems"
-            v-model="model.visibilityCondition"
+            v-model="model.visibilityConditionValue"
         />
       </div>
       <div class="col-12">
@@ -122,6 +122,8 @@ export default {
       this.model.minLength = this.data.minimum;
       this.model.maxLength = this.data.maximum;
       this.model.isRequired = this.data.isRequired;
+      this.model.visibilityCondition = this.initialize.addedForms.find(x=> x.value === this.data.visibilityCondition);
+      this.model.visibilityConditionValue = this.data.visibilityConditionValue;
       if (this.data.items && this.data.items.length > 0) {
         this.model.items = this.data.items.map(f => {
           return {
@@ -148,9 +150,9 @@ export default {
         size: 12,
         isRequired: false,
         visibilityCondition: null,
+        visibilityConditionValue: null,
         items: [],
-      },
-      visibilityCondition: null,
+      }
     }
   },
   methods: {
@@ -158,7 +160,9 @@ export default {
       let payload = {
         ...this.model,
         parentId: this.$route.params.parentId,
-        items: this.model.items
+        items: this.model.items,
+        visibilityCondition: this.model.visibilityCondition ? this.model.visibilityCondition.value : null,
+        visibilityConditionValue: this.model.visibilityCondition ? this.model.visibilityConditionValue : null,
       }
       if (this.data) {
         this.httpPut(`/form-template-items/${this.data.id}`, payload, result => {
@@ -196,8 +200,8 @@ export default {
   },
   computed: {
     conditionChildrenItems() {
-      if (this.visibilityCondition)
-        return this.visibilityCondition.child;
+      if (this.model.visibilityCondition)
+        return this.model.visibilityCondition.child;
       return [];
     }
   }

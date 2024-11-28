@@ -29,6 +29,7 @@ export default {
   methods: {
     define() {
       this.httpGet(`/form-template-items/initialize`, result => {
+        this.modal.data = null;
         this.modal.initialize = result;
         this.modal.visible = true;
       })
