@@ -13,6 +13,23 @@
       </div>
       <div class="col-12">
         <base-select
+            label="شرط نمایش"
+            :items="initialize.addedForms"
+            return-object
+            v-model="visibilityCondition"
+        />
+      </div>
+      <div
+          v-if="conditionChildrenItems.length> 0"
+          class="col-12">
+        <base-select
+            label="شرط نمایش"
+            :items="conditionChildrenItems"
+            v-model="model.visibilityCondition"
+        />
+      </div>
+      <div class="col-12">
+        <base-select
             label="نوع فیلد"
             :items="initialize.formTypes"
             v-model="model.type"
@@ -130,8 +147,10 @@ export default {
         maxLength: null,
         size: 12,
         isRequired: false,
+        visibilityCondition: null,
         items: [],
-      }
+      },
+      visibilityCondition: null,
     }
   },
   methods: {
@@ -173,8 +192,13 @@ export default {
       } else {
         this.model.items.splice(index, 1);
       }
-
-
+    }
+  },
+  computed: {
+    conditionChildrenItems() {
+      if (this.visibilityCondition)
+        return this.visibilityCondition.child;
+      return [];
     }
   }
 }
