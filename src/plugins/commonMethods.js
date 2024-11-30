@@ -61,17 +61,20 @@ Vue.mixin({
                 let total = addCommas(removeCommas(stringValue))
                 callback(total)
             },
-            getSimpleTableKeyValueObject(title, value){
+            getSimpleTableKeyValueObject(title, value) {
                 return {
                     title,
                     value
                 }
             },
-            getComboBoxKeyValueObject(text, value){
+            getComboBoxKeyValueObject(text, value) {
                 return {
                     text,
                     value
                 }
+            },
+            developing() {
+                this.$toast.info('در دست توسعه...')
             }
         }
     }

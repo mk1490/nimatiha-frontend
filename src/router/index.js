@@ -81,6 +81,16 @@ export const constantRoutes = [{
                     // permission: 'access_permissions.list,access_permissions.update,access_permissions.insert,access_permissions.delete'
                 },
             },
+            {
+                path: 'test',
+                name: 'test',
+                component: () => import('@/view/components/Admin/Tests/TestsManagement.vue'),
+                meta: {
+                    title: 'آزمون',
+                    icon: 'mdi-comment-question-outline',
+                    // permission: 'access_permissions.list,access_permissions.update,access_permissions.insert,access_permissions.delete'
+                },
+            },
 
 
         ]
