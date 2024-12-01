@@ -101,8 +101,6 @@ export const constantRoutes = [{
                     // permission: 'access_permissions.list,access_permissions.update,access_permissions.insert,access_permissions.delete'
                 },
             },
-
-
         ]
     },
     {
@@ -117,6 +115,26 @@ export const constantRoutes = [{
                 component: () => import('@/view/components/Admin/AnswerSheets/AnswerSheets.vue'),
                 meta: {
                     title: 'پاسخ‌نامه',
+                    icon: 'mdi-book-open-page-variant',
+                    // permission: 'access_permissions.list,access_permissions.update,access_permissions.insert,access_permissions.delete'
+                },
+            },
+
+
+        ]
+    },
+    {
+        path: '/', name: 'Root', component: Layout, meta: {
+            noCache: true,
+            affix: true,
+            title: 'route.Management',
+        }, children: [
+            {
+                path: 'answeredTests',
+                name: 'answeredTests',
+                component: () => import('@/view/components/Admin/AnsweredTests/AnsweredTests.vue'),
+                meta: {
+                    title: 'پاسخ‌نامه آزمون',
                     icon: 'mdi-book-open-page-variant',
                     // permission: 'access_permissions.list,access_permissions.update,access_permissions.insert,access_permissions.delete'
                 },
