@@ -2,7 +2,7 @@
 import QuestionsModal from "@/view/components/Admin/Tests/Questions/QuestionsModal.vue";
 
 export default {
-  name: "PublishedTestModal",
+  name: "انتشار آزمون جدید",
   components: {QuestionsModal},
   emits: ['add'],
   props: {
@@ -14,6 +14,7 @@ export default {
     submit() {
       this.httpPost(`/published-test`, {
         testId: this.model.test,
+        isRandom: this.model.isRandom,
       }, result => {
         this.$emit('add', result);
       })
@@ -23,6 +24,7 @@ export default {
     return {
       model: {
         test: null,
+        isRandom: false,
       }
     }
   }
@@ -44,6 +46,12 @@ export default {
             label="آزمون"
             :items="initialize.tests"
             v-model="model.test"
+        />
+      </div>
+      <div class="col-12">
+        <v-checkbox
+            label="سوالات تصادفی"
+            v-model="model.isRandom"
         />
       </div>
     </div>
