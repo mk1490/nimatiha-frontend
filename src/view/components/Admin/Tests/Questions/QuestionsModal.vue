@@ -20,6 +20,7 @@ export default {
         headers: [
           {text: 'عنوان', value: 'questionTitle'},
           {text: 'نوع سؤال', value: 'questionType'},
+          {text: 'امتیاز', value: 'questionScore'},
         ],
         contents: [],
         actions: [
