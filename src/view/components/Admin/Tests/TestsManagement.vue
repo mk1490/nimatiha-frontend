@@ -74,7 +74,7 @@ export default {
   <base-card-layout
       @buttonClick="define"
       button-title="تعریف آزمون جدید"
-      title="مدیریت آزمون‌ها">
+      title="مدیریت قالب آزمون‌ها">
     <base-table
         :items="table.contents"
         :actions="table.actions"

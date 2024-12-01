@@ -86,7 +86,17 @@ export const constantRoutes = [{
                 name: 'test',
                 component: () => import('@/view/components/Admin/Tests/TestsManagement.vue'),
                 meta: {
-                    title: 'آزمون',
+                    title: 'قالب آزمون',
+                    icon: 'mdi-comment-question-outline',
+                    // permission: 'access_permissions.list,access_permissions.update,access_permissions.insert,access_permissions.delete'
+                },
+            },
+            {
+                path: 'published-test',
+                name: 'published-test',
+                component: () => import('@/view/components/Admin/PublishedTests/PublishedTests.vue'),
+                meta: {
+                    title: 'آزمون‌های منتشر شده',
                     icon: 'mdi-comment-question-outline',
                     // permission: 'access_permissions.list,access_permissions.update,access_permissions.insert,access_permissions.delete'
                 },
