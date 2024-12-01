@@ -15,7 +15,7 @@ export default {
       table: {
         headers: [
           {text: 'عنوان', value: 'title'},
-          {text: 'نوع سؤال', value: 'type'}
+          {text: 'تعداد سوالات', value: 'questionsCount'},
         ],
         contents: [],
         actions: [
@@ -23,7 +23,8 @@ export default {
             title: 'ویرایش',
             icon: 'mdi-pen',
             click: (item) => {
-              this.developing()
+              this.modal.data = item;
+              this.modal.visible = true;
             }
           },
           {

@@ -71,6 +71,10 @@ export default {
         :headers="table.headers"
         :actions="table.actions">
 
+      <template v-slot:item.creationTime="{item}">
+        {{ getPersianTime(item.creationTime) }}
+      </template>
+      3
     </base-table>
 
     <answer-sheet-details-modal

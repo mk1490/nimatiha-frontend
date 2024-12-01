@@ -8,6 +8,12 @@ export default {
     visible: Boolean,
     data: Object,
   },
+  created() {
+    if (this.data) {
+      this.model.title = this.data.title;
+      this.model.time = this.data.time;
+    }
+  },
   methods: {
     submit() {
       this.httpPost(`/test`, this.model, result => {
@@ -22,7 +28,7 @@ export default {
     return {
       model: {
         title: null,
-        slug: null,
+        time: null,
       },
     }
   }
@@ -48,8 +54,9 @@ export default {
       </div>
       <div class="col-12">
         <base-text-field
-            label="اسلاگ"
-            v-model="model.slug"
+            label="مدّت زمان آزمون (دقیقه)"
+            type="number"
+            v-model="model.time"
         />
       </div>
     </div>
