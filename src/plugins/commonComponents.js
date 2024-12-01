@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import BaseModal from "@/view/layout/Base/BaseModal.vue";
+import BaseModal from "@/view/widget/Base/BaseModal.vue";
 import BaseTable from "@/view/widget/Base/BaseTable.vue";
 import BaseCardLayout from "@/view/widget/Base/BaseCardLayout.vue";
 import BaseSqaureButton from "@/view/widget/Base/BaseSqaureButton.vue";

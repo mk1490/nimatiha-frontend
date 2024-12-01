@@ -22,11 +22,26 @@ export default {
           {text: 'نوع سؤال', value: 'questionType'},
         ],
         contents: [],
-        actions: []
+        actions: [
+          {
+            title: 'ویرایش',
+            icon: 'mdi-pen',
+            click: (item) => {
+              this.httpGet(`/test-question/${item.id}`, result => {
+                this.modal.initialize = result.initialize;
+                this.modal.index = this.table.contents.indexOf(item);
+                this.modal.data = result.data;
+                this.modal.visible = true;
+              })
+
+            }
+          }
+        ]
       },
       modal: {
         visible: false,
         data: null,
+        index: -1,
         initialize: null,
       }
     }
@@ -34,6 +49,7 @@ export default {
   methods: {
     define() {
       this.httpGet(`/test-question/initialize`, result => {
+        this.modal.data = null;
         this.modal.initialize = result;
         this.modal.visible = true;
       })
@@ -41,20 +57,24 @@ export default {
     add(item) {
       this.modal.visible = false;
       this.table.contents.push(item)
-    }
+    },
+    update(item) {
+      this.modal.visible = false;
+      this.table.contents.splice(this.modal.index, 1, item);
+    },
   }
 }
 </script>
 
 <template>
   <base-modal
+      title="مدیریت سوالات"
       :visible="visible"
       @close="$emit('update:visible', false)"
       full-screen>
 
     <base-card-layout
         button-title="تعریف سوال جدید"
-        title="مدیریت سوالات"
         @buttonClick="define"
     >
 
@@ -72,6 +92,7 @@ export default {
         :questionId="questionId"
         :initialize="modal.initialize"
         @add="add"
+        @update="update"
     />
   </base-modal>
 </template>

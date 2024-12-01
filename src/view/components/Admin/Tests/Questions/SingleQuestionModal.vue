@@ -10,7 +10,7 @@ export default {
     questionId: String,
     initialize: Object
   },
-  emits: ['add'],
+  emits: ['add', 'update'],
   data() {
     return {
       childItems: [],
@@ -22,29 +22,51 @@ export default {
         title: null,
         type: null,
         correctAnswer: null,
+        score: null,
       }
+    }
+  },
+  created() {
+    if (this.data) {
+      this.model.title = this.data.questionTitle;
+      this.model.type = this.data.questionType;
+      this.model.score = this.data.questionScore;
     }
   },
   methods: {
     submit() {
-      this.httpPost(`/test-question`, {
-        ...this.model,
-        parentId: this.questionId,
-        items: this.childItems,
-      }, result => {
-
-      })
-    },
-    addItem(item) {
-      if (this.childItems.length !== 4) {
-        for (let i = 0; i < 4; i++) {
-          this.childItems.push({
-            title: ''
-          })
-        }
-
+      if (this.data) {
+        this.httpPut(`/test-question/${this.data.id}`, {
+          ...this.model,
+          items: this.childItems,
+        }, result => {
+          this.$emit('update', result);
+        })
+      } else {
+        this.httpPost(`/test-question`, {
+          ...this.model,
+          parentId: this.questionId,
+          items: this.childItems,
+        }, result => {
+          this.$emit('add', result);
+        })
       }
 
+    },
+  },
+  watch: {
+    'model.type': {
+      handler() {
+        if (this.model.type === 1) {
+          for (let i = 0; i < 4; i++) {
+            this.childItems.push({
+              title: ''
+            })
+          }
+        } else {
+          this.childItems = []
+        }
+      }
     }
   }
 }
@@ -52,7 +74,7 @@ export default {
 
 <template>
   <base-modal
-      title="تعریف سوال جدید"
+      :title="data? 'ویرایش سوال': 'تعریف سوال جدید'"
       :visible="visible"
       @close="$emit('update:visible', false)"
       @submit="submit">
@@ -70,8 +92,17 @@ export default {
             label="نوع سوال"/>
       </div>
 
+      <div
+          v-if='model.type === 1'
+          class="col-12">
+        <base-text-field
+            v-model="model.score"
+            label="امتیاز"/>
+      </div>
+
 
       <div
+          v-if='model.type === 1'
           class="col-12">
         <v-radio-group v-model="model.correctAnswer">
           <div
@@ -91,20 +122,6 @@ export default {
           </div>
         </v-radio-group>
       </div>
-
-
-      <div
-          v-if='model.type === 1'
-          class="col-12">
-        <v-btn
-            block
-            color="primary"
-            @click="addItem()">
-          افزودن آیتم جدید
-        </v-btn>
-      </div>
-
-
     </div>
 
 

@@ -48,7 +48,7 @@
       <v-card-actions>
         <slot name="footerAboveActionsArea"></slot>
       </v-card-actions>
-      <v-card-actions v-if="fullScreen === false">
+      <v-card-actions v-if="!fullScreen">
         <div class="d-inline-flex" :style="{'width': blockCloseButton ? '100%' : ''}">
           <v-btn
               :block="blockCloseButton"
@@ -66,7 +66,7 @@
 
           </slot>
           <v-btn
-              v-if="hideSubmitButton === false"
+              v-if="hideSubmitButton == false"
               @click="submitOrNext()"
               :disabled="submitDisabled"
               :width="submitWidth"
@@ -100,10 +100,7 @@ export default {
   props: {
     title: String,
     subTitle: String,
-    fullScreen: {
-      type: Boolean,
-      default: false,
-    },
+    fullScreen: Boolean,
     width: {
       type: undefined,
       default: 500,
