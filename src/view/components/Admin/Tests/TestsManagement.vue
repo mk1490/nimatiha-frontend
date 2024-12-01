@@ -16,6 +16,7 @@ export default {
         headers: [
           {text: 'عنوان', value: 'title'},
           {text: 'تعداد سوالات', value: 'questionsCount'},
+          {text: 'مدّت زمان آزمون (دقیقه)', value: 'time'},
         ],
         contents: [],
         actions: [
