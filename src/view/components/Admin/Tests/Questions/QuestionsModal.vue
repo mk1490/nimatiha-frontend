@@ -36,7 +36,18 @@ export default {
               })
 
             }
-          }
+          },
+          {
+            title: 'حذف',
+            icon: 'mdi-delete',
+            color: 'red',
+            click: (item) => {
+              this.httpDelete(`/test-question/${item.id}`, result => {
+                this.table.contents.splice(this.table.contents.indexOf(item), 1);
+              })
+
+            }
+          },
         ]
       },
       modal: {
