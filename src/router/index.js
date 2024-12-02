@@ -8,22 +8,6 @@ Vue.use(Router);
 export const constantRoutes = [{
     path: '*', hidden: true,
 },
-    //
-    // {
-    //     path: 'dashboard', name: 'Dashboard', component: TheLayout,
-    //     children: [
-    //         {
-    //             path: '/Dashboard',
-    //             name: 'Dashboard',
-    //             component: () => import('@/view/components/Admin/Dashboard/Dashboard.vue'),
-    //             meta: {
-    //                 icon: 'mdi-gauge',
-    //                 title: 'داشبورد',
-    //                 // permission: ['reports.event_records']
-    //             },
-    //         }
-    //     ], meta: {},
-    // },
     {
         path: '/', name: 'Root', component: Layout, meta: {
             noCache: true,

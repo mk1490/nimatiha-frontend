@@ -2,7 +2,7 @@
 import QuestionsModal from "@/view/components/Admin/Tests/Questions/QuestionsModal.vue";
 
 export default {
-  name: "انتشار آزمون جدید",
+  name: "PublishedTestModal",
   components: {QuestionsModal},
   emits: ['add'],
   props: {
@@ -35,7 +35,7 @@ export default {
 <template>
   <base-modal
       v-if="visible"
-      title="تعریف آزمون جدید"
+      title="انتشار آزمون جدید"
       @close="$emit('update:visible', false)"
       @submit="submit"
       :visible="visible">
