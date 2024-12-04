@@ -39,9 +39,8 @@ export default {
             click: item => {
               this.httpDelete(`/test-template/${item.id}`, result => {
                 this.table.contents.splice(this.table.contents.indexOf(item));
-              })
+              });
             }
-
           }
         ],
       },
