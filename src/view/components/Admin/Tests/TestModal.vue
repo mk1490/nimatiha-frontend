@@ -4,6 +4,7 @@ import QuestionsModal from "@/view/components/Admin/Tests/Questions/QuestionsMod
 export default {
   name: "TestModal",
   components: {QuestionsModal},
+  emits: ['add', 'update'],
   props: {
     visible: Boolean,
     data: Object,
@@ -11,14 +12,21 @@ export default {
   created() {
     if (this.data) {
       this.model.title = this.data.title;
-      this.model.time = this.data.time;
+      this.model.time = Number(this.data.time);
     }
   },
   methods: {
     submit() {
-      this.httpPost(`/test`, this.model, result => {
-        this.$emit('add', result);
-      })
+      if (this.data) {
+        this.httpPut(`/test/${this.data.id}`, this.model, result => {
+          this.$emit('update', result);
+        })
+      } else {
+        this.httpPost(`/test`, this.model, result => {
+          this.$emit('add', result);
+        })
+      }
+
     },
     questionItems() {
       this.modal.questions.visible = true;
@@ -40,7 +48,7 @@ export default {
   <base-modal
       style="z-index: 220"
       v-if="visible"
-      title="تعریف آزمون جدید"
+      :title="data? 'ویرایش آزمون': 'تعریف آزمون جدید'"
       @close="$emit('update:visible', false)"
       @submit="submit"
       :visible="visible">

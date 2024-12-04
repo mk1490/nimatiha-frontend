@@ -1,7 +1,8 @@
 <template>
   <base-modal
       :title="!data? 'تعریف فرم جدید': 'ویرایش فرم'"
-      :visible.sync="visible"
+      :visible="visible"
+      @close="$emit('update:visible', false)"
       @submit="submit">
     <div class="row">
       <div class="col-12">

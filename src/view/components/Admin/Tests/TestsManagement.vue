@@ -25,6 +25,7 @@ export default {
             icon: 'mdi-pen',
             click: (item) => {
               this.modal.data = item;
+              this.modal.index = this.table.contents.indexOf(item);
               this.modal.visible = true;
             }
           },
@@ -63,16 +64,15 @@ export default {
       this.table.contents.push(data);
       this.modal.visible = false;
     },
-    updateItem() {
-
+    updateItem(data) {
+      this.table.contents.splice(this.modal.index, 1, data);
+      this.modal.visible = false;
     }
   }
 }
 </script>
 
 <template>
-
-
   <base-card-layout
       @buttonClick="define"
       button-title="تعریف آزمون جدید"

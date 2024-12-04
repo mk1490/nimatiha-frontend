@@ -13,8 +13,7 @@ export default {
     return {
       table: {
         headers: [
-          {text: 'عنوان', value: 'title'},
-          {text: 'نوع سؤال', value: 'type'}
+          {text: 'عنوان', value: 'title'}
         ],
         contents: [],
         actions: [
@@ -24,9 +23,8 @@ export default {
             icon: 'mdi-delete',
             click: (item) => {
               this.httpDelete(`/published-test/${item.id}`, result => {
-
+                this.table.contents.splice(this.table.contents.indexOf(item), 1);
               })
-
             }
           }
         ],
@@ -42,7 +40,7 @@ export default {
   methods: {
     define() {
 
-      this.httpGet(`/published-test/initialize`, result=>{
+      this.httpGet(`/published-test/initialize`, result => {
         this.modal.initialize = result;
         this.modal.data = null;
         this.modal.visible = true;

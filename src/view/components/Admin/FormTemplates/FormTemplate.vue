@@ -37,7 +37,7 @@ export default {
             color: 'error',
             click: (item) => {
               this.httpDelete(`/form-template/${item.id}`, result => {
-                this.table.contents.splice(this.table.contents.indexOf(item));
+                this.table.contents.splice(this.table.contents.indexOf(item), 1);
               })
             }
           }
