@@ -30,7 +30,7 @@ export default {
             title: 'مشاهده جزئیات',
             icon: 'mdi-eye',
             click: (item) => {
-              this.httpGet(`/answer-sheet/${item.questionnaireId}/${item.memberId}`, result => {
+              this.httpGet(`/answered-tests/${item.id}`, result => {
                 this.modal.data = result;
                 this.modal.visible = true;
               })

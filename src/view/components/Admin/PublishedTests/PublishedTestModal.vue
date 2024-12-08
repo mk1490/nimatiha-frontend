@@ -3,7 +3,7 @@ import QuestionsModal from "@/view/components/Admin/Tests/Questions/QuestionsMod
 
 export default {
   name: "PublishedTestModal",
-  components: { QuestionsModal },
+  components: {QuestionsModal},
   emits: ['add'],
   props: {
     visible: Boolean,
@@ -15,6 +15,7 @@ export default {
       this.httpPost(`/published-test/`, {
         testId: this.model.test,
         isRandom: this.model.isRandom,
+        randomCountNumbers: this.model.randomCountNumbers,
       }, result => {
         this.$emit('add', result);
       })
@@ -25,6 +26,7 @@ export default {
       model: {
         test: null,
         isRandom: false,
+        randomCountNumbers: null,
       }
     }
   }
@@ -34,14 +36,23 @@ export default {
 
 <template>
   <base-modal v-if="visible" title="انتشار آزمون جدید" @close="$emit('update:visible', false)" @submit="submit"
-    :visible="visible">
+              :visible="visible">
 
     <div class="row">
       <div class="col-12">
-        <base-select label="آزمون" :items="initialize.tests" v-model="model.test" />
+        <base-select label="آزمون" :items="initialize.tests" v-model="model.test"/>
       </div>
       <div class="col-12">
-        <v-checkbox label="سوالات تصادفی" v-model="model.isRandom" />
+        <v-checkbox
+            hide-details
+            label="سوالات تصادفی" v-model="model.isRandom"/>
+      </div>
+
+      <div class="col-12">
+        <base-text-field
+            label="تعداد سژالات تصادفی"
+            type="number"
+            v-model="model.randomCountNumbers"/>
       </div>
     </div>
 
