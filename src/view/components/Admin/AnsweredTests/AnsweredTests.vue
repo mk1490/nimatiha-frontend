@@ -1,7 +1,7 @@
 <script>
 import FormTemplateModal from "@/view/components/Admin/FormTemplates/FormTemplateModal.vue";
 import ItemsModal from "@/view/components/Admin/FormTemplateItems/ItemsModal.vue";
-import AnswerSheetDetailsModal from "@/view/components/Admin/AnswerSheets/AnswerSheetDetailsModal.vue";
+import AnswerSheetDetailsModal from "./AnswerSheetDetailsModal.vue";
 
 export default {
   name: "AnsweredTests",
@@ -36,14 +36,6 @@ export default {
               })
             }
           },
-          {
-            title: 'حذف',
-            icon: 'mdi-delete',
-            color: 'error',
-            click: (item) => {
-
-            }
-          }
         ],
       }
     }

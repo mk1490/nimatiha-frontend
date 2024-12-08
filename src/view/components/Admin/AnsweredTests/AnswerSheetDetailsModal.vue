@@ -1,37 +1,16 @@
 <template>
   <base-modal
-      width="800"
+      width="100%"
       title="مشاهده جزئیات پاسخ‌نامه"
       hide-submit-button
       @close="$emit('update:visible', false)"
       :visible="visible">
-
-    <v-tabs
-        align-with-title
-        centered
-        fixed-tabs
-        v-model="tab">
-      <v-tab v-for="tabItem in tabItems">
-        {{ tabItem.title }}
-      </v-tab>
-    </v-tabs>
-
-
-    <v-tabs-items v-model="tab">
-      <v-container>
-        <v-tab-item
-            v-for="(tabItem, tabIndex) in tabItems"
-            :key="tabIndex"
-            :value="tabIndex">
-          <base-key-value-simple-table
-              :items="getTableContent(tabItem)"
-          />
-
-        </v-tab-item>
-      </v-container>
-
-    </v-tabs-items>
-
+    <base-table
+        hide-default-footer
+        :items-per-page="100"
+        :headers="headers"
+        :items="contents"
+    />
 
   </base-modal>
 </template>
@@ -49,28 +28,29 @@ export default {
   },
   created() {
     if (this.data) {
-      this.tabItems = this.data.tabs;
+      Object.keys(this.data).map(f => {
+        this.contents.push({
+          questionTitle: this.data[f]['questionTitle'],
+          answerContent: this.data[f]['answerContent'],
+          isCorrect: this.data[f]['isCorrect'] === true ? 'بلی' : 'خیر',
+          score: this.data[f]['score'],
+        })
+      })
     }
   },
   data() {
     return {
-      tab: 0,
-      tabItems: []
+      headers: [
+        {text: 'سؤال', value: 'questionTitle'},
+        {text: 'پاسخ', value: 'answerContent'},
+        {text: 'پاسخ صحیح', value: 'isCorrect'},
+        {text: 'امتیاز', value: 'score'},
+
+      ],
+      contents: [],
     }
   },
-  methods: {
-    async downloadItem(item) {
-
-    },
-    getTableContent(item) {
-      return item.answers.map(f => {
-        return {
-          title: f.label,
-          value: f.value,
-        };
-      })
-    }
-  }
+  methods: {}
 }
 </script>
 
