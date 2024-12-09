@@ -70,7 +70,7 @@ export const constantRoutes = [{
                 name: 'test',
                 component: () => import('@/view/components/Admin/Tests/TestsManagement.vue'),
                 meta: {
-                    title: 'قالب آزمون',
+                    title: 'بانک آزمون',
                     icon: 'mdi-comment-question-outline',
                     // permission: 'access_permissions.list,access_permissions.update,access_permissions.insert,access_permissions.delete'
                 },

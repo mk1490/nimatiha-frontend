@@ -13,7 +13,8 @@ export default {
     return {
       table: {
         headers: [
-          {text: 'عنوان', value: 'title'}
+          {text: 'عنوان', value: 'title'},
+          {text: 'فعال بودن', value: 'active'}
         ],
         contents: [],
         actions: [
@@ -39,7 +40,6 @@ export default {
   emits: ['add', 'update'],
   methods: {
     define() {
-
       this.httpGet(`/published-test/initialize`, result => {
         this.modal.initialize = result;
         this.modal.data = null;
@@ -50,6 +50,13 @@ export default {
     addItem(data) {
       this.table.contents.push(data);
       this.modal.visible = false;
+    },
+    changeStatus(item, event) {
+      this.httpPut(`/published-test/change-status/${item.id}`, {
+        status: event
+      }, result => {
+        this.$toast.success('تغییر وضعیت با موفقیت انجام شد.')
+      })
     }
   }
 }
@@ -66,6 +73,17 @@ export default {
         :items="table.contents"
         :actions="table.actions"
         :headers="table.headers">
+
+      <template v-slot:item.active="{item}">
+        <div class="d-flex justify-center">
+          <v-switch
+              inset
+              @change="changeStatus(item, $event)"
+              v-model="item.isActive"
+
+          />
+        </div>
+      </template>
     </base-table>
 
 

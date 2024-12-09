@@ -6,10 +6,12 @@ import BaseSqaureButton from "@/view/widget/Base/BaseSqaureButton.vue";
 import BaseTextField from "@/view/widget/Base/BaseTextField.vue";
 import BaseKeyValueSimpleTable from "@/view/widget/Base/BaseKeyValueSimpleTable.vue";
 import BaseSelect from "@/view/widget/Base/BaseSelect.vue";
+import BaseTextArea from "@/view/widget/Base/BaseTextArea.vue";
 
 Vue.component('base-modal', BaseModal);
 Vue.component('base-card-layout', BaseCardLayout);
 Vue.component('base-text-field', BaseTextField);
+Vue.component('base-text-area', BaseTextArea);
 Vue.component('base-table', BaseTable);
 Vue.component('base-square-button', BaseSqaureButton);
 Vue.component('base-square-button', BaseSqaureButton);
