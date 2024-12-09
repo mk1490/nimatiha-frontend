@@ -5,7 +5,22 @@ import BaseTextArea from "@/view/widget/Base/BaseTextArea.vue";
 export default {
   name: "PublishedTestModal",
   components: {BaseTextArea, QuestionsModal},
-  emits: ['add'],
+  emits: ['add', 'submit'],
+  created() {
+    if (this.data) {
+      this.model.title = this.data.title;
+      this.model.description = this.data.description;
+      this.model.endDescription = this.data.endDescription;
+      this.model.time = Number(this.data.time);
+      this.model.items = this.data.items.map(f => {
+        return {
+          testId: f.testTemplateId,
+          isRandom: f.isRandom,
+          randomCount: f.questionRandomNumbers,
+        }
+      });
+    }
+  },
   props: {
     visible: Boolean,
     data: Object,
@@ -13,9 +28,21 @@ export default {
   },
   methods: {
     submit() {
-      this.httpPost(`/published-test/`, this.model, result => {
-        this.$emit('add', result);
-      })
+      let payload = {...this.model}
+      payload.time = Number(this.model.time);
+
+
+      if (this.data) {
+        this.httpPut(`/published-test/${this.data.id}/`, payload, result => {
+          this.$emit('add', result);
+        })
+      } else {
+        this.httpPost(`/published-test/`, payload, result => {
+          this.$emit('add', result);
+        })
+      }
+
+
     },
     addItem() {
       this.model.items.push({
@@ -43,16 +70,27 @@ export default {
 </script>
 
 <template>
-  <base-modal v-if="visible"
-              title="انتشار آزمون جدید"
-              @close="$emit('update:visible', false)" @submit="submit"
-              :visible="visible">
+  <base-modal
+      v-if="visible"
+      :title="data ?'ویرایش آزمون جدید': 'انتشار آزمون جدید'"
+      @close="$emit('update:visible', false)"
+      @submit="submit"
+      :visible="visible">
 
     <div class="row">
       <div class="col-12">
-
-
-        <base-text-field label="عنوان نمایشی" v-model="model.title"/>
+        <base-text-field
+            required-symbol
+            label="عنوان نمایشی"
+            v-model="model.title"/>
+      </div>
+      <div class="col-12">
+        <base-text-field
+            required-symbol
+            type="number"
+            dir="ltr"
+            label="مدّت زمان آزمون (دقیقه)"
+            v-model="model.time"/>
       </div>
 
       <div class="col-12">
@@ -129,9 +167,6 @@ export default {
       >
         اضافه نمودن بانک آزمون جدید
       </v-btn>
-    </div>
-
-
     </div>
 
   </base-modal>

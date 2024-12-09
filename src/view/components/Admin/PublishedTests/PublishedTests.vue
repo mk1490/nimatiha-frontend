@@ -19,6 +19,17 @@ export default {
         contents: [],
         actions: [
           {
+            title: 'ویرایش',
+            icon: 'mdi-pen',
+            click: (item) => {
+              this.httpGet(`/published-test/${item.id}`, result => {
+                this.modal.visible = true;
+                this.modal.initialize = result.initialize;
+                this.modal.data = result.data;
+              })
+            }
+          },
+          {
             title: 'حذف',
             color: 'red',
             icon: 'mdi-delete',
@@ -91,6 +102,7 @@ export default {
         v-if="modal.visible"
         :visible.sync="modal.visible"
         :initialize="modal.initialize"
+        :data="modal.data"
         @add="addItem"
 
     />
