@@ -5,7 +5,7 @@ import BaseTextArea from "@/view/widget/Base/BaseTextArea.vue";
 export default {
   name: "PublishedTestModal",
   components: {BaseTextArea, QuestionsModal},
-  emits: ['add', 'submit'],
+  emits: ['add', 'update'],
   created() {
     if (this.data) {
       this.model.title = this.data.title;
@@ -34,11 +34,13 @@ export default {
 
       if (this.data) {
         this.httpPut(`/published-test/${this.data.id}/`, payload, result => {
-          this.$emit('add', result);
+          this.$emit('update', result);
+          this.$toast.success('بروزرسانی آزمون با موفقیت انجام شد.')
         })
       } else {
         this.httpPost(`/published-test/`, payload, result => {
           this.$emit('add', result);
+          this.$toast.success('انتشار آزمون با موفقیت انجام شد.')
         })
       }
 

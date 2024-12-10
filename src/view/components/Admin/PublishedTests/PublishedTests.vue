@@ -23,6 +23,7 @@ export default {
             icon: 'mdi-pen',
             click: (item) => {
               this.httpGet(`/published-test/${item.id}`, result => {
+                this.modal.index = this.table.contents.indexOf(item);
                 this.modal.visible = true;
                 this.modal.initialize = result.initialize;
                 this.modal.data = result.data;
@@ -44,6 +45,7 @@ export default {
       modal: {
         visible: false,
         data: null,
+        index: -1,
         initialize: null,
       }
     }
@@ -60,6 +62,10 @@ export default {
     },
     addItem(data) {
       this.table.contents.push(data);
+      this.modal.visible = false;
+    },
+    updateItem(data) {
+      this.table.contents.splice(this.modal.index, 1, data);
       this.modal.visible = false;
     },
     changeStatus(item, event) {
@@ -104,7 +110,7 @@ export default {
         :initialize="modal.initialize"
         :data="modal.data"
         @add="addItem"
-
+        @update="updateItem"
     />
 
   </base-card-layout>

@@ -12,17 +12,16 @@ export default {
   created() {
     if (this.data) {
       this.model.title = this.data.title;
-      this.model.time = Number(this.data.time);
     }
   },
   methods: {
     submit() {
       if (this.data) {
-        this.httpPut(`/test/${this.data.id}`, this.model, result => {
+        this.httpPut(`/test/${this.data.id}/`, this.model, result => {
           this.$emit('update', result);
         })
       } else {
-        this.httpPost(`/test`, this.model, result => {
+        this.httpPost(`/test/`, this.model, result => {
           this.$emit('add', result);
         })
       }
@@ -36,7 +35,6 @@ export default {
     return {
       model: {
         title: null,
-        time: null,
       },
     }
   }
@@ -58,13 +56,6 @@ export default {
         <base-text-field
             label="عنوان آزمون"
             v-model="model.title"
-        />
-      </div>
-      <div class="col-12">
-        <base-text-field
-            label="مدّت زمان آزمون (دقیقه)"
-            type="number"
-            v-model="model.time"
         />
       </div>
     </div>
