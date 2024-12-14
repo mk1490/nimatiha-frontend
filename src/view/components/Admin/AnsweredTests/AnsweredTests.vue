@@ -21,6 +21,11 @@ export default {
       table: {
         headers: [
           {text: 'شماره تلفن', value: 'mobileNumber'},
+          {text: 'نام و نام خانوادگی', value: 'fullName'},
+          {text: 'مدرسه', value: 'fullName'},
+          {text: 'پایه', value: 'educationLevel'},
+          {text: 'شهرستان', value: 'city'},
+          {text: 'ناحیه', value: 'zone'},
           {text: 'پرسش‌نامه', value: 'testTitle'},
           {text: 'زمان', value: 'creationTime'},
         ],
