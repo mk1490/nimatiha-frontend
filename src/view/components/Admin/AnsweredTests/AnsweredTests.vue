@@ -2,6 +2,7 @@
 import FormTemplateModal from "@/view/components/Admin/FormTemplates/FormTemplateModal.vue";
 import ItemsModal from "@/view/components/Admin/FormTemplateItems/ItemsModal.vue";
 import AnswerSheetDetailsModal from "./AnswerSheetDetailsModal.vue";
+import xlsx from "json-as-xlsx";
 
 export default {
   name: "AnsweredTests",
@@ -46,6 +47,42 @@ export default {
     }
   },
   methods: {
+    downloadExcel(){
+      if (this.table.contents.length == 0)
+        this.$swal.fire({
+          icon: 'warning',
+          text: 'موردی جهت دانلود وجود ندارد!'
+        })
+      const _h = [
+        {label: 'ردیف', value: 'row'},
+        {label: 'شماره تلفن همراه', value: 'mobileNumber'},
+        {label: 'نام', value: 'name'},
+        {label: 'نام خانوادگی', value: 'family'},
+        {label: 'کد ملّی', value: 'nationalCode'},
+        {label: 'نام مدرسه', value: 'schoolName'},
+        {label: 'پایه تحصیلی', value: 'educationLevel'},
+        {label: 'شهرستان', value: 'city'},
+        {label: 'ناحیه', value: 'city'},
+        {label: 'زمان', value: 'creationTime'},
+      ]
+
+      _h.push()
+      const _c = [...this.table.contents].map((f, i) => {
+        f.row = i + 1;
+        return f;
+      })
+      let settings = {
+        fileName: `Nimkatiha_survey_response_template_${this.faToEn(this.getPersianTime(new Date(), 'YYYY_MM_DD_HH_mm_ss'))}`,
+        writeMode: "writeFile",
+        RTL: true,
+        writeOptions: {},
+      }
+      xlsx([{
+        sheet: 'Main',
+        content: _c,
+        columns: _h,
+      }], settings);
+    },
     define() {
     },
     addItem(data) {
@@ -63,6 +100,14 @@ export default {
   <base-card-layout
       @buttonClick="define"
       title="پاسخ‌نامه آزمون‌ها">
+
+    <template v-slot:button-area>
+      <v-btn @click="downloadExcel">
+        دانلود اکسل
+      </v-btn>
+    </template>
+
+
     <base-table
         :items="table.contents"
         :headers="table.headers"
