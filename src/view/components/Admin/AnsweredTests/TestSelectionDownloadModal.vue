@@ -52,11 +52,12 @@ export default {
         })
 
 
-
-        result[hasDataIndex].stringifyData.map((questionItem, questionIndex) => {
-          _h.push({
-            label: questionItem.questionTitle,
-            value: questionItem.questionTitle
+        result.map(f => {
+          f.stringifyData.map((questionItem, questionIndex) => {
+            _h.push({
+              label: questionItem.questionTitle,
+              value: questionItem.questionTitle
+            })
           })
         })
         let _c = [...result].map((f, i) => {
