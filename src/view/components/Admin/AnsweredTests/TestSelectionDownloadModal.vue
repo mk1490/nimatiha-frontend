@@ -38,15 +38,30 @@ export default {
           {label: 'نام مدرسه', value: 'schoolName'},
           {label: 'پایه تحصیلی', value: 'educationLevel'},
           {label: 'شهرستان', value: 'city'},
-          {label: 'ناحیه', value: 'city'},
+          {label: 'ناحیه', value: 'zone'},
           // {label: 'زمان', value: 'creationTime'},
           {label: 'مجموع امتیاز', value: 'totalScore'},
         ]
 
-        result[0].stringifyData.map((questionItem, questionIndex) => {
+
+        let hasDataIndex = -1;
+        result.map((f, i) => {
+          if (f.stringifyData && f.stringifyData.length > 0 && hasDataIndex == -1) {
+            hasDataIndex = i;
+          }
+        })
+
+        const questionIds = [];
+
+        for (let i = 0 ; i < result[hasDataIndex].stringifyData.length; i++){
+          questionIds.push(`index_${i}`)
+        }
+
+
+        result[hasDataIndex].stringifyData.map((questionItem, questionIndex) => {
           _h.push({
             label: questionItem.questionTitle,
-            value: questionItem.id
+            value: questionItem.questionTitle
           })
         })
         let _c = [...result].map((f, i) => {
@@ -57,7 +72,7 @@ export default {
 
         result.map((f, i) => {
           f.stringifyData.map((questionItem, questionIndex) => {
-            _c[i][questionItem.id] = questionItem.answerContent
+            _c[i][questionItem.questionTitle] = questionItem.answerContent
           })
         })
 
