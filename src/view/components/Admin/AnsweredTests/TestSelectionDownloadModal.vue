@@ -51,11 +51,6 @@ export default {
           }
         })
 
-        const questionIds = [];
-
-        for (let i = 0 ; i < result[hasDataIndex].stringifyData.length; i++){
-          questionIds.push(`index_${i}`)
-        }
 
 
         result[hasDataIndex].stringifyData.map((questionItem, questionIndex) => {
