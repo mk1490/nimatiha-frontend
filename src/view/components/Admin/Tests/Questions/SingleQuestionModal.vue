@@ -36,14 +36,14 @@ export default {
   methods: {
     submit() {
       if (this.data) {
-        this.httpPut(`/test-question/${this.data.id}`, {
+        this.httpPut(`/test-question/${this.data.id}/`, {
           ...this.model,
           items: this.childItems,
         }, result => {
           this.$emit('update', result);
         })
       } else {
-        this.httpPost(`/test-question`, {
+        this.httpPost(`/test-question/`, {
           ...this.model,
           parentId: this.questionId,
           items: this.childItems,
