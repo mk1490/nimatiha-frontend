@@ -84,8 +84,9 @@ export default {
             content: _c,
             columns: _h,
           }], settings);
+
+          this.$emit('update:visible', false)
         } catch (e) {
-          console.error(e)
         }
       })
 
@@ -98,6 +99,7 @@ export default {
   <base-modal
       title="انتخاب آزمون جهت دانلود پاسخ‌نامه"
       @submit="downloadExcel()"
+      @close="$emit('update:visible', false)"
       :visible="visible">
     <base-select
         label="آزمون"
