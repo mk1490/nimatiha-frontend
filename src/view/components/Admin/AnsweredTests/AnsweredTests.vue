@@ -9,9 +9,7 @@ export default {
   name: "AnsweredTests",
   components: {TestSelectionDownloadModal, AnswerSheetDetailsModal, ItemsModal},
   created() {
-    this.httpGet(`/answered-tests/list`, result => {
-      this.table.contents = result;
-    })
+    this.fetchData();
   },
   data() {
     return {
@@ -49,6 +47,12 @@ export default {
             }
           },
         ],
+      },
+      items: {
+        tests: [],
+      },
+      filter: {
+        test: null,
       }
     }
   },
@@ -66,6 +70,24 @@ export default {
     },
     updateItem(data) {
 
+    },
+    fetchData() {
+      let url = `/answered-tests/list`;
+      if (this.filter.test) {
+        url += `?id=${this.filter.test}`
+      }
+
+      this.httpGet(url, result => {
+        this.items.tests = result.initialize.tests;
+        this.table.contents = result.list;
+      })
+    }
+  },
+  watch: {
+    'filter.test': {
+      handler() {
+        this.fetchData();
+      }
     }
   }
 }
@@ -73,15 +95,24 @@ export default {
 
 <template>
   <base-card-layout
-      @buttonClick="define"
       title="پاسخ‌نامه آزمون‌ها">
-
     <template v-slot:button-area>
-      <v-btn
-          color="primary"
-          @click="downloadExcel">
-        دانلود اکسل
-      </v-btn>
+      <div class="d-inline-flex">
+        <base-select
+            class="mx-2"
+            style="max-width: 180px"
+            color="primary"
+            :items="items.tests"
+            v-model="filter.test"
+            clearable
+            label="فیلتر آزمون">
+        </base-select>
+        <v-btn
+            color="primary"
+            @click="downloadExcel">
+          دانلود اکسل
+        </v-btn>
+      </div>
     </template>
 
 
@@ -93,7 +124,6 @@ export default {
       <template v-slot:item.creationTime="{item}">
         {{ getPersianTime(item.creationTime) }}
       </template>
-      3
     </base-table>
 
     <answer-sheet-details-modal
