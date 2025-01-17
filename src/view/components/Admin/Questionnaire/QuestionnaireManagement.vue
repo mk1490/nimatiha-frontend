@@ -14,6 +14,7 @@ export default {
       table: {
         headers: [
           {text: 'عنوان', value: 'title'},
+          {text: 'فعال بودن', value: 'visible'},
           {text: 'اسلاگ', value: 'slug'},
         ],
         contents: [],
@@ -58,7 +59,6 @@ export default {
         this.modal.data = null;
         this.modal.visible = true;
       })
-
     },
     addItem(data) {
       this.table.contents.push(data);
@@ -67,6 +67,13 @@ export default {
     updateItem(data) {
       this.table.contents.splice(this.modal.index, 1, data)
       this.modal.visible = false;
+    },
+    changeStatus(item, event) {
+      this.httpPut(`/test-template/change-status/${item.id}`, {
+        status: event
+      }, result => {
+        this.$toast.success('تغییر وضعیت با موفقیت انجام شد.')
+      })
     }
   }
 }
@@ -81,6 +88,16 @@ export default {
         :items="table.contents"
         :actions="table.actions"
         :headers="table.headers">
+      <template v-slot:item.visible="{item}">
+        <div class="d-flex justify-center">
+          <v-switch
+              inset
+              @change="changeStatus(item, $event)"
+              v-model="item.visible"
+
+          />
+        </div>
+      </template>
     </base-table>
 
     <questionnaire-modal

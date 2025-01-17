@@ -3,14 +3,13 @@ import FormTemplateModal from "@/view/components/Admin/FormTemplates/FormTemplat
 import ItemsModal from "@/view/components/Admin/FormTemplateItems/ItemsModal.vue";
 import AnswerSheetDetailsModal from "./AnswerSheetDetailsModal.vue";
 import xlsx from "json-as-xlsx";
+import TestSelectionDownloadModal from "@/view/components/Admin/AnsweredTests/TestSelectionDownloadModal.vue";
 
 export default {
   name: "AnsweredTests",
-  components: {AnswerSheetDetailsModal, ItemsModal},
+  components: {TestSelectionDownloadModal, AnswerSheetDetailsModal, ItemsModal},
   created() {
-    this.httpGet(`/answered-tests/list`, result => {
-      this.table.contents = result;
-    })
+    this.fetchData();
   },
   data() {
     return {
@@ -18,6 +17,11 @@ export default {
         data: null,
         initialize: null,
         visible: false,
+        downloadExcel: {
+          data: null,
+          initialize: null,
+          visible: false,
+        },
       },
       table: {
         headers: [
@@ -43,47 +47,22 @@ export default {
             }
           },
         ],
+      },
+      items: {
+        tests: [],
+      },
+      filter: {
+        test: null,
       }
     }
   },
   methods: {
-    downloadExcel(){
-      if (this.table.contents.length == 0)
-        this.$swal.fire({
-          icon: 'warning',
-          text: 'موردی جهت دانلود وجود ندارد!'
-        })
-      const _h = [
-        {label: 'ردیف', value: 'row'},
-        {label: 'شماره تلفن همراه', value: 'mobileNumber'},
-        {label: 'نام', value: 'name'},
-        {label: 'نام خانوادگی', value: 'family'},
-        {label: 'کد ملّی', value: 'nationalCode'},
-        {label: 'نام مدرسه', value: 'schoolName'},
-        {label: 'پایه تحصیلی', value: 'educationLevel'},
-        {label: 'شهرستان', value: 'city'},
-        {label: 'ناحیه', value: 'city'},
-        {label: 'زمان', value: 'creationTime'},
-      ]
-
-      _h.push()
-      const _c = [...this.table.contents].map((f, i) => {
-        f.row = i + 1;
-        return f;
+    downloadExcel() {
+      this.httpGet(`/answered-tests/initialize`, result => {
+        this.modal.downloadExcel.initialize = result;
+        this.modal.downloadExcel.visible = true;
       })
-      let settings = {
-        fileName: `Nimkatiha_survey_response_template_${this.faToEn(this.getPersianTime(new Date(), 'YYYY_MM_DD_HH_mm_ss'))}`,
-        writeMode: "writeFile",
-        RTL: true,
-        writeOptions: {},
-      }
-      xlsx([{
-        sheet: 'Main',
-        content: _c,
-        columns: _h,
-      }], settings);
-    },
-    define() {
+
     },
     addItem(data) {
       this.table.contents.push(data);
@@ -91,6 +70,24 @@ export default {
     },
     updateItem(data) {
 
+    },
+    fetchData() {
+      let url = `/answered-tests/list`;
+      if (this.filter.test) {
+        url += `?id=${this.filter.test}`
+      }
+
+      this.httpGet(url, result => {
+        this.items.tests = result.initialize.tests;
+        this.table.contents = result.list;
+      })
+    }
+  },
+  watch: {
+    'filter.test': {
+      handler() {
+        this.fetchData();
+      }
     }
   }
 }
@@ -98,13 +95,24 @@ export default {
 
 <template>
   <base-card-layout
-      @buttonClick="define"
       title="پاسخ‌نامه آزمون‌ها">
-
     <template v-slot:button-area>
-      <v-btn @click="downloadExcel">
-        دانلود اکسل
-      </v-btn>
+      <div class="d-inline-flex">
+        <base-select
+            class="mx-2"
+            style="max-width: 180px"
+            color="primary"
+            :items="items.tests"
+            v-model="filter.test"
+            clearable
+            label="فیلتر آزمون">
+        </base-select>
+        <v-btn
+            color="primary"
+            @click="downloadExcel">
+          دانلود اکسل
+        </v-btn>
+      </div>
     </template>
 
 
@@ -116,7 +124,6 @@ export default {
       <template v-slot:item.creationTime="{item}">
         {{ getPersianTime(item.creationTime) }}
       </template>
-      3
     </base-table>
 
     <answer-sheet-details-modal
@@ -126,6 +133,13 @@ export default {
         :data="modal.data"
         @add="addItem"
         @update="updateItem"
+    />
+
+
+    <test-selection-download-modal
+        v-if="modal.downloadExcel.visible"
+        :visible.sync="modal.downloadExcel.visible"
+        :initialize="modal.downloadExcel.initialize"
     />
 
 
