@@ -165,11 +165,11 @@ export default {
         visibilityConditionValue: this.model.visibilityCondition ? this.model.visibilityConditionValue : null,
       }
       if (this.data) {
-        this.httpPut(`/form-template-items/${this.data.id}`, payload, result => {
+        this.httpPut(`/form-template-items/${this.data.id}/`, payload, result => {
           this.$emit('update', result);
         })
       } else {
-        this.httpPost(`/form-template-items`, payload, result => {
+        this.httpPost(`/form-template-items/`, payload, result => {
           this.$emit('add', result);
         })
       }
