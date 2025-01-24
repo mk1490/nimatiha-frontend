@@ -26,11 +26,11 @@ export default {
         items: this.items
       }
       if (this.data) {
-        this.httpPut(`/test-template/${this.data.id}`, payload, result => {
+        this.httpPut(`/test-template/${this.data.id}/`, payload, result => {
           this.$emit('update', result);
         })
       } else {
-        this.httpPost(`/test-template`, payload, result => {
+        this.httpPost(`/test-template/`, payload, result => {
           this.$emit('add', result);
         })
       }
@@ -38,7 +38,7 @@ export default {
     },
     addItem() {
       if (this.data) {
-        this.httpPost(`/test-template/add-level-item/${this.data.id}`, {}, result => {
+        this.httpPost(`/test-template/add-level-item/${this.data.id}/`, {}, result => {
           this.items.push({
             id: result.id,
             levelTitle: result.levelTitle,
