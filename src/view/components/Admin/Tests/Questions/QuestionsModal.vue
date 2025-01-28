@@ -91,6 +91,13 @@ export default {
           this.$emit('add', result);
         })
       }
+    },
+    getQuestionTypeTitle(questionType) {
+      if (questionType == 1) {
+        return 'چهار گزینه‌ای';
+      } else {
+        return 'تشریحی';
+      }
     }
   }
 }
@@ -118,8 +125,11 @@ export default {
       <base-table
           :headers="table.headers"
           :items="table.contents"
-          :actions="table.actions"
-      />
+          :actions="table.actions">
+        <template v-slot:item.questionType="{item}">
+          {{ getQuestionTypeTitle(item.questionType) }}
+        </template>
+      </base-table>
     </base-card-layout>
 
     <single-question-modal
