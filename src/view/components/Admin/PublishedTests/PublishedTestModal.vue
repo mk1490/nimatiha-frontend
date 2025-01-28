@@ -1,10 +1,11 @@
 <script>
 import QuestionsModal from "@/view/components/Admin/Tests/Questions/QuestionsModal.vue";
 import BaseTextArea from "@/view/widget/Base/BaseTextArea.vue";
+import BaseAutoComplete from "@/view/widget/Base/BaseAutoComplete.vue";
 
 export default {
   name: "PublishedTestModal",
-  components: {BaseTextArea, QuestionsModal},
+  components: {BaseAutoComplete, BaseTextArea, QuestionsModal},
   emits: ['add', 'update'],
   created() {
     if (this.data) {
@@ -13,8 +14,8 @@ export default {
       this.model.endDescription = this.data.endDescription;
       this.model.slug = this.data.slug;
       this.model.authenticationRequired = this.data.authenticationRequired;
-      if (this.data.educationalConditions){
-        this.model.educationalConditions = this.data.educationalConditions.split(',').map(f=>{
+      if (this.data.educationalConditions) {
+        this.model.educationalConditions = this.data.educationalConditions.split(',').map(f => {
           return Number(f);
         })
       }
@@ -156,9 +157,11 @@ export default {
               <div class="col align-self-">
                 <div class="row">
                   <div class="col-12">
-                    <base-select
+                    <base-auto-complete
                         :items="initialize.tests"
                         v-model="model.items[index].testId"
+                        chips
+                        small-chips
                         label="بانک آزمون"
                     />
                   </div>
