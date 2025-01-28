@@ -22,7 +22,7 @@ export default {
             title: 'ویرایش',
             icon: 'mdi-pen',
             click: (item) => {
-              this.httpGet(`/published-test/${item.id}`, result => {
+              this.httpGet(`/published-test/${item.id}/`, result => {
                 this.modal.index = this.table.contents.indexOf(item);
                 this.modal.visible = true;
                 this.modal.initialize = result.initialize;

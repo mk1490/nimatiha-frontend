@@ -11,6 +11,14 @@ export default {
       this.model.title = this.data.title;
       this.model.description = this.data.description;
       this.model.endDescription = this.data.endDescription;
+      this.model.slug = this.data.slug;
+      this.model.authenticationRequired = this.data.authenticationRequired;
+      if (this.data.educationalConditions){
+        this.model.educationalConditions = this.data.educationalConditions.split(',').map(f=>{
+          return Number(f);
+        })
+      }
+      this.model.slug = this.data.slug;
       this.model.time = Number(this.data.time);
       this.model.items = this.data.items.map(f => {
         return {
@@ -30,7 +38,6 @@ export default {
     submit() {
       let payload = {...this.model}
       payload.time = Number(this.model.time);
-
 
       if (this.data) {
         this.httpPut(`/published-test/${this.data.id}/`, payload, result => {
@@ -63,6 +70,9 @@ export default {
         title: null,
         description: null,
         endDescription: null,
+        slug: null,
+        authenticationRequired: false,
+        educationalConditions: null,
         items: [],
       }
     }
@@ -86,6 +96,8 @@ export default {
             label="عنوان نمایشی"
             v-model="model.title"/>
       </div>
+
+
       <div class="col-12">
         <base-text-field
             required-symbol
@@ -93,6 +105,23 @@ export default {
             dir="ltr"
             label="مدّت زمان آزمون (دقیقه)"
             v-model="model.time"/>
+      </div>
+
+
+      <div class="col-12">
+        <base-text-field
+            required-symbol
+            dir="ltr"
+            label="اسلاگ"
+            v-model="model.slug"/>
+      </div>
+
+      <div class="col-12">
+        <base-select
+            label="شرط پایه"
+            :items="initialize['educationGrade']"
+            multiple
+            v-model="model.educationalConditions"/>
       </div>
 
       <div class="col-12">
@@ -105,6 +134,14 @@ export default {
         <base-text-area
             label="توضیحات پس از پایان آزمون"
             v-model="model.endDescription"
+        />
+      </div>
+
+      <div class="col-12">
+        <v-checkbox
+            label="این آزمون نیاز به احراز هویت دارد"
+            hide-details
+            v-model="model.authenticationRequired"
         />
       </div>
 
