@@ -7,6 +7,7 @@ import BaseTextField from "@/view/widget/Base/BaseTextField.vue";
 import BaseKeyValueSimpleTable from "@/view/widget/Base/BaseKeyValueSimpleTable.vue";
 import BaseSelect from "@/view/widget/Base/BaseSelect.vue";
 import BaseTextArea from "@/view/widget/Base/BaseTextArea.vue";
+import BaseButton from "@/view/widget/Base/BaseButton.vue";
 
 Vue.component('base-modal', BaseModal);
 Vue.component('base-card-layout', BaseCardLayout);
@@ -17,3 +18,4 @@ Vue.component('base-square-button', BaseSqaureButton);
 Vue.component('base-square-button', BaseSqaureButton);
 Vue.component('base-simple-table', BaseKeyValueSimpleTable);
 Vue.component('base-select', BaseSelect);
+Vue.component('base-button', BaseButton);

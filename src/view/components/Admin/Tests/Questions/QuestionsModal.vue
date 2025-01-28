@@ -9,6 +9,7 @@ export default {
     data: Object,
     questionId: String,
   },
+  emits: ['add'],
   created() {
     this.table.contents = this.data.questions.map(f => {
       return f;
@@ -16,6 +17,7 @@ export default {
   },
   data() {
     return {
+      formData: new FormData(),
       table: {
         headers: [
           {text: 'عنوان', value: 'questionTitle'},
@@ -74,6 +76,22 @@ export default {
       this.modal.visible = false;
       this.table.contents.splice(this.modal.index, 1, item);
     },
+    importExcel() {
+      this.$refs.filePicker.click();
+    },
+    onFileSelected(event) {
+      const reader = new FileReader();
+      const file = event.target.files[0];
+      reader.readAsDataURL(file);
+      reader.onloadend = () => {
+        this.data = reader.result;
+        this.formData.append('file', file)
+        this.httpPost(`/test/insert-many/${this.questionId}`, this.formData, result => {
+          this.table.contents = result.items;
+          this.$emit('add', result);
+        })
+      }
+    }
   }
 }
 </script>
@@ -90,6 +108,13 @@ export default {
         @buttonClick="define"
     >
 
+      <template v-slot:button-area>
+        <base-button
+            label="بارگذاری از اکسل"
+            class="mx-1"
+            @click="importExcel"
+        />
+      </template>
       <base-table
           :headers="table.headers"
           :items="table.contents"
@@ -106,6 +131,16 @@ export default {
         @add="add"
         @update="update"
     />
+
+
+    <form ref="fileFormPicker">
+      <input
+          @change="onFileSelected"
+          accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          hidden="hidden"
+          ref="filePicker"
+          type="file"/>
+    </form>
   </base-modal>
 </template>
 
