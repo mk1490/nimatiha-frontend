@@ -15,73 +15,22 @@ export const constantRoutes = [{
             title: 'route.Management',
         }, children: [
             {
-                path: 'Users',
-                name: 'Users',
-                component: () => import('@/view/components/Admin/Users/UsersManagement.vue'),
-                meta: {
-                    title: 'route.users',
-                    icon: 'mdi-account-multiple',
-                    // permission: 'users.list,users.update,users.insert,users.delete,users.change_password'
-                },
-            },
-            // {
-            //     path: 'members',
-            //     name: 'members',
-            //     component: () => import('@/view/components/Admin/Members/MembersManagement.vue'),
-            //     meta: {
-            //         title: 'اعضا',
-            //         icon: 'mdi-account-settings',
-            //         // permission: 'access_permissions.list,access_permissions.update,access_permissions.insert,access_permissions.delete'
-            //     },
-            // },
-            {
                 path: 'form-templates',
                 name: 'form-templates',
                 component: () => import('@/view/components/Admin/FormTemplates/FormTemplate.vue'),
                 meta: {
-                    title: 'قالب فرم‌ها',
+                    title: 'آزمون',
                     icon: 'mdi-format-list-checks',
                     // permission: 'access_permissions.list,access_permissions.update,access_permissions.insert,access_permissions.delete'
                 },
             },
             {
-                path: 'Questionnaire',
-                name: 'Questionnaire',
-                component: () => import('@/view/components/Admin/Questionnaire/QuestionnaireManagement.vue'),
+                path: 'files',
+                name: 'files',
+                component: () => import('@/view/components/Admin/FileManager/FileManager.vue'),
                 meta: {
-                    title: 'پرسش‌نامه منتشر شده',
-                    icon: 'mdi-comment-question-outline',
-                    // permission: 'access_permissions.list,access_permissions.update,access_permissions.insert,access_permissions.delete'
-                },
-            },
-            {
-                path: 'form-templates/:parentId',
-                name: 'form-templates',
-                component: () => import('@/view/components/Admin/FormTemplateItems/FormItemsManagement.vue'),
-                hidden: true,
-                meta: {
-                    title: 'قالب فرم‌ها',
-                    icon: 'mdi-comment-question-outline',
-                    // permission: 'access_permissions.list,access_permissions.update,access_permissions.insert,access_permissions.delete'
-                },
-            },
-            {
-                path: 'test',
-                name: 'test',
-                component: () => import('@/view/components/Admin/Tests/TestsManagement.vue'),
-                meta: {
-                    title: 'بانک آزمون',
-                    icon: 'mdi-comment-question-outline',
-                    // permission: 'access_permissions.list,access_permissions.update,access_permissions.insert,access_permissions.delete'
-                },
-            },
-            {
-                path: 'published-test',
-                name: 'published-test',
-                component: () => import('@/view/components/Admin/PublishedTests/PublishedTests.vue'),
-                meta: {
-                    title: 'آزمون‌های منتشر شده',
-                    icon: 'mdi-comment-question-outline',
+                    title: 'فایل',
+                    icon: 'mdi-format-list-checks',
                     // permission: 'access_permissions.list,access_permissions.update,access_permissions.insert,access_permissions.delete'
                 },
             },

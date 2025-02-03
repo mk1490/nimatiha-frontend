@@ -6,6 +6,7 @@ const baseData = {
         tenantId: null,
         panelTitle: null,
         companyLogo: null,
+        files: [],
         timeRangeItems: [{
             text: i18n.t('timeRangeItems.recent12Hour'), value: 'recent12Hour'
         }, {
@@ -37,6 +38,9 @@ const baseData = {
         },
         SET_COMPANY_LOGO_URL: (state, payload) => {
             state.companyLogo = payload;
+        },
+        ADD_FILE: (state, payload) => {
+            state.files.push(payload);
         }
     }, actions: {
         setInitializeData: ({commit}, payload) => {

@@ -4,8 +4,6 @@
       @close="$emit('update:visible', false)"
       @submit="nextOrSubmitAndSendToServer"
       :visible="visible">
-
-
     <base-tab-layout
         :tabs="tabs">
       <template v-slot:tab-1="{props}">
@@ -34,13 +32,13 @@
 <script>
 import BaseSelect from "@/view/widget/Base/BaseSelect.vue";
 import BaseTabLayout from "@/view/widget/Base/BaseTabLayout.vue";
-import General from "@/view/components/Admin/Users/Tabs/General.vue";
-import Roles from "@/view/components/Admin/Users/Tabs/Roles.vue";
-import AvailableTests from "@/view/components/Admin/Users/Tabs/AvailableTests.vue";
+// import General from "@/view/components/Admin/Users/Tabs/General.vue";
+// import Roles from "@/view/components/Admin/Users/Tabs/Roles.vue";
+// import AvailableTests from "@/view/components/Admin/Users/Tabs/AvailableTests.vue";
 
 export default {
   name: "DefineOrEditUserModal",
-  components: {AvailableTests, Roles, General, BaseTabLayout, BaseSelect},
+  components: {BaseTabLayout, BaseSelect},
   emits: ['add', 'update'],
   async created() {
     this.setInitialize();

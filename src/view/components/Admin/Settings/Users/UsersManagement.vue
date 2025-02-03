@@ -30,8 +30,8 @@
 </template>
 
 <script>
-import DefineOrEditUserModal from "@/view/components/Admin/Users/DefineOrEditUserModal.vue";
-import ChangePassword from "@/view/components/Admin/Users/ChangePassword.vue";
+import DefineOrEditUserModal from "./DefineOrEditUserModal.vue";
+import ChangePassword from "./ChangePassword.vue";
 import BaseTabLayout from "@/view/widget/Base/BaseTabLayout.vue";
 
 export default {

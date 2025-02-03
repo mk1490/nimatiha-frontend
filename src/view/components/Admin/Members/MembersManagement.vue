@@ -1,71 +1,10 @@
 <template>
-  <base-card-layout
-      title="مدیریت درخواست‌های عضویت">
+  <base-tab-layout
+      :tabs="tabs">
 
 
-    <template v-slot:button-area>
-      <div class="d-inline-flex align-center">
 
-
-        <base-select
-            class="mx-2"
-            v-model="filter.tests"
-            :items="items.tests"
-            item-value="id"
-            item-text="title"
-            multiple
-            label="فیلتر قالب پرسش‌نامه"
-            style="max-width: 150px"
-        />
-
-        <v-btn
-            class="ml-4"
-            @click="downloadExcel"
-            color="primary">
-          <v-icon>
-            mdi-file-excel
-          </v-icon>
-          دانلود اکسل
-        </v-btn>
-      </div>
-    </template>
-
-
-    <base-table
-        :headers="table.headers"
-        :items="table.contents"
-        :actions="table.actions">
-      <template v-slot:item.status="{item}">
-        <v-chip :color="getItemColor(item)">
-          {{ getItemText(item.status) }}
-        </v-chip>
-      </template>
-      <template v-slot:item.workflow="{item}">
-        <div class="workflow">
-          {{ item.notifications }}
-        </div>
-      </template>
-      <template v-slot:item.initialCashAmount="{item}">
-        {{ addCommas(item.initialCashAmount) }}
-      </template>
-      <template v-slot:item.monthlyInstallmentsAmount="{item}">
-        {{ addCommas(item.monthlyInstallmentsAmount) }}
-      </template>
-      <template v-slot:item.monthlyIncome="{item}">
-        {{ addCommas(item.monthlyIncome) }}
-      </template>
-      <template v-slot:item.creationTime="{item}">
-        {{ getPersianTime(item.creationTime, 'YYYY/MM/DD') }}
-      </template>
-    </base-table>
-
-    <member-details-modal
-        v-if="modal.details.visible"
-        :visible.sync="modal.details.visible"
-        :data="modal.details.data"
-    />
-
-  </base-card-layout>
+  </base-tab-layout>
 </template>
 
 <script>
@@ -75,16 +14,23 @@ import {mapGetters} from "vuex";
 import MemberDetailsModal from "@/view/components/Admin/Members/MemberRequestsInbox/Modals/MemberDetailsModal.vue";
 import BaseSelect from "@/view/widget/Base/BaseSelect.vue";
 import membersMixin from "@/view/components/Admin/Members/membersMixin";
+import BaseTabLayout from "@/view/widget/Base/BaseTabLayout.vue";
 
 export default {
   name: "MembersManagement",
-  components: {BaseSelect, MemberDetailsModal},
+  components: {BaseTabLayout, BaseSelect, MemberDetailsModal},
   mixins: [membersMixin],
   created() {
     this.fetchData()
   },
   data() {
     return {
+      tabs: [
+        {
+          title: 'اساتید',
+          key: 'teachers',
+        },
+      ],
       modal: {
         approve: {
           visible: false,

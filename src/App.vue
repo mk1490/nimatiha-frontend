@@ -13,6 +13,7 @@ import Vue from 'vue';
 import DeleteDialog from "./view/widget/DeleteDialog";
 import ProgressDialog from "@/view/widget/ProgressDialog";
 import {Subject} from "rxjs";
+import tus from "tus-js-client";
 import vuex from "@/store";
 
 export default {
@@ -35,7 +36,13 @@ export default {
                     break;
             }
         });
+
+
+
         this.updateTitle()
+
+
+
     },
     name: 'App',
     components: {ProgressDialog, DeleteDialog},
