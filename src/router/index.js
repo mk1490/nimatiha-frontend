@@ -85,6 +85,16 @@ export const constantRoutes = [{
                     // permission: 'access_permissions.list,access_permissions.update,access_permissions.insert,access_permissions.delete'
                 },
             },
+            {
+                path: 'settings',
+                name: 'settings',
+                component: () => import('@/view/components/Admin/Settings/Settings.vue'),
+                meta: {
+                    title: 'تنظیمات',
+                    icon: 'mdi-cog',
+                    // permission: 'access_permissions.list,access_permissions.update,access_permissions.insert,access_permissions.delete'
+                },
+            },
         ]
     },
     {
@@ -123,8 +133,6 @@ export const constantRoutes = [{
                     // permission: 'access_permissions.list,access_permissions.update,access_permissions.insert,access_permissions.delete'
                 },
             },
-
-
         ]
     },
     {
