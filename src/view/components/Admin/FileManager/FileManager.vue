@@ -44,7 +44,6 @@ export default {
         },
         onProgress: function (bytesUploaded, bytesTotal) {
           let percentage = ((bytesUploaded / bytesTotal) * 100).toFixed(2)
-          console.log(bytesUploaded, bytesTotal, percentage + '%')
         },
         onSuccess: function () {
 
