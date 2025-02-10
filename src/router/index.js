@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Layout from '../view/layout/TheLayout.vue';
-import TheLayout from "@/view/layout/TheLayout.vue";
 
 Vue.use(Router);
 
@@ -17,11 +16,10 @@ export const constantRoutes = [{
             {
                 path: 'form-templates',
                 name: 'form-templates',
-                component: () => import('@/view/components/Admin/FormTemplates/FormTemplate.vue'),
+                component: () => import('@/view/components/Admin/PublishedTests/PublishedTests.vue'),
                 meta: {
                     title: 'آزمون',
                     icon: 'mdi-format-list-checks',
-                    // permission: 'access_permissions.list,access_permissions.update,access_permissions.insert,access_permissions.delete'
                 },
             },
             {
