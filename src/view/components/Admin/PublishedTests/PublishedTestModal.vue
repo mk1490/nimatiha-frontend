@@ -1,5 +1,5 @@
 <script>
-import QuestionsModal from "@/view/components/Admin/PublishedTests/QuestionsBank/Questions/QuestionsModal.vue";
+import QuestionsModal from "@/view/components/Admin/PublishedTests/QuestionsBank/DefineOrEditQuestionBankModal.vue";
 import BaseTextArea from "@/view/widget/Base/BaseTextArea.vue";
 import BaseAutoComplete from "@/view/widget/Base/BaseAutoComplete.vue";
 

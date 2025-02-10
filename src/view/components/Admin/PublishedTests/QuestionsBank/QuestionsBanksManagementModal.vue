@@ -5,14 +5,11 @@
             @close="$emit('update:visible', false)"
             :visible="visible">
 
-
         <template v-slot:toolbar-action>
             <base-button
                     @click="define"
                     label="تعریف بانک سؤال جدید"
             />
-
-
         </template>
 
 
@@ -23,28 +20,30 @@
         />
 
 
-        <questions-modal
+        <define-or-edit-question-bank-modal
                 v-if="modal.questions.visible"
                 :visible.sync="modal.questions.visible"
                 :data="modal.questions.data"
-                :question-id="modal.questions.id">
-
-        </questions-modal>
+                :question-id="modal.questions.id"
+                @add="addItem"
+        />
 
     </base-modal>
 </template>
 
 <script>
-import QuestionsModal from "@/view/components/Admin/PublishedTests/QuestionsBank/Questions/QuestionsModal.vue";
+import QuestionsModal from "@/view/components/Admin/PublishedTests/QuestionsBank/DefineOrEditQuestionBankModal.vue";
+import DefineOrEditQuestionBankModal
+    from "@/view/components/Admin/PublishedTests/QuestionsBank/DefineOrEditQuestionBankModal.vue";
 
 export default {
     name: "QuestionsBankModal",
-    components: {QuestionsModal},
+    components: {DefineOrEditQuestionBankModal, QuestionsModal},
     props: {
         visible: Boolean,
     },
     created() {
-        this.httpGet(`/test/list`, result => {
+        this.httpGet(`/question-bank/list`, result => {
             this.table.contents = result;
         })
     },
@@ -67,10 +66,10 @@ export default {
                     //     }
                     // },
                     {
-                        title: 'سوالات',
-                        icon: 'mdi-comment-question-outline',
+                        title: 'ویرایش',
+                        icon: 'mdi-pen',
                         click: (item) => {
-                            this.httpGet(`/test/${item.id}`, result => {
+                            this.httpGet(`/question-bank/${item.id}`, result => {
                                 this.modal.questions.data = result;
                                 this.modal.questions.id = item.id;
                                 this.modal.questions.visible = true;
@@ -93,7 +92,14 @@ export default {
     },
     methods: {
         define() {
-            this.modal.questions.visible = true;
+            this.httpGet(`/question-bank/initialize`, result => {
+                this.modal.questions.id = result.id;
+                this.modal.questions.visible = true;
+            })
+        },
+        addItem(data) {
+            this.modal.visible = false;
+            this.table.contents.push(data);
         }
     }
 }

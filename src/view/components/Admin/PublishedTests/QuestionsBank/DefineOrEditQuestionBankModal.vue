@@ -3,7 +3,7 @@ import SingleQuestionModal
     from "@/view/components/Admin/PublishedTests/QuestionsBank/Questions/SingleQuestionModal.vue";
 
 export default {
-    name: "QuestionsModal",
+    name: "DefineOrEditQuestionBankModal",
     components: {SingleQuestionModal},
     props: {
         visible: Boolean,
@@ -18,6 +18,9 @@ export default {
     },
     data() {
         return {
+            model: {
+                title: null,
+            },
             formData: new FormData(),
             menuItems: [
                 {title: 'دانلود فایل نمونه'},
@@ -104,6 +107,14 @@ export default {
             } else {
                 return 'تشریحی';
             }
+        },
+        save() {
+            this.httpPost(`/question-bank/`, {
+                id: this.questionId,
+                title: this.model.title,
+            }, result => {
+                this.$emit('add', result);
+            })
         }
     }
 }
@@ -116,27 +127,38 @@ export default {
             @close="$emit('update:visible', false)"
             full-screen>
 
-        <base-card-layout
-                button-title="تعریف پرسش جدید"
-                @buttonClick="define"
-        >
+        <template v-slot:toolbar-action>
+            <div class="d-inline-flex">
+                <base-text-field
+                        class="mx-2"
+                        label="عنوان بانک"
+                        v-model="model.title"
+                />
 
-            <template v-slot:button-area>
                 <base-button
                         label="بارگذاری از اکسل"
-                        class="mx-1"
                         :menu-items="menuItems"
                 />
+                <base-button
+                        label="تعریف پرسش تکی"
+                        @click="define"
+                        class="mx-1"
+                />
+                <base-button
+                        label="ذخیره و بستن"
+                        @click="save"
+                />
+            </div>
+
+        </template>
+        <base-table
+                :headers="table.headers"
+                :items="table.contents"
+                :actions="table.actions">
+            <template v-slot:item.questionType="{item}">
+                {{ getQuestionTypeTitle(item.questionType) }}
             </template>
-            <base-table
-                    :headers="table.headers"
-                    :items="table.contents"
-                    :actions="table.actions">
-                <template v-slot:item.questionType="{item}">
-                    {{ getQuestionTypeTitle(item.questionType) }}
-                </template>
-            </base-table>
-        </base-card-layout>
+        </base-table>
 
         <single-question-modal
                 v-if="modal.visible"
