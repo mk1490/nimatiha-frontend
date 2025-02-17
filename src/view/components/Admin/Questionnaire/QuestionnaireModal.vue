@@ -75,6 +75,7 @@ export default {
       model: {
         title: null,
         slug: null,
+        authRequired: false,
       },
       selectedItems: [],
       selectedChildItem: [],
@@ -107,11 +108,19 @@ export default {
                 v-model="model.slug"
             />
           </div>
+          <div class="col-12">
+            <v-switch
+                v-model="model.authRequired"
+                inset
+                hide-details
+                label="تکمیل این پرسش‌نامه نیازمند احراز هویت می‌باشد."
+            />
+          </div>
         </div>
 
       </div>
 
-      <div class="col-8">
+      <div class="col-12">
         <div class="row">
           <div
               v-for="(item, index) in items "

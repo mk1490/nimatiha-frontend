@@ -22,6 +22,7 @@ export default {
         formBankQuestionItems: {
           visible: false,
           data: null,
+          parentId: null,
         }
       },
       table: {
@@ -35,6 +36,7 @@ export default {
             icon: 'mdi-format-list-bulleted-type',
             click: async (item) => {
               this.httpGet(`/form-template-items/list/${item.id}`, result => {
+                this.modal.formBankQuestionItems.parentId = item.id;
                 this.modal.formBankQuestionItems.data = result;
                 this.modal.formBankQuestionItems.visible = true
               })
@@ -115,6 +117,7 @@ export default {
         v-if="modal.formBankQuestionItems.visible"
         :visible.sync="modal.formBankQuestionItems.visible"
         :data="modal.formBankQuestionItems.data"
+        :parent-id="modal.formBankQuestionItems.parentId"
     />
 
 

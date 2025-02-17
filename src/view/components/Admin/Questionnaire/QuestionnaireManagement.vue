@@ -15,7 +15,7 @@ export default {
       table: {
         headers: [
           {text: 'عنوان', value: 'title'},
-          {text: 'نمایش در لیست', value: 'visible'},
+          {text: 'نمایش عمومی در پروفایل', value: 'visible'},
           {text: 'اسلاگ', value: 'slug'},
         ],
         contents: [],
