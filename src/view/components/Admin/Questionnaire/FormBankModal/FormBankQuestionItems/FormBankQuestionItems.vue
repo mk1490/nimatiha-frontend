@@ -1,14 +1,17 @@
 <script>
-import FormTemplateModal from "@/view/components/Admin/FormTemplates/FormTemplateModal.vue";
-import ItemsModal from "@/view/components/Admin/FormTemplateItems/ItemsModal.vue";
+
+import FormBankQuestionItemModal
+  from "@/view/components/Admin/Questionnaire/FormBankModal/FormBankQuestionItems/FormBankQuestionItemModal.vue";
 
 export default {
-  name: "FormItemsManagement",
-  components: {ItemsModal},
+  name: "FormBankQuestionItems",
+  components: {FormBankQuestionItemModal},
+  props: {
+    visible: Boolean,
+    data: Object,
+  },
   created() {
-    this.httpGet(`/form-template-items/list/${this.$route.params.parentId}`, result => {
-      this.table.contents = result;
-    })
+    this.table.contents = this.data;
   },
   data() {
     return {
@@ -105,19 +108,27 @@ export default {
 </script>
 
 <template>
-  <base-card-layout
-      @buttonClick="define"
-      title="آیتم‌های فیلد"
-      :back-route="`/form-templates`"
-      button-title="تعریف فیلد جدید"
-  >
+  <base-modal
+      :visible.sync="visible"
+      @close="$emit('update:visible', false)"
+      full-screen
+      title="آیتم‌های فیلد">
+
+    <template v-slot:toolbar-action>
+      <base-button
+          label="تعریف فیلد جدید"
+          @click="define"
+      />
+    </template>
+
+
     <base-table
         :items="table.contents"
         :headers="table.headers"
         :actions="actions">
     </base-table>
 
-    <items-modal
+    <form-bank-question-item-modal
         v-if="modal.visible"
         :visible.sync="modal.visible"
         :initialize="modal.initialize"
@@ -127,7 +138,7 @@ export default {
     />
 
 
-  </base-card-layout>
+  </base-modal>
 </template>
 
 <style scoped>

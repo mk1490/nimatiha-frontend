@@ -1,13 +1,10 @@
 <script>
-import FormTemplateModal from "@/view/components/Admin/FormTemplates/FormTemplateModal.vue";
-import ItemsModal from "@/view/components/Admin/FormTemplateItems/ItemsModal.vue";
 import AnswerSheetDetailsModal from "./AnswerSheetDetailsModal.vue";
-import xlsx from "json-as-xlsx";
 import TestSelectionDownloadModal from "@/view/components/Admin/AnsweredTests/TestSelectionDownloadModal.vue";
 
 export default {
   name: "AnsweredTests",
-  components: {TestSelectionDownloadModal, AnswerSheetDetailsModal, ItemsModal},
+  components: {TestSelectionDownloadModal, AnswerSheetDetailsModal},
   created() {
     this.fetchData();
   },

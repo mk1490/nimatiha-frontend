@@ -112,7 +112,7 @@
 import BaseSelect from "@/view/widget/Base/BaseSelect.vue";
 
 export default {
-    name: "ItemsModal",
+    name: "FormBankQuestionItemModal",
     components: {BaseSelect},
     emits: ['update', 'add'],
     created() {

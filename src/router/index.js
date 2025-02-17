@@ -14,11 +14,20 @@ export const constantRoutes = [{
             title: 'route.Management',
         }, children: [
             {
-                path: 'form-templates',
-                name: 'form-templates',
+                path: 'test-management',
+                name: 'test-management',
                 component: () => import('@/view/components/Admin/PublishedTests/PublishedTests.vue'),
                 meta: {
                     title: 'آزمون',
+                    icon: 'mdi-format-list-checks',
+                },
+            },
+            {
+                path: 'questionnaires-management',
+                name: 'questionnaires-management',
+                component: () => import('@/view/components/Admin/Questionnaire/QuestionnaireManagement.vue'),
+                meta: {
+                    title: 'فرم‌ساز',
                     icon: 'mdi-format-list-checks',
                 },
             },

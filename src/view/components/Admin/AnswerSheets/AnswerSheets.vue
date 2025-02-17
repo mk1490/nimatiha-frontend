@@ -1,11 +1,9 @@
 <script>
-import FormTemplateModal from "@/view/components/Admin/FormTemplates/FormTemplateModal.vue";
-import ItemsModal from "@/view/components/Admin/FormTemplateItems/ItemsModal.vue";
 import AnswerSheetDetailsModal from "@/view/components/Admin/AnswerSheets/AnswerSheetDetailsModal.vue";
 
 export default {
   name: "AnswerSheets",
-  components: {AnswerSheetDetailsModal, ItemsModal},
+  components: {AnswerSheetDetailsModal},
   created() {
     this.httpGet(`/answer-sheet/list`, result => {
       this.table.contents = result;
