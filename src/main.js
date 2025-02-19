@@ -3,7 +3,7 @@ import App from './App.vue'
 import vuetify from './plugins/vuetify'
 import router from './router';
 import store from './store';
-import i18n from './locale'; // Internationalization
+import i18n from './locale'
 import '@/assets/styles/global.scss';
 import '@/assets/styles/background.scss';
 import '@/plugins/httpRequest';
@@ -18,19 +18,15 @@ import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
 import "@mdi/font/css/materialdesignicons.min.css";
 import VuePersianDatetimePicker from 'vue-persian-datetime-picker';
-
-// import 'zingchart/es6';
-// import zingchartVue from 'zingchart-vue';
-
-// Modules must be imported EXPLICITLY when using es6 version
-import VueApexCharts from "vue-apexcharts";
 import HighchartsVue from 'highcharts-vue'
 import 'nprogress/nprogress.css'
+import CKEditor from "@ckeditor/ckeditor5-vue2";
 
-Vue.use(HighchartsVue)
-Vue.component('apexchart', VueApexCharts);
-Vue.use(VueApexCharts);
-import exportingInit from 'highcharts/modules/exporting'
+Vue.use(CKEditor);
+Vue.use(HighchartsVue);
+
+
+
 import Highcharts from "highcharts/highcharts";
 
 Highcharts.setOptions({

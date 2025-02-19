@@ -1,5 +1,6 @@
 <script>
 import BaseSelect from "@/view/widget/Base/BaseSelect.vue";
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 export default {
   name: "QuestionnaireModal",
@@ -73,6 +74,22 @@ export default {
   },
   data() {
     return {
+      editor: ClassicEditor,
+      editorConfig: {
+        language: {
+          ui: 'fa',
+          content: 'fa'
+        },
+        toolbar: {
+          items: [
+            'undo', 'redo',
+            '|', 'heading',
+            '|', 'bold', 'italic',
+            '|', 'bulletedList', 'numberedList', 'outdent', 'indent'
+          ]
+        },
+        cloudServices: {}
+      },
       disabledValues: [],
       model: {
         title: null,
@@ -113,16 +130,15 @@ export default {
             />
           </div>
           <div class="col-12">
-            <base-text-area
-                label="متن پیش از شروع پرسش‌نامه"
-                v-model="model.preText"
-            />
+            <ckeditor
+                :editor="editor"
+                v-model="model.preText" :config="editorConfig"/>
           </div>
           <div class="col-12">
-            <base-text-area
-                label="متن پس از تکمیل پرسش‌نامه"
+            <ckeditor
+                :editor="editor"
                 v-model="model.afterText"
-            />
+                :config="editorConfig"/>
           </div>
           <div class="col-12">
             <v-switch
