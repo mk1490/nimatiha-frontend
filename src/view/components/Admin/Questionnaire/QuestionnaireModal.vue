@@ -13,6 +13,8 @@ export default {
   created() {
     if (this.data) {
       this.model.title = this.data.title;
+      this.model.preText = this.data.preText;
+      this.model.afterText = this.data.afterText;
       this.model.slug = this.data.slug;
       this.items = [...this.data.items];
 
@@ -76,6 +78,8 @@ export default {
         title: null,
         slug: null,
         authRequired: false,
+        preText: null,
+        afterText: null,
       },
       selectedItems: [],
       selectedChildItem: [],
@@ -106,6 +110,18 @@ export default {
                 label="اسلاگ"
                 dir="ltr"
                 v-model="model.slug"
+            />
+          </div>
+          <div class="col-12">
+            <base-text-area
+                label="متن پیش از شروع پرسش‌نامه"
+                v-model="model.preText"
+            />
+          </div>
+          <div class="col-12">
+            <base-text-area
+                label="متن پس از تکمیل پرسش‌نامه"
+                v-model="model.afterText"
             />
           </div>
           <div class="col-12">
