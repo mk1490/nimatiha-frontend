@@ -32,11 +32,21 @@ export const constantRoutes = [{
                 },
             },
             {
-                path: 'files',
-                name: 'files',
-                component: () => import('@/view/components/Admin/FileManager/FileManager.vue'),
+                path: 'courses',
+                name: 'courses',
+                component: () => import('@/view/components/Admin/Courses/CoursesManagement.vue'),
                 meta: {
-                    title: 'فایل',
+                    title: 'دوره‌ها',
+                    icon: 'mdi-format-list-checks',
+                    // permission: 'access_permissions.list,access_permissions.update,access_permissions.insert,access_permissions.delete'
+                },
+            },
+            {
+                path: 'coaches',
+                name: 'coaches',
+                component: () => import('@/view/components/Admin/Coaches/Coaches.vue'),
+                meta: {
+                    title: 'مربیان',
                     icon: 'mdi-format-list-checks',
                     // permission: 'access_permissions.list,access_permissions.update,access_permissions.insert,access_permissions.delete'
                 },
