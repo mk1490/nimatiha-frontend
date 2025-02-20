@@ -16,8 +16,15 @@ export default {
       },
       model: {
         title: null,
-        categories: [],
+        joinedCategoryIds: [],
       }
+    }
+  },
+  methods: {
+    submit() {
+      this.httpPost(`/course`, this.model, result => {
+
+      })
     }
   }
 }
@@ -27,6 +34,7 @@ export default {
   <base-modal
       :title="data? 'ویرایش دوره': 'تعریف دوره جدید'"
       @close="$emit('update:visible', false)"
+      @submit="submit"
       :visible="visible">
 
     <div class="row">
@@ -41,8 +49,11 @@ export default {
         <base-select
             label="دسته بندی"
             multiple
+            chips
+            small-chips
+            deletable-chips
             :items="items.categories"
-            v-model="model.categories"
+            v-model="model.joinedCategoryIds"
         />
       </div>
 
