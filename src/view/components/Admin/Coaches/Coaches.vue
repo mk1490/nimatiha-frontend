@@ -12,7 +12,12 @@ export default {
   },
   methods: {
     define() {
-      this.modal.visible = true;
+      this.httpGet(`/coach/initialize`, result => {
+        this.modal.initialize = result;
+        this.modal.data = null;
+        this.modal.visible = true;
+      })
+
     },
     addItem(data) {
       this.table.contents.push(data);
@@ -35,7 +40,9 @@ export default {
       table: {
         headers: [
           {text: 'نام', value: 'name'},
-          {text: 'نام خانوادگی', value: 'family'}
+          {text: 'نام خانوادگی', value: 'family'},
+          {text: 'کد ملّی', value: 'nationalCode'},
+          {text: 'شماره همراه', value: 'mobileNumber'}
         ],
         contents: [],
         actions: [
@@ -94,6 +101,7 @@ export default {
         v-if="modal.visible"
         :visible.sync="modal.visible"
         :data="modal.data"
+        :initialize="modal.initialize"
         @add="addItem"
         @update="updateItem"
     />
@@ -103,6 +111,7 @@ export default {
         v-if="modal.category.visible"
         :visible.sync="modal.category.visible"
         :data="modal.category.data"
+
     />
 
   </base-card-layout>

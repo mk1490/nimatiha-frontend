@@ -4,8 +4,19 @@ export default {
   props: {
     visible: Boolean,
     data: Object,
+    initialize: Object,
   },
   emits: ['add', 'update'],
+  created() {
+    this.items.categories = this.initialize['coachCategories'];
+    if (this.data){
+      this.model.name = this.data.name;
+      this.model.family = this.data.family;
+      this.model.mobileNumber = this.data.mobileNumber;
+      this.model.nationalCode = this.data.nationalCode;
+      this.model.username = this.data.username;
+    }
+  },
   data() {
     return {
       model: {
@@ -15,18 +26,21 @@ export default {
         mobileNumber: null,
         username: null,
         password: null,
+      },
+      items: {
+        categories: [],
       }
     }
   },
   methods: {
     submit() {
       if (this.data) {
-        this.httpPut(``, this.model, result => {
+        this.httpPut(`/coach/${this.data.id}`, this.model, result => {
           this.$emit('update', result);
         }, error => {
         })
       } else {
-        this.httpPost(``, this.model, result => {
+        this.httpPost(`/coach`, this.model, result => {
           this.$emit('add', result);
         }, error => {
 
@@ -70,6 +84,17 @@ export default {
             label="تلفن همراه"
             type="tel"
             dir="ltr"
+        />
+      </div>
+      <div class="col-12">
+        <base-select
+            :items="items.categories"
+            v-model="model.categories"
+            deletable-chips
+            chips
+            multiple
+            small-chips
+            label="دسته بندی"
         />
       </div>
       <div class="col-12">
