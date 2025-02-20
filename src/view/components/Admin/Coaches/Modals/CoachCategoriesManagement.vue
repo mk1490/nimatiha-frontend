@@ -29,8 +29,7 @@ export default {
     },
     deleteItem(item, index) {
       if (item.id) {
-        this.httpDelete(`/coach-category/${item.id
-        }`, result => {
+        this.httpDelete(`/coach-category/${item.id}`, result => {
           this.model.splice(index, 1);
         })
 
