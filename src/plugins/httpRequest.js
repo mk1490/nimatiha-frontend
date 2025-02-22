@@ -4,9 +4,7 @@ import i18n from '@/locale'; // Internationalization
 import store from '@/store'; // Internationalization
 import Router from "@/router";
 
-// const serverAddress = process.env.VUE_APP_SERVER_ADDRESS;
-// const serverAddress = "https://api.nimkatiha.com";
-const serverAddress = "http://localhost:3000";
+const serverAddress = process.env.VUE_APP_SERVER_ADDRESS;
 
 Vue.prototype.serverAddress = serverAddress;
 let lastRequest;
