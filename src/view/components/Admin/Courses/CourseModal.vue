@@ -6,8 +6,13 @@ export default {
     data: Object,
     initialize: Object,
   },
+  emits: ['add', 'update'],
   created() {
     this.items.categories = this.initialize['coachCategories'];
+    if (this.data) {
+      this.model.title = this.data['title'];
+      this.model.joinedCategoryIds = this.data['joinedCategoryIds'];
+    }
   },
   data() {
     return {
@@ -22,9 +27,16 @@ export default {
   },
   methods: {
     submit() {
-      this.httpPost(`/course`, this.model, result => {
+      if (this.data) {
+        this.httpPut(`/course/${this.data.id}`, this.model, result => {
+          this.$emit('update', result);
+        })
+      } else {
+        this.httpPost(`/course`, this.model, result => {
+          this.$emit('add', result);
+        })
+      }
 
-      })
     }
   }
 }

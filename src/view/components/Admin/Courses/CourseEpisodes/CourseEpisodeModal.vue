@@ -72,7 +72,7 @@ export default {
           v-if="model.type === 1"
           class="col-12">
         <base-text-field
-            label="آدرس Url ویدئو"
+            label="آدرس Config ابرآروان"
             v-model="model.metaData"
             dir="ltr"
         />

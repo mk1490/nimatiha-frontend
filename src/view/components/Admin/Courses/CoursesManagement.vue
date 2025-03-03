@@ -17,6 +17,14 @@ export default {
         this.modal.initialize = result;
         this.modal.visible = true;
       });
+    },
+    addItem(data) {
+      this.table.contents.push(data);
+      this.modal.visible = false;
+    },
+    updateItem(data) {
+      this.table.contents.splice(this.modal.index, 1, data);
+      this.modal.visible = false;
     }
   },
   data() {
@@ -31,15 +39,20 @@ export default {
             title: 'ویرایش',
             icon: 'mdi-pen',
             click: item => {
-              this.modal.data = item;
-              this.modal.visible = true;
+              this.httpGet(`/course/${item.id}`, result => {
+                this.modal.index = this.table.contents.indexOf(item);
+                this.modal.data = result.data;
+                this.modal.initialize = result.initialize;
+                this.modal.visible = true;
+              });
+
             }
           },
           {
             title: 'آیتم‌های دوره',
             icon: 'mdi-playlist-check',
             click: item => {
-              this.httpGet(`/course-episode/${item.id}`, result=>{
+              this.httpGet(`/course-episode/${item.id}`, result => {
                 this.modal.courseEpisodes.parentId = item.id;
                 this.modal.courseEpisodes.data = result;
                 this.modal.courseEpisodes.visible = true;
@@ -91,6 +104,8 @@ export default {
         :visible.sync="modal.visible"
         :data="modal.data"
         :initialize="modal.initialize"
+        @add="addItem"
+        @update="updateItem"
     />
 
     <course-episodes
