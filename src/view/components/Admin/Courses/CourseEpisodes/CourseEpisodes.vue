@@ -28,6 +28,29 @@ export default {
           {text: 'نوع', value: 'type'},
         ],
         contents: [],
+        actions: [
+          {
+            title: 'ویرایش',
+            icon: 'mdi-pen',
+            click: item => {
+              this.httpGet(`/course-episode/initialize`, result => {
+                this.modal.initialize = result;
+                this.modal.data = item;
+                this.modal.visible = true;
+              })
+            }
+          },
+          {
+            title: 'حذف',
+            icon: 'mdi-delete',
+            color: 'error',
+            click: item => {
+              this.httpDelete(`/course-episode/${item.id}`, result => {
+                this.table.contents.splice(this.table.contents.indexOf(item), 1)
+              })
+            }
+          }
+        ],
       }
     }
   },
@@ -46,6 +69,13 @@ export default {
     updateItem(data) {
       this.table.contents.splice(this.modal.index, 1, data);
       this.modal.visible = false;
+    },
+    getTypeTitle(type) {
+      if (type === 1) {
+        return 'ویدئو';
+      } else {
+        return 'آزمون';
+      }
     }
   }
 }
@@ -68,7 +98,13 @@ export default {
     <base-table
         :headers="table.headers"
         :items="table.contents"
-    />
+        :actions="table.actions">
+      <template v-slot:item.type="{item}">
+        <div>
+          {{ getTypeTitle(item.type) }}
+        </div>
+      </template>
+    </base-table>
 
     <course-episode-modal
         v-if="modal.visible"

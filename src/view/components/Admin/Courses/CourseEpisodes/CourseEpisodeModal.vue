@@ -13,6 +13,11 @@ export default {
   emits: ['add', 'update'],
   created() {
     this.items.types = this.initialize.types;
+    if (this.data) {
+      this.model.title = this.data.title;
+      this.model.type = this.data.type;
+      this.model.metaData = this.data.metaData;
+    }
   },
   data() {
     return {
@@ -50,7 +55,7 @@ export default {
 
 <template>
   <base-modal
-      title="تعریف آیتم جدید"
+      :title="data ?'ویرایش آیتم' : 'تعریف آیتم جدید'"
       @close="$emit('update:visible', false)"
       @submit="submit"
       :visible="visible">
