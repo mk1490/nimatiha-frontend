@@ -13,10 +13,12 @@ export default {
   emits: ['add', 'update'],
   created() {
     this.items.types = this.initialize.types;
+    this.items.prerequisites = this.initialize.prerequisites;
     if (this.data) {
       this.model.title = this.data.title;
       this.model.type = this.data.type;
       this.model.metaData = this.data.metaData;
+      this.model.prerequisites = this.data.prerequisites;
     }
   },
   data() {
@@ -25,10 +27,12 @@ export default {
         title: null,
         type: null,
         metaData: null,
+        prerequisites: null,
       },
       items: {
         types: [],
         testBanks: [],
+        prerequisites: [],
       }
     }
   },
@@ -89,7 +93,15 @@ export default {
             label="بانک آزمون"
             :items="items.testBanks"
             v-model="model.metaData"
-            dir="ltr"
+        />
+      </div>
+      <div
+          class="col-12">
+        <base-select
+            label="پیش‌نیاز"
+            :items="items.prerequisites"
+            v-model="model.prerequisites"
+            clearable
         />
       </div>
     </div>
