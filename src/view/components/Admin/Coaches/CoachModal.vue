@@ -9,7 +9,7 @@ export default {
   emits: ['add', 'update'],
   created() {
     this.items.categories = this.initialize['coachCategories'];
-    if (this.data){
+    if (this.data) {
       this.model.name = this.data.name;
       this.model.family = this.data.family;
       this.model.mobileNumber = this.data.mobileNumber;

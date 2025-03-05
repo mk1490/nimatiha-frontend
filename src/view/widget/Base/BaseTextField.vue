@@ -9,6 +9,7 @@
       @focusout="$emit('focusout')"
       :label="label"
       :type="type"
+      :dir="dir"
       v-bind="vBind"
       v-on="vOn"
       :disabled="disabled"
@@ -48,6 +49,10 @@ export default {
     vBind: undefined,
     vOn: undefined,
     label: String,
+    dir: {
+      type: String,
+      default: 'rtl',
+    },
     suffix: String,
     prependIcon: String,
     appendIcon: String,
