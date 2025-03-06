@@ -45,13 +45,28 @@ export default {
           {text: 'شماره همراه', value: 'mobileNumber'}
         ],
         contents: [],
+        filters: [
+          {
+            type: 'text',
+            value: 'name',
+          },
+          {
+            type: 'text',
+            value: 'family',
+          }
+        ],
         actions: [
           {
             title: 'ویرایش',
             icon: 'mdi-pen',
             click: item => {
-              this.modal.index = this.table.contents.indexOf(item);
-              this.modal.visible = true;
+              this.httpGet(`/coach/${item.id}`, result => {
+                this.modal.index = this.table.contents.indexOf(item);
+                this.modal.initialize = result.initialize;
+                this.modal.data = result.data;
+                this.modal.visible = true;
+              })
+
             }
           },
           {
@@ -67,6 +82,7 @@ export default {
       modal: {
         visible: false,
         data: null,
+        initialize: null,
         category: {
           visible: false,
           data: null,
@@ -94,6 +110,8 @@ export default {
     <base-table
         :items="table.contents"
         :headers="table.headers"
+        :actions="table.actions"
+        :filters="table.filters"
     />
 
 

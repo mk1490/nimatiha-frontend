@@ -15,6 +15,7 @@ export default {
       this.model.mobileNumber = this.data.mobileNumber;
       this.model.nationalCode = this.data.nationalCode;
       this.model.username = this.data.username;
+      this.model.categories = this.data.categories;
     }
   },
   data() {
@@ -54,7 +55,7 @@ export default {
 
 <template>
   <base-modal
-      title="تعریف مربی جدید"
+      :title="data? 'ویرایش مربی': 'تعریف مربی جدید'"
       @submit="submit"
       @close="$emit('update:visible', false)"
       :visible="visible">
@@ -104,7 +105,9 @@ export default {
             dir="ltr"
         />
       </div>
-      <div class="col-12">
+      <div
+          v-if="!data"
+          class="col-12">
         <base-text-field
             dir="ltr"
             v-model="model.password"
