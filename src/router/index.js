@@ -12,6 +12,13 @@ export const constantRoutes = [{
             noCache: true,
             affix: true,
             title: 'route.Management',
+            permission: [
+                'management.test',
+                'management.form_generator',
+                'management.courses',
+                'management.coaches',
+                'management.settings',
+            ],
         }, children: [
             {
                 path: 'test-management',
@@ -20,6 +27,7 @@ export const constantRoutes = [{
                 meta: {
                     title: 'آزمون',
                     icon: 'mdi-format-list-checks',
+                    permission: 'management.test'
                 },
             },
             {
@@ -29,6 +37,7 @@ export const constantRoutes = [{
                 meta: {
                     title: 'فرم‌ساز',
                     icon: 'mdi-format-list-checks',
+                    permission: 'management.form_generator'
                 },
             },
             {
@@ -38,7 +47,7 @@ export const constantRoutes = [{
                 meta: {
                     title: 'دوره‌ها',
                     icon: 'mdi-format-list-checks',
-                    // permission: 'access_permissions.list,access_permissions.update,access_permissions.insert,access_permissions.delete'
+                    permission: 'management.courses'
                 },
             },
             {
@@ -48,7 +57,7 @@ export const constantRoutes = [{
                 meta: {
                     title: 'مربیان',
                     icon: 'mdi-format-list-checks',
-                    // permission: 'access_permissions.list,access_permissions.update,access_permissions.insert,access_permissions.delete'
+                    permission: 'management.coaches'
                 },
             },
             {
@@ -58,7 +67,7 @@ export const constantRoutes = [{
                 meta: {
                     title: 'تنظیمات',
                     icon: 'mdi-cog',
-                    // permission: 'access_permissions.list,access_permissions.update,access_permissions.insert,access_permissions.delete'
+                    permission: 'management.settings'
                 },
             },
         ]
@@ -68,6 +77,7 @@ export const constantRoutes = [{
             noCache: true,
             affix: true,
             title: 'route.Management',
+            permission: 'report.answer_sheet'
         }, children: [
             {
                 path: 'answerSheets',
@@ -76,7 +86,7 @@ export const constantRoutes = [{
                 meta: {
                     title: 'پاسخ‌نامه',
                     icon: 'mdi-book-open-page-variant',
-                    // permission: 'access_permissions.list,access_permissions.update,access_permissions.insert,access_permissions.delete'
+                    permission: 'report.answer_sheet'
                 },
             },
 
@@ -88,6 +98,7 @@ export const constantRoutes = [{
             noCache: true,
             affix: true,
             title: 'route.Management',
+            permission: 'report.answered_tests'
         }, children: [
             {
                 path: 'answeredTests',
@@ -96,7 +107,7 @@ export const constantRoutes = [{
                 meta: {
                     title: 'پاسخ‌نامه آزمون',
                     icon: 'mdi-book-open-page-variant',
-                    // permission: 'access_permissions.list,access_permissions.update,access_permissions.insert,access_permissions.delete'
+                    permission: 'report.answered_tests'
                 },
             },
         ]
