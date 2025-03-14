@@ -28,6 +28,7 @@ export default {
         type: null,
         metaData: null,
         prerequisites: null,
+        file: null,
       },
       items: {
         types: [],
@@ -39,7 +40,10 @@ export default {
   methods: {
     submit() {
       let payload = {
-        ...this.model,
+        title: this.model.title,
+        type: this.model.type,
+        metaData: this.model.metaData,
+        prerequisites: this.model.prerequisites,
         parentId: this.parentId
       }
       if (this.data) {
@@ -48,10 +52,29 @@ export default {
         })
       } else {
         this.httpPost(`/course-episode`, payload, result => {
-          this.$emit('add', result);
+          if (this.model.file) {
+            this.uploadFile(result.id, callback => {
+              this.$emit('add', result);
+            })
+          } else {
+            this.$emit('add', result);
+          }
         })
       }
 
+    },
+    filePicked(file) {
+      this.model.file = file;
+      this.formData = new FormData();
+      this.formData.append("file", file);
+      if (this.data && this.model.file) {
+        this.uploadFile(this.data.id)
+      }
+    },
+    uploadFile(id, callback) {
+      this.httpPost(`/course-episode/upload-file/${id}`, this.formData, result => {
+        callback(result);
+      })
     }
   }
 }
@@ -89,10 +112,33 @@ export default {
       <div
           v-if="model.type === 2"
           class="col-12">
-        <base-select
-            label="بانک آزمون"
-            :items="items.testBanks"
-            v-model="model.metaData"
+        <div class="row">
+          <div class="col-12">
+            <div class="row">
+              <div class="col">
+                <base-select
+                    label="بانک آزمون"
+                    :items="items.testBanks"
+                    v-model="model.metaData"
+                />
+              </div>
+              <div class="col-auto">
+                <base-button
+                    label="آزمون‌ها"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div
+          v-if="model.type === 3"
+          class="col-12">
+        <base-file-picker
+            label="فایل پیوست"
+            v-model="model.file"
+            @change="filePicked"
         />
       </div>
       <div

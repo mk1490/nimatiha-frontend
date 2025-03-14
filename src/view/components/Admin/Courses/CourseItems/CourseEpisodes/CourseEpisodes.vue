@@ -71,10 +71,15 @@ export default {
       this.modal.visible = false;
     },
     getTypeTitle(type) {
-      if (type === 1) {
-        return 'ویدئو';
-      } else {
-        return 'آزمون';
+      switch (type) {
+        case 1:
+          return 'ویدئو';
+        case 2:
+          return 'آزمون';
+        case 3:
+          return 'فایل پیوست';
+        case 4:
+          return 'تکلیف';
       }
     }
   }
