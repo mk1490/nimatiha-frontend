@@ -1,9 +1,10 @@
 <script>
 import CourseItems from "./CourseItems/CourseItems.vue";
+import CourseModal from "./CourseModal.vue";
 
 export default {
   name: "CoursesManagement",
-  components: {CourseItems},
+  components: {CourseModal, CourseItems},
   created() {
     this.httpGet(`/course/list`, result => {
       this.table.contents = result;
@@ -88,8 +89,7 @@ export default {
   <base-card-layout
       @buttonClick="define"
       button-title="تعریف دوره جدید"
-      title="مدیریت دوره‌ها">`
-
+      title="مدیریت دوره‌ها">
 
     <base-table
         :headers="table.headers"

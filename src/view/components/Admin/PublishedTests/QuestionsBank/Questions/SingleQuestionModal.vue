@@ -36,16 +36,16 @@ export default {
   methods: {
     submit() {
       if (this.data) {
-        this.httpPut(`/test-question/${this.data.id}/`, {
+        this.httpPut(`/question-bank/add-or-update-question-item/${this.data.id}`, {
           ...this.model,
           items: this.childItems,
         }, result => {
           this.$emit('update', result);
         })
       } else {
-        this.httpPost(`/test-question/`, {
+        this.httpPost(`/question-bank/add-or-update-question-item`, {
           ...this.model,
-          parentId: this.questionId,
+          parentQuestionBankId: this.questionId,
           items: this.childItems,
         }, result => {
           this.$emit('add', result);
@@ -87,7 +87,7 @@ export default {
       <div class="col-12">
         <base-select
             v-model="model.type"
-            :items="initialize.types"
+            :items="initialize.questionTypes"
             label="نوع سوال"/>
       </div>
 

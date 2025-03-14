@@ -162,7 +162,7 @@ export default {
                         v-model="model.items[index].testId"
                         chips
                         small-chips
-                        label="بانک آزمون"
+                        label="بانک سؤال"
                     />
                   </div>
 

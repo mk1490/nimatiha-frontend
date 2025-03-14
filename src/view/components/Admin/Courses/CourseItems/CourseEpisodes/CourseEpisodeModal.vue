@@ -1,9 +1,16 @@
 <script>
 import BaseDateTimeTextField from "@/view/widget/Base/BaseDateTimeTextField.vue";
+import DefineOrEditQuestionBankModal
+  from "@/view/components/Admin/PublishedTests/QuestionsBank/DefineOrEditQuestionBankModal.vue";
+import QuestionsBankModal from "@/view/components/Admin/PublishedTests/QuestionsBank/QuestionsBanksManagementModal.vue";
 
 export default {
   name: "CourseEpisodeModal",
-  components: {BaseDateTimeTextField},
+  components: {
+    QuestionsBankModal,
+    DefineOrEditQuestionBankModal,
+    BaseDateTimeTextField
+  },
   props: {
     visible: Boolean,
     data: Object,
@@ -14,6 +21,7 @@ export default {
   created() {
     this.items.types = this.initialize.types;
     this.items.prerequisites = this.initialize.prerequisites;
+    this.items.questionsBank = this.initialize.questionsBank;
     if (this.data) {
       this.model.title = this.data.title;
       this.model.type = this.data.type;
@@ -23,6 +31,10 @@ export default {
   },
   data() {
     return {
+      modal: {
+        visible: false,
+        data: null,
+      },
       model: {
         title: null,
         type: null,
@@ -32,7 +44,7 @@ export default {
       },
       items: {
         types: [],
-        testBanks: [],
+        questionsBank: [],
         prerequisites: [],
       }
     }
@@ -75,6 +87,14 @@ export default {
       this.httpPost(`/course-episode/upload-file/${id}`, this.formData, result => {
         callback(result);
       })
+    },
+    testQuestionsBankModal() {
+      this.modal.data = [];
+      this.modal.visible = true;
+    },
+    pickQuestionBank(item) {
+      this.model.metaData = item.id;
+      this.modal.visible = false;
     }
   }
 }
@@ -117,14 +137,15 @@ export default {
             <div class="row">
               <div class="col">
                 <base-select
-                    label="بانک آزمون"
-                    :items="items.testBanks"
+                    label="بانک سؤال"
+                    :items="items.questionsBank"
                     v-model="model.metaData"
                 />
               </div>
               <div class="col-auto">
                 <base-button
-                    label="آزمون‌ها"
+                    @click="testQuestionsBankModal"
+                    label="سوالات"
                 />
               </div>
             </div>
@@ -151,6 +172,13 @@ export default {
         />
       </div>
     </div>
+
+    <questions-bank-modal
+        v-if="modal.visible"
+        :visible.sync="modal.visible"
+        picker
+        @pick="pickQuestionBank"
+    />
   </base-modal>
 </template>
 

@@ -39,7 +39,7 @@ export default {
                         title: 'ویرایش',
                         icon: 'mdi-pen',
                         click: (item) => {
-                            this.httpGet(`/test-question/${item.id}`, result => {
+                            this.httpGet(`/question-bank/${item.id}`, result => {
                                 this.modal.initialize = result.initialize;
                                 this.modal.index = this.table.contents.indexOf(item);
                                 this.modal.data = result.data;
@@ -53,7 +53,7 @@ export default {
                         icon: 'mdi-delete',
                         color: 'red',
                         click: (item) => {
-                            this.httpDelete(`/test-question/${item.id}`, result => {
+                            this.httpDelete(`/question-bank/${item.id}`, result => {
                                 this.table.contents.splice(this.table.contents.indexOf(item), 1);
                             })
 
@@ -71,7 +71,7 @@ export default {
     },
     methods: {
         define() {
-            this.httpGet(`/test-question/initialize`, result => {
+            this.httpGet(`/question-bank/initialize`, result => {
                 this.modal.data = null;
                 this.modal.initialize = result;
                 this.modal.visible = true;
