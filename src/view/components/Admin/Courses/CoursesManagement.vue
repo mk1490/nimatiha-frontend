@@ -1,10 +1,9 @@
 <script>
-import CourseModal from "@/view/components/Admin/Courses/CourseModal.vue";
-import CourseEpisodes from "@/view/components/Admin/Courses/CourseEpisodes/CourseEpisodes.vue";
+import CourseItems from "./CourseItems/CourseItems.vue";
 
 export default {
   name: "CoursesManagement",
-  components: {CourseEpisodes, CourseModal},
+  components: {CourseItems},
   created() {
     this.httpGet(`/course/list`, result => {
       this.table.contents = result;
@@ -49,13 +48,13 @@ export default {
             }
           },
           {
-            title: 'آیتم‌های دوره',
+            title: 'فصل‌های دوره',
             icon: 'mdi-playlist-check',
             click: item => {
-              this.httpGet(`/course-episode/${item.id}`, result => {
-                this.modal.courseEpisodes.parentId = item.id;
-                this.modal.courseEpisodes.data = result;
-                this.modal.courseEpisodes.visible = true;
+              this.httpGet(`/course-items/list/${item.id}`, result => {
+                this.modal.courseItems.parentId = item.id;
+                this.modal.courseItems.data = result;
+                this.modal.courseItems.visible = true;
               })
 
             }
@@ -74,7 +73,7 @@ export default {
         data: null,
         initialize: null,
         visible: false,
-        courseEpisodes: {
+        courseItems: {
           data: null,
           parentId: null,
           visible: false,
@@ -108,11 +107,13 @@ export default {
         @update="updateItem"
     />
 
-    <course-episodes
-        v-if="modal.courseEpisodes.visible"
-        :visible.sync="modal.courseEpisodes.visible"
-        :data="modal.courseEpisodes.data"
-        :parent-id="modal.courseEpisodes.parentId"
+
+    <course-items
+        v-if="modal.courseItems.visible"
+        :visible="modal.courseItems.visible"
+        :data="modal.courseItems.data"
+        :parentCourseId="modal.courseItems.parentId"
+        @close="modal.courseItems.visible= false"
     />
 
   </base-card-layout>

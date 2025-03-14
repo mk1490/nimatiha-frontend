@@ -130,9 +130,9 @@ export default {
             />
           </div>
           <div class="col-12">
-            <ckeditor
-                :editor="editor"
-                v-model="model.preText" :config="editorConfig"/>
+              <ckeditor
+                  :editor="editor"
+                  v-model="model.preText" :config="editorConfig"/>
           </div>
           <div class="col-12">
             <ckeditor

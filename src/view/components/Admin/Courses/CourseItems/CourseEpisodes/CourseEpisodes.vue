@@ -1,12 +1,12 @@
 <script>
-import CourseEpisodeModal from "@/view/components/Admin/Courses/CourseEpisodes/CourseEpisodeModal.vue";
+import CourseEpisodeModal from "./CourseEpisodeModal.vue";
 
 export default {
   name: "CourseEpisodes",
   components: {CourseEpisodeModal},
   props: {
     visible: Boolean,
-    data: Object,
+    data: Array,
     parentId: String,
   },
   created() {

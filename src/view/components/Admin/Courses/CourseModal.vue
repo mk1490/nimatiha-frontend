@@ -1,4 +1,6 @@
 <script>
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+
 export default {
   name: "CourseModal",
   props: {
@@ -16,11 +18,28 @@ export default {
   },
   data() {
     return {
+      editor: ClassicEditor,
+      editorConfig: {
+        language: {
+          ui: 'fa',
+          content: 'fa'
+        },
+        toolbar: {
+          items: [
+            'undo', 'redo',
+            '|', 'heading',
+            '|', 'bold', 'italic',
+            '|', 'bulletedList', 'numberedList', 'outdent', 'indent'
+          ]
+        },
+        cloudServices: {}
+      },
       items: {
         categories: [],
       },
       model: {
         title: null,
+        content: null,
         joinedCategoryIds: [],
       }
     }
@@ -47,6 +66,7 @@ export default {
       :title="data? 'ویرایش دوره': 'تعریف دوره جدید'"
       @close="$emit('update:visible', false)"
       @submit="submit"
+      fullscreen
       :visible="visible">
 
     <div class="row">
@@ -55,6 +75,11 @@ export default {
             label="عنوان دوره"
             v-model="model.title"
         />
+      </div>
+      <div class="col-12">
+        <ckeditor
+            :editor="editor"
+            v-model="model.content" :config="editorConfig"/>
       </div>
 
       <div class="col-12">

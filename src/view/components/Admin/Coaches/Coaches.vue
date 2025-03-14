@@ -53,6 +53,14 @@ export default {
           {
             type: 'text',
             value: 'family',
+          },
+          {
+            type: 'text',
+            value: 'nationalCode',
+          },
+          {
+            type: 'text',
+            value: 'mobileNumber',
           }
         ],
         actions: [

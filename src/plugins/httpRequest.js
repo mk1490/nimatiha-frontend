@@ -110,18 +110,30 @@ axios.interceptors.response.use(async (response) => {
 });
 Vue.prototype.http = axios;
 
+const httpPost = (requestUrl, body, successCallback, errorCallback) => {
+    axios.post(requestUrl, body).then(response => {
+        successCallback(response);
+    }).catch(error => {
+        if (errorCallback) {
+            errorCallback(error)
+        }
+    })
+}
+
+const httpGet = (requestUrl, successCallback, errorCallback) => {
+    axios.get(requestUrl).then(response => {
+        successCallback(response);
+    }).catch(error => {
+        if (errorCallback) {
+            errorCallback(error)
+        }
+    })
+}
+
 
 Vue.mixin({
     methods: {
-        httpGet: (requestUrl, successCallback, errorCallback) => {
-            axios.get(requestUrl).then(response => {
-                successCallback(response);
-            }).catch(error => {
-                if (errorCallback) {
-                    errorCallback(error)
-                }
-            })
-        },
+        httpGet,
         httpPut: (requestUrl, body, successCallback, errorCallback) => {
             axios.put(requestUrl, body).then(response => {
                 successCallback(response);
@@ -131,15 +143,7 @@ Vue.mixin({
                 }
             })
         },
-        httpPost: (requestUrl, body, successCallback, errorCallback) => {
-            axios.post(requestUrl, body).then(response => {
-                successCallback(response);
-            }).catch(error => {
-                if (errorCallback) {
-                    errorCallback(error)
-                }
-            })
-        },
+        httpPost,
 
         httpDelete: (requestUrl, successCallback, errorCallback) => {
             const item = Vue.prototype.deleteModal.show();
@@ -158,3 +162,6 @@ Vue.mixin({
 
     }
 })
+
+
+export {httpPost, httpGet}
