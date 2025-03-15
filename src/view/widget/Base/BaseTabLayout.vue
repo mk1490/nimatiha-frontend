@@ -33,8 +33,8 @@ export default {
 
 <template>
   <v-container fluid>
-    <div class="row" style="margin: 0!important;">
-      <div class="col">
+    <div class="row pa-0" style="margin: 0!important;">
+      <div class="col pa-0 ma-0">
         <v-tabs
             :vertical="vertical"
             v-model="selectedTab">
@@ -72,18 +72,20 @@ export default {
         </v-btn>
       </div>
 
-      <div class="col-12">
+      <div class="col-12 pa-0">
         <v-tabs-items
             color="transparent"
             v-if="!vertical "
             v-model="selectedTab">
           <v-tab-item v-for="(item, index) in tabs">
-            <slot :name="`tab-${index + 1}`"></slot>
-            <component
-                v-if="item.view"
-                v-bind="item.data"
-                :is="item.view">
-            </component>
+            <v-container>
+              <slot :name="`tab-${index + 1}`"></slot>
+              <component
+                  v-if="item.view"
+                  v-bind="item.data"
+                  :is="item.view">
+              </component>
+            </v-container>
           </v-tab-item>
         </v-tabs-items>
       </div>

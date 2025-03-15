@@ -49,7 +49,7 @@ export default {
             }
           },
           {
-            title: 'فصل‌های دوره',
+            title: 'سرفصل‌های دوره',
             icon: 'mdi-playlist-check',
             click: item => {
               this.httpGet(`/course-items/list/${item.id}`, result => {

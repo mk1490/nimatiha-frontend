@@ -72,7 +72,7 @@ function toggleEdit(index) {
 
 <template>
   <base-modal
-      title="فصل‌های دوره"
+      title="سرفصل‌های دوره"
       @close="$emit('close')"
       :visible="props.visible">
 

@@ -1,8 +1,10 @@
 <script>
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import BaseTabLayout from "@/view/widget/Base/BaseTabLayout.vue";
 
 export default {
   name: "CourseModal",
+  components: {BaseTabLayout},
   props: {
     visible: Boolean,
     data: Object,
@@ -13,11 +15,17 @@ export default {
     this.items.categories = this.initialize['coachCategories'];
     if (this.data) {
       this.model.title = this.data['title'];
+      this.model.content = this.data['content'];
       this.model.joinedCategoryIds = this.data['joinedCategoryIds'];
     }
   },
   data() {
     return {
+      tabs: [
+        {title: 'مشخصات کلی'},
+        {title: 'ویژگی‌ها'},
+
+      ],
       editor: ClassicEditor,
       editorConfig: {
         language: {
@@ -41,6 +49,7 @@ export default {
         title: null,
         content: null,
         joinedCategoryIds: [],
+        specifications: [],
       }
     }
   },
@@ -68,33 +77,67 @@ export default {
       @submit="submit"
       fullscreen
       :visible="visible">
+    <base-tab-layout :tabs="tabs">
 
-    <div class="row">
-      <div class="col-12">
-        <base-text-field
-            label="عنوان دوره"
-            v-model="model.title"
-        />
-      </div>
-      <div class="col-12">
-        <ckeditor
-            :editor="editor"
-            v-model="model.content" :config="editorConfig"/>
-      </div>
 
-      <div class="col-12">
-        <base-select
-            label="دسته بندی"
-            multiple
-            chips
-            small-chips
-            deletable-chips
-            :items="items.categories"
-            v-model="model.joinedCategoryIds"
-        />
-      </div>
+      <template v-slot:tab-1>
 
-    </div>
+        <div class="row">
+          <div class="col-12">
+            <base-text-field
+                label="عنوان دوره"
+                v-model="model.title"
+            />
+          </div>
+          <div class="col-12">
+            <ckeditor
+                :editor="editor"
+                v-model="model.content" :config="editorConfig"/>
+          </div>
+
+          <div class="col-12">
+            <base-select
+                label="دسته بندی"
+                multiple
+                chips
+                small-chips
+                deletable-chips
+                :items="items.categories"
+                v-model="model.joinedCategoryIds"
+            />
+          </div>
+
+        </div>
+      </template>
+      <template v-slot:tab-2>
+        <v-container>
+          <div class="row">
+            <div
+                v-for="(item, index) in model.specifications"
+                class="col-12">
+
+              <div class="row">
+                <div class="col-6">
+                  <base-text-field
+                      v-model="model.specifications[index].title"
+                      label="عنوان"/>
+                </div>
+                <div class="col-6">
+                  <base-text-field
+                      v-model="model.specifications[index].value"
+                      label="متن"/>
+                </div>
+
+              </div>
+            </div>
+
+
+          </div>
+        </v-container>
+      </template>
+
+    </base-tab-layout>
+
 
   </base-modal>
 </template>
