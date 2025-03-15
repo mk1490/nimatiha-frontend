@@ -117,6 +117,7 @@ export const constantRoutes = [{
             noCache: true,
             affix: true,
             title: "گزارش",
+            permission: 'management.coaches'
         }, children: [
             {
                 path: 'coaches',
@@ -126,6 +127,7 @@ export const constantRoutes = [{
                     title: 'عملکرد مربیان',
                     // icon: 'mdi-book-open-page-variant',
                     // permission: 'report.answered_tests'
+                    permission: 'management.coaches'
                 },
             },
             {
@@ -136,6 +138,7 @@ export const constantRoutes = [{
                     title: 'کارنامه آزمون',
                     // icon: 'mdi-book-open-page-variant',
                     // permission: 'report.answered_tests'
+                    permission: 'management.coaches'
                 },
             },
             {
@@ -144,6 +147,7 @@ export const constantRoutes = [{
                 component: () => import('@/view/components/Reports/Homeworks.vue'),
                 meta: {
                     title: 'تکالیف ارسالی',
+                    permission: 'management.coaches'
                     // icon: 'mdi-book-open-page-variant',
                     // permission: 'report.answered_tests'
                 },
