@@ -46,7 +46,7 @@ export const constantRoutes = [{
                 component: () => import('@/view/components/Admin/Courses/CoursesManagement.vue'),
                 meta: {
                     title: 'دوره‌ها',
-                    icon: 'mdi-format-list-checks',
+                    icon: 'mdi-playlist-check',
                     permission: 'management.courses'
                 },
             },
@@ -108,6 +108,44 @@ export const constantRoutes = [{
                     title: 'پاسخ‌نامه آزمون',
                     icon: 'mdi-book-open-page-variant',
                     permission: 'report.answered_tests'
+                },
+            },
+        ]
+    },
+    {
+        path: '/report', component: Layout, meta: {
+            noCache: true,
+            affix: true,
+            title: "گزارش",
+        }, children: [
+            {
+                path: 'coaches',
+                name: 'coachesReport',
+                component: () => import('@/view/components/Reports/CoachReports.vue'),
+                meta: {
+                    title: 'عملکرد مربیان',
+                    // icon: 'mdi-book-open-page-variant',
+                    // permission: 'report.answered_tests'
+                },
+            },
+            {
+                path: 'coachTests',
+                name: 'coachesTestReport',
+                component: () => import('@/view/components/Reports/CoachTests/CoachTests.vue'),
+                meta: {
+                    title: 'کارنامه آزمون',
+                    // icon: 'mdi-book-open-page-variant',
+                    // permission: 'report.answered_tests'
+                },
+            },
+            {
+                path: 'homeWorks',
+                name: 'homeWorks',
+                component: () => import('@/view/components/Reports/Homeworks.vue'),
+                meta: {
+                    title: 'تکالیف ارسالی',
+                    // icon: 'mdi-book-open-page-variant',
+                    // permission: 'report.answered_tests'
                 },
             },
         ]
