@@ -70,6 +70,9 @@ export default {
         })
       }
 
+    },
+    generateRandomSlug() {
+      this.model.slug = this.generateRandomString(7)
     }
   },
   data() {
@@ -123,18 +126,35 @@ export default {
             />
           </div>
           <div class="col-12">
-            <base-text-field
-                label="اسلاگ"
-                dir="ltr"
-                v-model="model.slug"
-            />
+            <div class="row">
+              <div class="col">
+                <base-text-field
+                    label="اسلاگ"
+                    dir="ltr"
+                    v-model="model.slug"
+                />
+              </div>
+              <div class="col-auto">
+                <base-button
+                    @click="generateRandomSlug"
+                    label="اسلاگ رندوم"
+                />
+              </div>
+            </div>
+
           </div>
           <div class="col-12">
-              <ckeditor
-                  :editor="editor"
-                  v-model="model.preText" :config="editorConfig"/>
+            <label>
+              متن پیش از شروع آزمون
+            </label>
+            <ckeditor
+                :editor="editor"
+                v-model="model.preText" :config="editorConfig"/>
           </div>
           <div class="col-12">
+            <label>
+              متن پس از پایان آزمون
+            </label>
             <ckeditor
                 :editor="editor"
                 v-model="model.afterText"

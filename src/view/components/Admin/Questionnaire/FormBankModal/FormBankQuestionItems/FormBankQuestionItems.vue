@@ -79,6 +79,17 @@ export default {
           }
         },
         {
+          title: 'کپی',
+          icon: 'mdi-content-copy',
+          click: (item) => {
+            this.httpPost(`/form-template-items/duplicate/${item.id}`, {}, result => {
+
+              this.table.contents.splice(index, 1, this.table.contents[index + 1]);
+              this.table.contents.splice(index + 1, 1, item);
+            })
+          }
+        },
+        {
           title: 'ویرایش',
           icon: 'mdi-pen',
           click: (item) => {
@@ -126,7 +137,10 @@ export default {
     <base-table
         :items="table.contents"
         :headers="table.headers"
-        :actions="actions">
+        :actions="actions"
+        :items-per-page="-1"
+        hide-default-footer
+    >
     </base-table>
 
     <form-bank-question-item-modal
