@@ -24,7 +24,9 @@ export default {
       table: {
         headers: [
           {text: 'عنوان', value: 'label'},
-          {text: 'نوع فیلد', value: 'type'}
+          {text: 'نوع فیلد', value: 'type'},
+          {text: 'حدأقل مقدار', value: 'minimum'},
+          {text: 'حدأکثر مقدار', value: 'maximum'}
         ],
         contents: [],
       }
